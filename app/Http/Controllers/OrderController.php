@@ -9,6 +9,7 @@ use App\Product;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 
 class OrderController extends Controller
 {
@@ -24,7 +25,7 @@ class OrderController extends Controller
     {
         $order_date = $request['order_date'];
         $client_id = $request['client_id'];
-        $product_id = $request['product_id'];
+        $product_id = $request['productName'];
         $total_amount = $request['total_amount'];
         $discount = $request['discount'];
         $grand_total = $request['grand_total'];
@@ -32,7 +33,7 @@ class OrderController extends Controller
         $due = $request['due'];
         $payment_type = $request['payment_type'];
         $quantity = $request['quantity'];
-        $rate = $request['rate'];
+        $rate = $request['rateValue'];
         $total = $request['total'];
 
         $order = new Order();
@@ -45,20 +46,31 @@ class OrderController extends Controller
         $order->due = $due;
         $order->payment_type = $payment_type;
        if ($order->save()){
-           $order_id =  $order->id;
-           $order_item = new Order_item();
-           $order_item->product_id = $product_id;
-           $order_item->order_id = $order_id;
-           $order_item->quantity = $quantity;
-           $order_item->rate = $rate;
-           $order_item->total = $total;
-           $order_item->save();
+           $input = Input::all();
+           $condition = $input['productName'];
+           foreach ($condition as $key => $condition) {
+               $order_id =  $order->id;
+               $order_item = new Order_item();
+               $order_item->product_id = $input['productName'][$key];
+               $order_item->order_id = $order_id;
+               $order_item->quantity = $input['quantity'][$key];
+               $order_item->rate = $input['rateValue'][$key];
+               $order_item->total = $input['totalValue'][$key];
+               $order_item->save();
+           }
        }
 
         return redirect()->back()->with(['message' => $order->id]);
+    }
+    public function fetchProductData()
+    {
+            $product = Product::all(['id','product_name'])->toArray();
+            return $product;
+    }
 
-
-
-
+    public function fetchSelectedProduct(Request $request)
+    {
+        $product = Product::find($request['productId']);
+        return $product;
     }
 }

@@ -187,4 +187,3 @@ $('#delete-products-btn').on('click', function () {
     });
     $(location).attr('href',urlGetProduct);
 });
-

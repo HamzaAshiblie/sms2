@@ -94,3 +94,12 @@ Route::post('createOrder', [
     'as' => 'createOrder',
     'middleware' => 'auth'
 ]);
+
+Route::post('/fetchProductData', [
+   'uses'  => 'OrderController@fetchProductData',
+    'as' => 'fetchProductData'
+]);
+Route::post('/fetchSelectedProduct', [
+   'uses' => 'OrderController@fetchSelectedProduct',
+    'as' => 'fetchSelectedProduct'
+]);

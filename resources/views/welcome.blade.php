@@ -21,19 +21,16 @@
                     <form class="form-horizontal" action="{{ route('signup') }}" method="post">
                         <fieldset>
                             <div class="form-group ">
-                                <label for="email" class="col-sm-2 control-label">البريد الإلكتروني</label>
                                 <div class="col-sm-10 {{$errors->has('email')? 'has-error':''}}">
                                     <input class="form-control" type="text" name="email" id="email" placeholder="البريد الإلكتروني" value="{{ Request::old('email') }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="username" class="col-sm-2 control-label">اسم المستخدم</label>
                                 <div class="col-sm-10 {{$errors->has('username')? 'has-error':''}}">
                                     <input class="form-control" type="text" name="username" id="username" placeholder="اسم المستخدم" value="{{ Request::old('username') }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="passsword" class="col-sm-2 control-label"> كلمة المرور </label>
                                 <div class="col-sm-10 {{$errors->has('password')? 'has-error':''}}">
                                     <input class="form-control" type="password" name="password" id="passsword" placeholder="كلمة المرور">
                                 </div>
@@ -61,13 +58,11 @@
                     <form class="form-horizontal" action="{{ route('signin') }}" method="post">
                         <fieldset>
                             <div class="form-group">
-                                <label for="email" class="col-sm-2 control-label">البريد الإلكتروني</label>
                                 <div class="col-sm-10 {{$errors->has('email')? 'has-error':''}}">
                                     <input class="form-control" type="text" name="email" id="email" placeholder="البريد الإلكتروني">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="passsword" class="col-sm-2 control-label"> كلمة المرور </label>
                                 <div class="col-sm-10 {{$errors->has('password')? 'has-error':''}}">
                                     <input class="form-control" type="password" name="password" id="passsword" placeholder="كلمة المرور">
                                 </div>
