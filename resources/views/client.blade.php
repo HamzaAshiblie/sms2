@@ -161,11 +161,13 @@
                             <div class="col-sm-7">
                                 <input type="text" class="form-control" id="edit-client_email" placeholder="البريد الإلكتروني" name="edit-client_email" autocomplete="off">
                             </div>
-                        </div> <!-- /form-group--><div class="form-group">
+                        </div> <!-- /form-group-->
+                        <div class="form-group">
                             <label for="edit-client_phone" class="col-sm-4 control-label">الهاتف: </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_edit-client_phone">
                                 <input type="text" class="form-control" id="edit-client_phone" placeholder="الهاتف" name="edit-client_phone" autocomplete="off">
+                                <h6></h6>
                             </div>
                         </div> <!-- /form-group-->
 

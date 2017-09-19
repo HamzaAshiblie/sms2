@@ -76,7 +76,7 @@
                     </td>
                     <td style="padding-left:20px;">
                         <div class="form-group">
-                            <input type="number" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
+                            <input type="text" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
                         </div>
                     </td>
                     <td style="padding-left:20px;">

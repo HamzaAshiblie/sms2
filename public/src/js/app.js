@@ -63,6 +63,27 @@ $('#edit-clients-btn').on('click', function () {
         $(clientEmailElement).text(msg['client_email']);
         $(clientPhoneElement).text(msg['client_phone']);
         $('#edit-client-modal').modal('hide');
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+        console.log('Text Status:');
+        console.log(textStatus);
+        console.log('Error Thrown:');
+        console.log(errorThrown);
+        console.log('jqXHR:');
+        console.log(jqXHR.responseText);
+       var responseError = JSON.parse(jqXHR.responseText);
+
+        $.each(responseError, function(k, v) {
+            console.log('Key:');
+            console.log(k);
+            console.log('Value:');
+            console.log(v[0]);
+            $('input#edit-' + k).closest('div').addClass('has-error');
+            $('div#error_edit-'+ k +' h6').html(v[0]);
+        });
+
+
+      //  edit-client_phone
     });
 });
 $('.panel').find('.div-body-modal').find('.table').find('.btn-group').find('.dropdown-menu').find('#remove-client-modal-btn').on('click', function(event){
