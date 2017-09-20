@@ -3,7 +3,6 @@ var clientNameElement = null;
 var clientCompanyElement = null;
 var clientEmailElement = null;
 var clientPhoneElement = null;
-
 $('.panel').find('.div-body-modal').find('.div-add-client-modal').find('#add-client-modal-btn').on('click', function(event){
     event.preventDefault();
     $('#addClientsModal').modal();

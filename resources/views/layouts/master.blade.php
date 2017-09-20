@@ -26,7 +26,34 @@
     <!-- DataTables -->
     <script src="{{URL::to('src/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::to('https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js')}}"></script>
+
+    <script>
+
+        var datax = [
+            [ "1", "حمزه", "فرد", "05050505"],
+            [ "1", "حمزه", "فرد", "05050505"],
+            [ "1", "حمزه", "فرد", "05050505"],
+            [ "1", "حمزه", "فرد", "05050505"],
+            [ "1", "حمزه", "فرد", "05050505"]
+        ];
+
+
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                data: datax,
+                columns: [
+                    { title: "Id" },
+                    { title: "Name" },
+                    { title: "Company" },
+                    { title: "Phone" }
+                ]
+            } );
+        } );
+
+    </script>
+
+
     <!--Jquery Redirect-->
-    <script src="{{URL::to('src/plugins/jquery.redirect.js')}}"></script>
+
 </body>
 </html>

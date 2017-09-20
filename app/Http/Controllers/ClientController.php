@@ -13,8 +13,7 @@ class ClientController extends Controller
         if($request['message']!=null){
             return view('client',['clients'=> $clients])->with('message');
         }else{
-            return view('client',['clients'=> $clients]);
-        }
+            return response()->json($clients);        }
     }
 
     public function getClientSingle(Request $request)

@@ -79,4 +79,7 @@
         </div>
     </div>
 
+    <table id="example" class="display" width="100%"></table>
+
+
 @endsection

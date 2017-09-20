@@ -22,7 +22,8 @@
                     <button class="btn btn-default" id="add-client-modal-btn"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة عميل </button>
                 </div> <!-- /div-action -->
 
-                <table class="table" id="datatable">
+                <table id="datatable" class="display" width="100%"></table>
+                <table class="table">
                     <thead>
                     <tr>
                         <th  style="text-align: right">العميل</th>
@@ -63,6 +64,7 @@
 
                 </div>
                 <!--/PAGINATION-->
+
 
             </div> <!-- /panel-body -->
         </div> <!-- /panel -->
@@ -210,7 +212,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- /delete clients modal -->
-
 <script>
 
     var token = '{{ Session::token() }}';
@@ -218,5 +219,20 @@
     var urlGetClient = '{{ route('client') }}';
     var urlEditClient = '{{ route('client.edit')}}';
     var urlDeleteClient = '{{ route('client.delete')}}';
+
+    $(document).ready(function() {
+        $('#datatable').DataTable( {
+            data: clients,
+            columns: [
+                { title: "Name" },
+                { title: "Position" },
+                { title: "Office" },
+                { title: "Extn." },
+                { title: "Start date" },
+                { title: "Salary" }
+            ]
+        } );
+    } );
+
 </script>
 @endsection
