@@ -27,7 +27,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> الطلبات <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li id="topNavAddOrder" class="{{ Request::is('addOrder*') ? 'active' : '' }}"><a href="{{ route('addOrder') }}"> <i class="glyphicon glyphicon-plus"></i> إضافة طلب</a></li>
-                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? 'active' : '' }}"><a href="orders.php?o=manord"> <i class="glyphicon glyphicon-edit"></i> إدارة الطلبات</a></li>
+                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? 'active' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة الطلبات</a></li>
                         </ul>
                     </li>
 
@@ -36,7 +36,7 @@
                     <li class="dropdown" id="navSetting">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li id="topNavSetting"><a href="setting.php"> <i class="glyphicon glyphicon-wrench"></i> الإعدادات</a></li>
+                            <li id="topNavSetting"><a href="{{ route('account') }}"> <i class="glyphicon glyphicon-wrench"></i> الإعدادات</a></li>
                             <li id="topNavLogout"><a href="{{ route('logout') }}"> <i class="glyphicon glyphicon-log-out"></i> تسجيل الخروج</a></li>
                         </ul>
                     </li>

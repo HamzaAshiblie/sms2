@@ -27,7 +27,7 @@ $(document).ready(function() {
 			var clientContact = $("#clientContact").val();
 			var paid = $("#paid").val();
 			var discount = $("#discount").val();
-			var paymentType = $("#paymentType").val();
+			var paymentType = $("#payment_type").val();
 			var paymentStatus = $("#paymentStatus").val();		
 
 			// form validation 
@@ -67,10 +67,10 @@ $(document).ready(function() {
 			} // /else
 
 			if(paymentType == "") {
-				$("#paymentType").after('<p class="text-danger"> The Payment Type field is required </p>');
-				$('#paymentType').closest('.form-group').addClass('has-error');
+				$("#payment_type").after('<p class="text-danger"> The Payment Type field is required </p>');
+				$('#payment_Type').closest('.form-group').addClass('has-error');
 			} else {
-				$('#paymentType').closest('.form-group').addClass('has-success');
+				$('#payment_type').closest('.form-group').addClass('has-success');
 			} // /else
 
 			if(paymentStatus == "") {
@@ -82,27 +82,27 @@ $(document).ready(function() {
 
 
 			// array validation
-			var productName = document.getElementsByName('productName[]');				
+			var product_name = document.getElementsByName('product_name[]');
 			var validateProduct;
-			for (var x = 0; x < productName.length; x++) {       			
-				var productNameId = productName[x].id;	    	
-		    if(productName[x].value == ''){	    		    	
-		    	$("#"+productNameId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
-		    	$("#"+productNameId+"").closest('.form-group').addClass('has-error');	    		    	    	
+			for (var x = 0; x < product_name.length; x++) {
+				var product_nameId = product_name[x].id;
+		    if(product_name[x].value == ''){
+		    	$("#"+product_nameId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
+		    	$("#"+product_nameId+"").closest('.form-group').addClass('has-error');
 	      } else {      	
-		    	$("#"+productNameId+"").closest('.form-group').addClass('has-success');	    		    		    	
+		    	$("#"+product_nameId+"").closest('.form-group').addClass('has-success');
 	      }          
 	   	} // for
 
-	   	for (var x = 0; x < productName.length; x++) {       						
-		    if(productName[x].value){	    		    		    	
+	   	for (var x = 0; x < product_name.length; x++) {
+		    if(product_name[x].value){
 		    	validateProduct = true;
 	      } else {      	
 		    	validateProduct = false;
 	      }          
 	   	} // for       		   	
 	   	
-	   	var quantity = document.getElementsByName('quantity[]');		   	
+	   	var quantity = document.getElementsByName('product_quantity[]');
 	   	var validateQuantity;
 	   	for (var x = 0; x < quantity.length; x++) {       
 	 			var quantityId = quantity[x].id;
@@ -196,7 +196,7 @@ $(document).ready(function() {
 			var clientContact = $("#clientContact").val();
 			var paid = $("#paid").val();
 			var discount = $("#discount").val();
-			var paymentType = $("#paymentType").val();
+			var paymentType = $("#payment_type").val();
 			var paymentStatus = $("#paymentStatus").val();		
 
 			// form validation 
@@ -236,10 +236,10 @@ $(document).ready(function() {
 			} // /else
 
 			if(paymentType == "") {
-				$("#paymentType").after('<p class="text-danger"> The Payment Type field is required </p>');
-				$('#paymentType').closest('.form-group').addClass('has-error');
+				$("#payment_type").after('<p class="text-danger"> The Payment Type field is required </p>');
+				$('#payment_type').closest('.form-group').addClass('has-error');
 			} else {
-				$('#paymentType').closest('.form-group').addClass('has-success');
+				$('#payment_type').closest('.form-group').addClass('has-success');
 			} // /else
 
 			if(paymentStatus == "") {
@@ -251,27 +251,27 @@ $(document).ready(function() {
 
 
 			// array validation
-			var productName = document.getElementsByName('productName[]');				
+			var product_name = document.getElementsByName('product_name[]');
 			var validateProduct;
-			for (var x = 0; x < productName.length; x++) {       			
-				var productNameId = productName[x].id;	    	
-		    if(productName[x].value == ''){	    		    	
-		    	$("#"+productNameId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
-		    	$("#"+productNameId+"").closest('.form-group').addClass('has-error');	    		    	    	
+			for (var x = 0; x < product_name.length; x++) {
+				var product_nameId = product_name[x].id;
+		    if(product_name[x].value == ''){
+		    	$("#"+product_nameId+"").after('<p class="text-danger"> Product Name Field is required!! </p>');
+		    	$("#"+product_nameId+"").closest('.form-group').addClass('has-error');
 	      } else {      	
-		    	$("#"+productNameId+"").closest('.form-group').addClass('has-success');	    		    		    	
+		    	$("#"+product_nameId+"").closest('.form-group').addClass('has-success');
 	      }          
 	   	} // for
 
-	   	for (var x = 0; x < productName.length; x++) {       						
-		    if(productName[x].value){	    		    		    	
+	   	for (var x = 0; x < product_name.length; x++) {
+		    if(product_name[x].value){
 		    	validateProduct = true;
 	      } else {      	
 		    	validateProduct = false;
 	      }          
 	   	} // for       		   	
 	   	
-	   	var quantity = document.getElementsByName('quantity[]');		   	
+	   	var quantity = document.getElementsByName('product_quantity[]');
 	   	var validateQuantity;
 	   	for (var x = 0; x < quantity.length; x++) {       
 	 			var quantityId = quantity[x].id;
@@ -405,7 +405,7 @@ function addRow() {
 				'<td>'+
 					'<div class="form-group">'+
 
-					'<select class="form-control" name="productName[]" id="productName'+count+'" onchange="getProductData('+count+')" >'+
+					'<select class="form-control" name="product_name[]" id="product_name'+count+'" onchange="getProductData('+count+')" >'+
 						'<option value="">~~إختر~~</option>';
 						// console.log(response);
 						$.each(response, function(index, value) {
@@ -422,7 +422,7 @@ function addRow() {
 				'</td style="padding-left:20px;">'+
 				'<td style="padding-left:20px;">'+
 					'<div class="form-group">'+
-					'<input type="number" name="quantity[]" id="quantity'+count+'" onkeyup="getTotal('+count+')" autocomplete="off" class="form-control" min="1" />'+
+					'<input type="number" name="product_quantity[]" id="product_quantity'+count+'" onkeyup="getTotal('+count+')" autocomplete="off" class="form-control" min="1" />'+
 					'</div>'+
 				'</td>'+
 				'<td style="padding-left:20px;">'+
@@ -458,12 +458,12 @@ function removeProductRow(row = null) {
 // select on product data
 function getProductData(row = null) {
 	if(row) {
-		var productId = $("#productName"+row).val();		
+		var productId = $("#product_name"+row).val();
 		
 		if(productId == "") {
 			$("#rate"+row).val("");
 
-			$("#quantity"+row).val("");						
+			$("#product_quantity"+row).val("");
 			$("#total"+row).val("");
 
 			// remove check if product name is selected
@@ -499,7 +499,7 @@ function getProductData(row = null) {
 					$("#rate"+row).val(response.unit_price);
 					$("#rateValue"+row).val(response.unit_price);
 
-					$("#quantity"+row).val(1);
+					$("#product_quantity"+row).val(1);
 
 					var total = Number(response.unit_price) * 1;
 					total = total.toFixed(2);
@@ -535,7 +535,7 @@ function getProductData(row = null) {
 // table total
 function getTotal(row = null) {
 	if(row) {
-		var total = Number($("#rate"+row).val()) * Number($("#quantity"+row).val());
+		var total = Number($("#rate"+row).val()) * Number($("#product_quantity"+row).val());
 		total = total.toFixed(2);
 		$("#total"+row).val(total);
 		$("#totalValue"+row).val(total);
@@ -554,7 +554,6 @@ function subAmount() {
 		var tr = $("#productTable tbody tr")[x];
 		var count = $(tr).attr('id');
 		count = count.substring(3);
-
 		totalSubAmount = Number(totalSubAmount) + Number($("#total"+count).val());
 	} // /for
 
@@ -571,47 +570,47 @@ function subAmount() {
 	$("#vatValue").val(vat);
 
 	// total amount
-	var totalAmount = (Number($("#subTotal").val()) + Number($("#vat").val()));
-	totalAmount = totalAmount.toFixed(2);
-	$("#totalAmount").val(totalAmount);
-	$("#totalAmountValue").val(totalAmount);
+	var total_amount = (Number($("#subTotal").val()) + Number($("#vat").val()));
+	total_amount = total_amount.toFixed(2);
+	$("#total_amount").val(total_amount);
+	$("#totalAmountValue").val(total_amount);
 
 	var discount = $("#discount").val();
 	if(discount) {
-		var grandTotal = Number($("#totalAmount").val()) - Number(discount);
-		grandTotal = grandTotal.toFixed(2);
-		$("#grandTotal").val(grandTotal);
-		$("#grandTotalValue").val(grandTotal);
+		var grand_total = Number($("#total_amount").val()) - Number(discount);
+		grand_total = grand_total.toFixed(2);
+		$("#grand_total").val(grand_total);
+		$("#grandTotalValue").val(grand_total);
 	} else {
-		$("#grandTotal").val(totalAmount);
-		$("#grandTotalValue").val(totalAmount);
+		$("#grand_total").val(total_amount);
+		$("#grandTotalValue").val(total_amount);
 	} // /else discount	
 
 	var paidAmount = $("#paid").val();
 	if(paidAmount) {
-		paidAmount =  Number($("#grandTotal").val()) - Number(paidAmount);
+		paidAmount =  Number($("#grand_total").val()) - Number(paidAmount);
 		paidAmount = paidAmount.toFixed(2);
 		$("#due").val(paidAmount);
 		$("#dueValue").val(paidAmount);
 	} else {	
-		$("#due").val($("#grandTotal").val());
-		$("#dueValue").val($("#grandTotal").val());
+		$("#due").val($("#grand_total").val());
+		$("#dueValue").val($("#grand_total").val());
 	} // else
 
 } // /sub total amount
 
 function discountFunc() {
 	var discount = $("#discount").val();
- 	var totalAmount = Number($("#totalAmount").val());
- 	totalAmount = totalAmount.toFixed(2);
+ 	var total_amount = Number($("#total_amount").val());
+ 	total_amount = total_amount.toFixed(2);
 
- 	var grandTotal;
- 	if(totalAmount) { 	
- 		grandTotal = Number($("#totalAmount").val()) - Number($("#discount").val());
- 		grandTotal = grandTotal.toFixed(2);
+ 	var grand_total;
+ 	if(total_amount) {
+ 		grand_total = Number($("#total_amount").val()) - Number($("#discount").val());
+ 		grand_total = grand_total.toFixed(2);
 
- 		$("#grandTotal").val(grandTotal);
- 		$("#grandTotalValue").val(grandTotal);
+ 		$("#grand_total").val(grand_total);
+ 		$("#grandTotalValue").val(grand_total);
  	} else {
  	}
 
@@ -619,23 +618,23 @@ function discountFunc() {
 
  	var dueAmount; 	
  	if(paid) {
- 		dueAmount = Number($("#grandTotal").val()) - Number($("#paid").val());
+ 		dueAmount = Number($("#grand_total").val()) - Number($("#paid").val());
  		dueAmount = dueAmount.toFixed(2);
 
  		$("#due").val(dueAmount);
  		$("#dueValue").val(dueAmount);
  	} else {
- 		$("#due").val($("#grandTotal").val());
- 		$("#dueValue").val($("#grandTotal").val());
+ 		$("#due").val($("#grand_total").val());
+ 		$("#dueValue").val($("#grand_total").val());
  	}
 
 } // /discount function
 
 function paidAmount() {
-	var grandTotal = $("#grandTotal").val();
+	var grand_total = $("#grand_total").val();
 
-	if(grandTotal) {
-		var dueAmount = Number($("#grandTotal").val()) - Number($("#paid").val());
+	if(grand_total) {
+		var dueAmount = Number($("#grand_total").val()) - Number($("#paid").val());
 		dueAmount = dueAmount.toFixed(2);
 		$("#due").val(dueAmount);
 		$("#dueValue").val(dueAmount);
@@ -733,12 +732,12 @@ function paymentOrder(orderId = null) {
 
 				var paidAmount = response.order[9] 
 				var dueAmount = response.order[10];							
-				var grandTotal = response.order[8];
+				var grand_total = response.order[8];
 
 				// update payment
 				$("#updatePaymentOrderBtn").unbind('click').bind('click', function() {
 					var payAmount = $("#payAmount").val();
-					var paymentType = $("#paymentType").val();
+					var payment_type = $("#payment_type").val();
 					var paymentStatus = $("#paymentStatus").val();
 
 					if(payAmount == "") {
@@ -748,11 +747,11 @@ function paymentOrder(orderId = null) {
 						$("#payAmount").closest('.form-group').addClass('has-success');
 					}
 
-					if(paymentType == "") {
-						$("#paymentType").after('<p class="text-danger">The Pay Amount field is required</p>');
-						$("#paymentType").closest('.form-group').addClass('has-error');
+					if(payment_type == "") {
+						$("#payment_type").after('<p class="text-danger">The Pay Amount field is required</p>');
+						$("#payment_type").closest('.form-group').addClass('has-error');
 					} else {
-						$("#paymentType").closest('.form-group').addClass('has-success');
+						$("#payment_type").closest('.form-group').addClass('has-success');
 					}
 
 					if(paymentStatus == "") {
@@ -770,10 +769,10 @@ function paymentOrder(orderId = null) {
 							data: {
 								orderId: orderId,
 								payAmount: payAmount,
-								paymentType: paymentType,
+								payment_type: paymentType,
 								paymentStatus: paymentStatus,
 								paidAmount: paidAmount,
-								grandTotal: grandTotal
+								grand_total: grand_total
 							},
 							dataType: 'json',
 							success:function(response) {

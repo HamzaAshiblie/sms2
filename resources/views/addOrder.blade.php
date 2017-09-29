@@ -3,7 +3,7 @@
 @section('content')
 
     <ol class="breadcrumb">
-        <li><a href="{{ route('home') }}">Home</a></li>
+        <li><a href="{{ route('home') }}">الرئيسية</a></li>
         <li>الطلبات</li>
         <li class="active">
             إضافة طلب
@@ -27,13 +27,13 @@
             <form class="form-horizontal" method="POST" action="{{ route('createOrder') }}" id="createOrderForm">
 
                 <div class="form-group">
-                    <label for="orderDate" class="col-sm-2 control-label">التاريخ</label>
+                    <label for="order_date" class="col-sm-2 control-label">date التاريخ</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="orderDate" name="order_date" value="{{ date('Y-m-d') }}" autocomplete="off" />
+                        <input type="text" class="form-control" id="order_date" name="order_date" value="{{ date('Y-m-d') }}" autocomplete="off" />
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
-                    <label for="clientName" class="col-sm-2 control-label">اسم العميل</label>
+                    <label for="clientName" class="col-sm-2 control-label">client name اسم العميل</label>
                     <div class="col-sm-10">
                         <select name="client_id" id="clientName" class="form-control">
                             <option value="">اختر</option>
@@ -47,10 +47,10 @@
             <table class="table" id="productTable">
                 <thead>
                 <tr>
-                    <th style="width:40%;">المنتج</th>
-                    <th style="width:20%;">السعر</th>
-                    <th style="width:15%;">الكمية</th>
-                    <th style="width:15%;">المجموع</th>
+                    <th style="width:40%;">product المنتج</th>
+                    <th style="width:20%;">السعرprice</th>
+                    <th style="width:15%;">الكميةquntity</th>
+                    <th style="width:15%;">المجموعtotal</th>
                     <th style="width:10%;"></th>
                 </tr>
                 </thead>
@@ -62,7 +62,7 @@
                     <td style="margin-left:20px;">
                         <div class="form-group">
 
-                            <select class="form-control" name="productName[]" id="productName<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)" >
+                            <select class="form-control" name="product_name[]" id="product_name<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)" >
                                 <option value="">~~إختر~~</option>
                                 @foreach($products as $product)
                                 <option value='{{ $product->id }}' id='changeProduct{{ $product->id }}'>{{ $product->product_name }}</option>
@@ -76,7 +76,7 @@
                     </td>
                     <td style="padding-left:20px;">
                         <div class="form-group">
-                            <input type="text" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
+                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
                         </div>
                     </td>
                     <td style="padding-left:20px;">
@@ -96,6 +96,7 @@
             </table>
 
             <div class="col-md-6">
+
                 <div class="form-group" style="display: none">
                     <label for="subTotal" class="col-sm-3 control-label">المجموع الكلي</label>
                     <div class="col-sm-9">
@@ -111,9 +112,9 @@
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
-                    <label for="totalAmount" class="col-sm-3 control-label">المجموع الكلي</label>
+                    <label for="total_amount" class="col-sm-3 control-label">المجموع الكلي</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="totalAmount" name="total_amount"/>
+                        <input type="text" class="form-control" id="total_amount" name="total_amount"/>
                         <input type="hidden" class="form-control" id="totalAmountValue" name="totalAmountValue" />
                     </div>
                 </div> <!--/form-group-->
@@ -124,9 +125,9 @@
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
-                    <label for="grandTotal" class="col-sm-3 control-label">المجموع النهائي</label>
+                    <label for="grand_total" class="col-sm-3 control-label">المجموع النهائي</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="grandTotal" name="grand_total" />
+                        <input type="text" class="form-control" id="grand_total" name="grand_total" />
                         <input type="hidden" class="form-control" id="grandTotalValue" name="grandTotalValue" />
                     </div>
                 </div> <!--/form-group-->
@@ -146,21 +147,11 @@
                         <input type="hidden" class="form-control" id="dueValue" name="dueValue" />
                     </div>
                 </div> <!--/form-group-->
-                <div class="form-group" style="display: none">
-                    <label for="clientContact" class="col-sm-3 control-label">Payment Type</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" name="paymentType" id="paymentType">
-                            <option value="">~~SELECT~~</option>
-                            <option value="1">Cheque</option>
-                            <option value="2">Cash</option>
-                            <option value="3">Credit Card</option>
-                        </select>
-                    </div>
-                </div> <!--/form-group-->
+
                 <div class="form-group">
                     <label for="clientContact" class="col-sm-3 control-label">طريقة الدفع</label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="payment_type" id="paymentType">
+                        <select class="form-control" name="payment_type" id="payment_type">
                             <option value="">~~اختر~~</option>
                             <option value="آجل">آجل</option>
                             <option value="نفدي">نفدي</option>
@@ -180,13 +171,18 @@
                     <input type="hidden" name="_token" value="{{ Session::token() }}">
                 </div>
             </div>
-        </form>
+
+            </form>
+            <div id="success-order"></div>
     </div> <!--/panel-->
 </div> <!--/panel-->
 <script>
     var token = '{{ Session::token() }}';
     var urlGetFetchProduct = '{{ route('fetchProductData') }}';
     var urlFetchSelectedProduct = '{{ route('fetchSelectedProduct') }}';
+    var urlAddOrder = '{{ route('createOrder') }}';
+    var urlOrder = '{{ route('addOrder') }}';
+
 
 </script>
 

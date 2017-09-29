@@ -69,7 +69,9 @@
         <div class="panel panel-default">
             <div class="panel-heading"> <i class="glyphicon glyphicon-calendar"></i>التقويم</div>
             <div class="panel-body">
-                <div id="calendar"></div>
+                {!! $calendar->calendar() !!}
+
+                {!! $calendar->script() !!}
             </div>
         </div>
 

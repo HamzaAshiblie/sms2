@@ -5,11 +5,43 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+use Calendar;
+
+use App\Event;
 class UserController extends Controller
 {
     public function getDashboard()
     {
-        return view('dashboard');
+        $events = [];
+
+        $data = Event::all();
+
+        if($data->count()){
+
+            foreach ($data as $key => $value) {
+
+                $events[] = Calendar::event(
+
+                    $value->title,
+
+                    true,
+
+                    new \DateTime($value->start_date),
+
+                    new \DateTime($value->end_date.' +1 day')
+
+                );
+
+            }
+
+        }
+
+        $calendar = Calendar::addEvents($events);
+        return view('dashboard', compact('calendar'));
+    }
+    public function getAccount()
+    {
+        return view('account',['user'=> Auth::user()]);
     }
     public function postSignUp(Request $request)
     {

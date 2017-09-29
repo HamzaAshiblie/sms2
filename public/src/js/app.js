@@ -146,7 +146,8 @@ $('#add_product_modal_save').on('click', function () {
         }
     }).done(function () {
         $('#addProductsModal').modal('hide');
-        $(location).attr('href',urlGetProduct);
+        $('#datatable').ajax.reload(null, true);
+        //$(location).attr('href',urlGetProduct);
     });
 
 
@@ -208,3 +209,94 @@ $('#delete-products-btn').on('click', function () {
     $(location).attr('href',urlGetProduct);
 });
 
+//////////////////////////////////////ORDERS/////////////////////////////////////////////////////////////////////////
+
+$('#createOrderForm').on('submit', function(e) {
+
+    e.preventDefault();
+
+    /*          NOT WROKING !!!!!!!!!
+     $('input[name^="product_name"]').each(function() {
+     console.log($(this).val());
+     });
+
+     */
+
+    var productNameData = [];
+    var quantityData1 = [];
+
+    var inps = document.getElementsByName('product_name[]');
+    var inpsQ = document.getElementsByName('product_quantity[]');
+    for (var i = 0; i <inps.length; i++) {
+        var inp = inps[i];
+        var inpQ = inpsQ[i];
+        productNameData.push(inp.value);
+        quantityData1.push(inpQ.value);
+    }
+    var quantityData = [];
+    var inpsq = document.getElementsByName('product_quantity[]');
+    for (var iq = 0; iq <inpsq.length; iq++) {
+        var inpq = inpsq[iq];
+        quantityData.push(inpq.value);
+    }
+
+    console.log(productNameData);
+    console.log(quantityData);
+    console.log(quantityData1);
+
+
+    $.ajax({
+        type: "POST",
+        url: urlAddOrder,
+        data:{
+            order_date:   $('#order_date').val(),
+            client_id:    $('#clientName').val(),
+            product_name: productNameData,
+            product_quantity:     quantityData,
+            total_amount: $('#total_amount').val(),
+            discount:     $('#discount').val(),
+            grand_total:  $('#grand_total').val(),
+            paid:         $('#paid').val(),
+            due:          $('#due').val(),
+            payment_type: $('#payment_type').val(),
+            _token: token},
+        success: function(data) {
+            $("#createOrderForm")[0].reset();
+            console.log('success');
+            console.log(data);
+            // create order button
+            $("#success-order").html('<div class="alert alert-success"> ' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تمت تسجيل الطلب <br /> <br /> <a type="button" onclick="" class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
+
+                '</div>');
+
+            $("html, body, div.panel, div.panel-body").animate({scrollTop: '0px'}, 100);
+
+            // disable the modal footer button
+            $(".submitButtonFooter").addClass('div-hide');
+            // remove the product row
+            //$(".removeProductRowBtn").addClass('div-hide');
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+        console.log('Text Status:');
+        console.log(textStatus);
+        console.log('Error Thrown:');
+        console.log(errorThrown);
+        console.log('jqXHR:');
+        console.log(jqXHR.responseText);
+        var responseError = JSON.parse(jqXHR.responseText);
+
+        $.each(responseError, function(k, v) {
+            console.log('Key:');
+            console.log(k);
+            console.log('Value:');
+            console.log(v[0]);
+            //$('input#' + k).closest('div').addClass('has-error');
+            //$('div#error_edit-'+ k +' h6').html(v[0]);
+        });
+    });
+
+});

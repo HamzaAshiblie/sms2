@@ -22,12 +22,14 @@
                     <button class="btn btn-default" id="add-client-modal-btn"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة عميل </button>
                 </div> <!-- /div-action -->
 
-                <table id="datatable" class="display" width="100%"></table>
-                <table class="table">
+
+                <table class="table" id="datatable">
                     <thead>
                     <tr>
                         <th  style="text-align: right">العميل</th>
                         <th  style="text-align: right">الشركة</th>
+                        <th  style="text-align: right">البريد الالكتروني</th>
+                        <th  style="text-align: right">الهاتف</th>
                         <th style="width:15%; text-align: right">التحكم</th>
                     </tr>
                     </thead>
@@ -36,8 +38,8 @@
                         <tr>
                             <td>{{ $client->client_name }}</td>
                             <td>{{ $client->client_company }}</td>
-                            <td style="display: none">{{ $client->client_email }}</td>
-                            <td style="display: none">{{ $client->client_phone }}</td>
+                            <td>{{ $client->client_email }}</td>
+                            <td>{{ $client->client_phone }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -220,19 +222,6 @@
     var urlEditClient = '{{ route('client.edit')}}';
     var urlDeleteClient = '{{ route('client.delete')}}';
 
-    $(document).ready(function() {
-        $('#datatable').DataTable( {
-            data: clients,
-            columns: [
-                { title: "Name" },
-                { title: "Position" },
-                { title: "Office" },
-                { title: "Extn." },
-                { title: "Start date" },
-                { title: "Salary" }
-            ]
-        } );
-    } );
-
 </script>
+
 @endsection

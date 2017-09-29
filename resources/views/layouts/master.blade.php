@@ -13,7 +13,10 @@
     <link href="{{URL::to('src/css/rtl.css')}}" rel="stylesheet">
 </head>
 <body>
+@section('header')
     @include('includes.header')
+@show
+
     <div class="container">
         @yield('content')
     </div>
@@ -25,31 +28,30 @@
     <script  src="{{URL::to('src/js/app.js')}}"> </script>
     <!-- DataTables -->
     <script src="{{URL::to('src/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{URL::to('https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::to('src/plugins/datatables.net/1.10.15/js/dataTables.bootstrap.min.js')}}"></script>
 
     <script>
-
-        var datax = [
-            [ "1", "حمزه", "فرد", "05050505"],
-            [ "1", "حمزه", "فرد", "05050505"],
-            [ "1", "حمزه", "فرد", "05050505"],
-            [ "1", "حمزه", "فرد", "05050505"],
-            [ "1", "حمزه", "فرد", "05050505"]
-        ];
-
-
         $(document).ready(function() {
-            $('#example').DataTable( {
-                data: datax,
-                columns: [
-                    { title: "Id" },
-                    { title: "Name" },
-                    { title: "Company" },
-                    { title: "Phone" }
-                ]
+            $('#datatable').DataTable({
+                "language": {
+                    "sProcessing":   "جارٍ التحميل...",
+                    "sLengthMenu":   "أظهر _MENU_ مدخلات",
+                    "sZeroRecords":  "لم يعثر على أية سجلات",
+                    "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "ابحث:",
+                    "sUrl":          "",
+                    "oPaginate": {
+                        "sFirst":    "الأول",
+                        "sPrevious": "السابق",
+                        "sNext":     "التالي",
+                        "sLast":     "الأخير"
+                    }
+                }
             } );
         } );
-
     </script>
 
 

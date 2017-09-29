@@ -14,7 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-
+Route::get('/account',[
+    'uses'=>'UserController@getAccount',
+    'as' => 'account'
+]);
 Route::post('/signup',[
     'uses' => 'UserController@postSignUp',
     'as' => 'signup'
@@ -103,3 +106,10 @@ Route::post('/fetchSelectedProduct', [
    'uses' => 'OrderController@fetchSelectedProduct',
     'as' => 'fetchSelectedProduct'
 ]);
+Route::get('/manageOrders',[
+    'uses' => 'OrderController@getOrder',
+    'as' => 'manageOrders',
+    'middleware' => 'auth'
+]);
+/////////////////////////////////////////CALENDER///////////////////////////////////////////////////
+//Route::get('dashboard', 'EventController@index');

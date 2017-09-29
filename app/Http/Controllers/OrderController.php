@@ -13,6 +13,29 @@ use Illuminate\Support\Facades\Input;
 
 class OrderController extends Controller
 {
+    public function getOrder()
+    {
+        $arr = array();
+        $orders = Order::all()->toArray();
+        if($orders){
+            //$orders['client_name'] = '';
+            foreach ($orders as $order) {
+                $client=Client::find($order['client_id']);
+                $new_order = array();
+                if($client && $order['client_id']>0){
+                    $client_name = array('client_name'=>$client->client_name);
+                    //$new_order = array_merge($order,$client_name);
+                }else{
+                    $client_name = array('client_name'=>'NO BODY');
+                }
+                $new_order = array_merge($order,$client_name);
+                array_push($arr,$new_order);
+
+            }
+        }
+        $orders = $arr;
+        return view('manageOrders',['orders'=>$orders]);
+    }
     public function getAddOrder()
     {
         $clients = Client::all();
@@ -23,16 +46,35 @@ class OrderController extends Controller
 
     public function createOrder(Request $request)
     {
+/*
+        $this->validate($request, [
+            'product_name'=> 'required:products',
+            'product_quantity'=>'required',
+            'quantity'=>'required',
+            'product_unit'=>'required:products',
+            'unit_price'=>'required:products',
+            'order_date'=>'required:orders',
+            'client_id'=>'required',
+            'total_amount'=>'required:orders',
+            'grand_total'=>'required',
+            'paid'=>'required',
+            'payment_type'=>'required',
+            'due'=>'required',
+            'discount'=>'required'
+
+        ]);
+
+*/
         $order_date = $request['order_date'];
         $client_id = $request['client_id'];
-        $product_id = $request['productName'];
+        $product_id = $request['product_name'];
         $total_amount = $request['total_amount'];
         $discount = $request['discount'];
         $grand_total = $request['grand_total'];
         $paid = $request['paid'];
         $due = $request['due'];
         $payment_type = $request['payment_type'];
-        $quantity = $request['quantity'];
+        //$quantity = $request['quantity'];
         $rate = $request['rateValue'];
         $total = $request['total'];
 
@@ -45,22 +87,31 @@ class OrderController extends Controller
         $order->paid = $paid;
         $order->due = $due;
         $order->payment_type = $payment_type;
-       if ($order->save()){
-           $input = Input::all();
-           $condition = $input['productName'];
-           foreach ($condition as $key => $condition) {
+        $updated_quantity = 0;
+
+        if ($order->save()){
+           //$input = Input::all();
+            $product_ids = $request['product_name'];
+            $quantities = $request['product_quantity'];
+            foreach ($product_ids as $key => $product_id) {
+
+               $product = Product::find($product_id);
+               $product->product_quantity = $product->product_quantity - $quantities[$key];
+               $product->save();
+
                $order_id =  $order->id;
                $order_item = new Order_item();
-               $order_item->product_id = $input['productName'][$key];
+               $order_item->product_id = $product_id;
                $order_item->order_id = $order_id;
-               $order_item->quantity = $input['quantity'][$key];
-               $order_item->rate = $input['rateValue'][$key];
-               $order_item->total = $input['totalValue'][$key];
+               $order_item->quantity = $quantities[$key];
+               //$order_item->rate = $input['rateValue'][$key];
+               //$order_item->total = $input['totalValue'][$key];
                $order_item->save();
+
            }
        }
 
-        return redirect()->back()->with(['message' => $order->id]);
+        return response()->json($order_item,200);
     }
     public function fetchProductData()
     {

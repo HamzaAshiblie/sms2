@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    public function Orders()
-    {
-        $this->hasMany('App\Order');
-    }
+    public function orders()
+{
+    $this->hasMany('App\Order');
+}
 }

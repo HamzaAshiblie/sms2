@@ -11097,7 +11097,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "السابق"
 			},
 	
 			/**
@@ -11429,7 +11429,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sUrl": "",
+			"sUrl": "http://www.cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json",
 	
 	
 			/**
