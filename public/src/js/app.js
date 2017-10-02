@@ -210,12 +210,12 @@ $('#delete-products-btn').on('click', function () {
 });
 
 //////////////////////////////////////ORDERS/////////////////////////////////////////////////////////////////////////
-
+var id = null;
 $('#createOrderForm').on('submit', function(e) {
 
     e.preventDefault();
 
-    /*          NOT WROKING !!!!!!!!!
+    /* NOT WROKING !!!!!!!!!
      $('input[name^="product_name"]').each(function() {
      console.log($(this).val());
      });
@@ -250,7 +250,7 @@ $('#createOrderForm').on('submit', function(e) {
         url: urlAddOrder,
         data:{
             order_date:   $('#order_date').val(),
-            client_id:    $('#clientName').val(),
+            client_id:    $('#client_id').val(),
             product_name: productNameData,
             product_quantity:     quantityData,
             total_amount: $('#total_amount').val(),
@@ -265,9 +265,10 @@ $('#createOrderForm').on('submit', function(e) {
             console.log('success');
             console.log(data);
             // create order button
+            id = data;
             $("#success-order").html('<div class="alert alert-success"> ' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تمت تسجيل الطلب <br /> <br /> <a type="button" onclick="" class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" onclick="printOrder('+id+')" class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
                 '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
 
                 '</div>');
@@ -289,14 +290,54 @@ $('#createOrderForm').on('submit', function(e) {
         console.log(jqXHR.responseText);
         var responseError = JSON.parse(jqXHR.responseText);
 
+        var product_name = document.getElementsByName('product_name[]');
+        var product_quantity = document.getElementsByName('product_quantity[]');
+        $(".clean_product_name").html('');
+        $(".clean_product_quantity").html('');
+        $(".clean_product_name").closest('.form-group').removeClass('has-error');
+        $(".clean_product_quantity").closest('.form-group').removeClass('has-error');
+        for (var x = 0; x < product_name.length; x++) {
+            var product_nameId = product_name[x].id;
+            if(product_name[x].value == ''){
+                $("#"+product_nameId+"").after('<p class="clean_product_name text-danger"> الرجاء اختيار منتج </p>');
+                $("#"+product_nameId+"").closest('.form-group').addClass('has-error');
+            }
+            console.log('IDDDD: '+ product_nameId);
+        }
+        for (var x = 0; x < product_quantity.length; x++) {
+            var product_quantityId = product_quantity[x].id;
+            if(product_quantity[x].value == ''){
+                $("#"+product_quantityId+"").after('<p class="clean_product_quantity text-danger"> حقل الكمية مطلوب </p>');
+                $("#"+product_quantityId+"").closest('.form-group').addClass('has-error');
+            }
+        }
         $.each(responseError, function(k, v) {
             console.log('Key:');
             console.log(k);
             console.log('Value:');
             console.log(v[0]);
-            //$('input#' + k).closest('div').addClass('has-error');
+            $('input#' + k).closest('div').addClass('has-error');
+            $('select#' + k).closest('div').addClass('has-error');
             //$('div#error_edit-'+ k +' h6').html(v[0]);
         });
     });
 
 });
+
+function printOrder(id) {
+    console.log('ORDER ID:'+id);
+    if(id) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            method:'POST',
+            url:urlPrintOrder,
+            data:{order_id: id, _token: token}
+        })
+    }
+}
+
+

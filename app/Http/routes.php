@@ -111,5 +111,10 @@ Route::get('/manageOrders',[
     'as' => 'manageOrders',
     'middleware' => 'auth'
 ]);
+Route::post('/printOrder',[
+    'uses' => 'OrderController@printOrder',
+    'as' => 'printOrder',
+    'middleware' => 'auth'
+]);
 /////////////////////////////////////////CALENDER///////////////////////////////////////////////////
-//Route::get('dashboard', 'EventController@index');
+Route::get('events', 'EventController@index');

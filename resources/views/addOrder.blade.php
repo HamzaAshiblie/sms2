@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label for="clientName" class="col-sm-2 control-label">client name اسم العميل</label>
                     <div class="col-sm-10">
-                        <select name="client_id" id="clientName" class="form-control">
+                        <select name="client_id" id="client_id" class="form-control">
                             <option value="">اختر</option>
                             @foreach($clients as $client)
                                 <option value="{{ $client->id }}">{{ $client->client_name }}</option>
@@ -50,6 +50,7 @@
                     <th style="width:40%;">product المنتج</th>
                     <th style="width:20%;">السعرprice</th>
                     <th style="width:15%;">الكميةquntity</th>
+                    <th style="width:15%;">المتبقي</th>
                     <th style="width:15%;">المجموعtotal</th>
                     <th style="width:10%;"></th>
                 </tr>
@@ -71,13 +72,15 @@
                         </div>
                     </td>
                     <td style="padding-left:20px;">
-                        <input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />
-                        <input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
+                        <input type="text" name="unit_price[]" id="unit_price<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />
                     </td>
                     <td style="padding-left:20px;">
                         <div class="form-group">
-                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
+                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onchange="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
                         </div>
+                    </td>
+                    <td style="padding-left:20px;">
+                        <input type="text" name="total_quantity" id="total_quantity<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
                     </td>
                     <td style="padding-left:20px;">
                         <input type="text" name="total[]" id="total<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
@@ -171,7 +174,7 @@
                     <input type="hidden" name="_token" value="{{ Session::token() }}">
                 </div>
             </div>
-
+<div class="clearfix"></div>
             </form>
             <div id="success-order"></div>
     </div> <!--/panel-->
@@ -182,6 +185,7 @@
     var urlFetchSelectedProduct = '{{ route('fetchSelectedProduct') }}';
     var urlAddOrder = '{{ route('createOrder') }}';
     var urlOrder = '{{ route('addOrder') }}';
+    var urlPrintOrder = '{{ route('printOrder') }}';
 
 
 </script>

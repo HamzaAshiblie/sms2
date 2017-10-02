@@ -8,10 +8,10 @@ class Order extends Model
 {
     public function client()
     {
-        $this->belongsTo('App\Client');
+      return  $this->belongsTo('App\Client');
     }
     public function order_items()
     {
-        $this->hasMany('App\Order_item');
+      return  $this->hasMany('App\Order_item');
     }
 }

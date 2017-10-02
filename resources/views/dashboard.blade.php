@@ -67,12 +67,7 @@
 
     <div class="col-md-8">
         <div class="panel panel-default">
-            <div class="panel-heading"> <i class="glyphicon glyphicon-calendar"></i>التقويم</div>
-            <div class="panel-body">
-                {!! $calendar->calendar() !!}
-
-                {!! $calendar->script() !!}
-            </div>
+            @include('includes.calender')
         </div>
 
     </div>

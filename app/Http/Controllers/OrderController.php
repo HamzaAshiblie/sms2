@@ -15,6 +15,7 @@ class OrderController extends Controller
 {
     public function getOrder()
     {
+        /*
         $arr = array();
         $orders = Order::all()->toArray();
         if($orders){
@@ -35,6 +36,12 @@ class OrderController extends Controller
         }
         $orders = $arr;
         return view('manageOrders',['orders'=>$orders]);
+        */
+
+        $order_item = Order_item::all()->groupBy('order_id');
+
+        $orders = Order::all();
+        return view('manageOrders',['orders'=>$orders, 'order_items'=>$order_item]);
     }
     public function getAddOrder()
     {
@@ -46,13 +53,11 @@ class OrderController extends Controller
 
     public function createOrder(Request $request)
     {
-/*
+
         $this->validate($request, [
             'product_name'=> 'required:products',
             'product_quantity'=>'required',
-            'quantity'=>'required',
-            'product_unit'=>'required:products',
-            'unit_price'=>'required:products',
+            //'unit_price'=>'required:products',
             'order_date'=>'required:orders',
             'client_id'=>'required',
             'total_amount'=>'required:orders',
@@ -64,7 +69,7 @@ class OrderController extends Controller
 
         ]);
 
-*/
+
         $order_date = $request['order_date'];
         $client_id = $request['client_id'];
         $product_id = $request['product_name'];
@@ -111,7 +116,7 @@ class OrderController extends Controller
            }
        }
 
-        return response()->json($order_item,200);
+        return response()->json($order_id,200);
     }
     public function fetchProductData()
     {
@@ -123,5 +128,10 @@ class OrderController extends Controller
     {
         $product = Product::find($request['productId']);
         return $product;
+    }
+    public function printOrder(Request $request)
+    {
+        $order = Order::find($request['order_id']);
+        return view('printOrder',['order' => $order]);
     }
 }

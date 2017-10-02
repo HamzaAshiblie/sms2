@@ -38,3 +38,6 @@ nav.navbar:hover {
     border-radius:1px;
     width: 98%;
 }
+.div-hide{
+    display: none;
+}
