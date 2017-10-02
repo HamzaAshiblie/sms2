@@ -26,11 +26,13 @@
 
 
    <tr>
+       @foreach($order_items as $order_item)
         <th>#</th>
-        <th>{{$order->product_name}}</th>
-        <th>{{$order->unit_price}}</th>
-        <th>{{$order->product_quantity}}</th>
-        <th>{{$order->total_amount}}</th>
+        <th>{{$order_item->product->product_name}}</th>
+        <th>{{$order_item->rate}}</th>
+        <th>{{$order_item->quantity}}</th>
+        <th>{{$order_item->total}}</th>
+       @endforeach
     </tr>
    <tr>
         <th></th>
