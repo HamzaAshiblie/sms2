@@ -185,7 +185,7 @@
     var urlFetchSelectedProduct = '{{ route('fetchSelectedProduct') }}';
     var urlAddOrder = '{{ route('createOrder') }}';
     var urlOrder = '{{ route('addOrder') }}';
-    var urlPrintOrder = '{{ route('printOrder') }}';
+
 
 
 </script>

@@ -129,9 +129,9 @@ class OrderController extends Controller
         $product = Product::find($request['productId']);
         return $product;
     }
-    public function printOrder(Request $request)
+    public function printOrder(Request $request, $order_id)
     {
-        $order = Order::find($request['order_id']);
-        return view('printOrder',['order' => $order]);
+        $order = Order::where('id', $order_id)->first();
+        return view('includes.printOrder',['order' => $order]);
     }
 }

@@ -4,9 +4,9 @@
         <th colspan="5">
 
             <center>
-                Order Date : {{$order_date}}
-                <center>Client Name : {{$client_name}}</center>
-                Contact : {{$client_phone}}
+                Order Date : {{$order->order_date}}
+                <center>Client Name : {{$order->client->client_name}}</center>
+                Contact : {{$order->client->client_phone}}
             </center>
         </th>
 
@@ -22,17 +22,15 @@
         <th>Rate</th>
         <th>Quantity</th>
         <th>Total</th>
-    </tr>';
+    </tr>
 
-    $x = 1;
-    while($row = $orderItemResult->fetch_array()) {
 
    <tr>
-        <th>{{$x}}</th>
-        <th>{{$product_name}}</th>
-        <th>{{$unit_price}}</th>
-        <th>{{$product_quantity}}</th>
-        <th>{{$total_amount}}</th>
+        <th>#</th>
+        <th>{{$order->product_name}}</th>
+        <th>{{$order->unit_price}}</th>
+        <th>{{$order->product_quantity}}</th>
+        <th>{{$order->total_amount}}</th>
     </tr>
    <tr>
         <th></th>
@@ -54,27 +52,27 @@
 
     <tr>
         <th>Total Amount</th>
-        <th>{{$total_amount}}</th>
+        <th>{{$order->total_amount}}</th>
     </tr>
 
     <tr>
         <th>Discount</th>
-        <th>{{$discount}}</th>
+        <th>{{$order->discount}}</th>
     </tr>
 
     <tr>
         <th>Grand Total</th>
-        <th>{{$grand_total}}</th>
+        <th>{{$order->grand_total}}</th>
     </tr>
 
     <tr>
         <th>Paid Amount</th>
-        <th>{{$paid}}</th>
+        <th>{{$order->paid}}</th>
     </tr>
 
     <tr>
         <th>Due Amount</th>
-        <th>{{$due}}</th>
+        <th>{{$order->due}}</th>
     </tr>
     </tbody>
 </table>

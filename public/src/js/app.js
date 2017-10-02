@@ -268,7 +268,7 @@ $('#createOrderForm').on('submit', function(e) {
             id = data;
             $("#success-order").html('<div class="alert alert-success"> ' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" onclick="printOrder('+id+')" class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" href="/printOrder/'+id+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
                 '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
 
                 '</div>');
@@ -324,20 +324,25 @@ $('#createOrderForm').on('submit', function(e) {
 
 });
 
-function printOrder(id) {
-    console.log('ORDER ID:'+id);
+/*function printOrder(id) {
+
     if(id) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        console.log('ORDER ID:'+id);
         $.ajax({
             method:'POST',
             url:urlPrintOrder,
-            data:{order_id: id, _token: token}
+            dataType: 'json',
+            data:{order_id: id, _token: token},
+            success:function(data) {
+                console.log('yes');
+            }
         })
     }
 }
-
+*/
 
