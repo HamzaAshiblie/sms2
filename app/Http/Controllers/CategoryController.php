@@ -32,10 +32,7 @@ class CategoryController extends Controller
     }
     public function editCategory( Request $request)
     {
-        $category = Category::where('id',$request['id'])->get();
-        if ($category){
-            return response()->json($category,500);
-        }
+        $category = Category::where('id',$request['id'])->first();
         $category->category_name = $request['category_name'];
         $category->category_description = $request['category_description'];
         $category->category_quantity = 0;
