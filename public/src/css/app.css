@@ -41,3 +41,6 @@ nav.navbar:hover {
 .div-hide{
     display: none;
 }
+.editErrorRed{
+    color: red;
+}

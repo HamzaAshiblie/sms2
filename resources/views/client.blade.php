@@ -59,15 +59,6 @@
                 </table>
                 <!-- /table -->
 
-                <!--PAGINATION-->
-                <div class="">
-
-                    {{ $clients->links() }}
-
-                </div>
-                <!--/PAGINATION-->
-
-
             </div> <!-- /panel-body -->
         </div> <!-- /panel -->
     </div> <!-- /col-md-12 -->
@@ -79,7 +70,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="addClientForm">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-plus"></i> إضافة عميل</h4>
@@ -91,29 +82,33 @@
                         <div class="form-group">
                             <label for="client_name" class="col-sm-4 control-label">اسم العميل </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_add-client_name">
                                 <input type="text" class="form-control" id="client_name" placeholder="اسم العميل" name="client_name" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
                             <label for="client_company" class="col-sm-4 control-label">الشركة </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_add-client_company">
                                 <input type="text" class="form-control" id="client_company" placeholder="الشركة" name="client_company" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
                             <label for="client_email" class="col-sm-4 control-label">البريد الإلكتروني </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_add-client_email">
                                 <input type="text" class="form-control" id="client_email" placeholder="البريد الإلكتروني" name="client_email" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
                             <label for="client_phone" class="col-sm-4 control-label">الهاتف </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_add-client_phone">
                                 <input type="text" class="form-control" id="client_phone" placeholder="الهاتف" name="client_phone" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                     </div> <!-- /modal-body -->
@@ -146,24 +141,27 @@
 
                     <div class="edit-clients-result">
                         <div class="form-group">
-                            <label for="edit-client-name" class="col-sm-4 control-label">اسم العميل: </label>
+                            <label for="edit-client_name" class="col-sm-4 control-label">اسم العميل: </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_edit-client_name">
                                 <input type="text" class="form-control" id="edit-client_name" placeholder="اسم العميل" name="edit-client_name" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
                             <label for="edit-client_company" class="col-sm-4 control-label">الشركة: </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_edit-client_company">
                                 <input type="text" class="form-control" id="edit-client_company" placeholder="الشركة" name="edit-client_company" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
                             <label for="edit-client_email" class="col-sm-4 control-label">البريد الإلكتروني: </label>
                             <label class="col-sm-1 control-label">: </label>
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" id="error_edit-client_email">
                                 <input type="text" class="form-control" id="edit-client_email" placeholder="البريد الإلكتروني" name="edit-client_email" autocomplete="off">
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
@@ -171,12 +169,12 @@
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_edit-client_phone">
                                 <input type="text" class="form-control" id="edit-client_phone" placeholder="الهاتف" name="edit-client_phone" autocomplete="off">
-                                <h6></h6>
+                                <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
 
                     </div>
-                    <!-- /edit brand result -->
+                    <!-- /edit client result -->
 
                 </div> <!-- /modal-body -->
 

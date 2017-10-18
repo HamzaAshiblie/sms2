@@ -112,5 +112,32 @@ Route::get('/manageOrders',[
     'middleware' => 'auth'
 ]);
 Route::get('/printOrder/{order_id}','OrderController@printOrder');
+/////////////////////////////////////////PAYMENTS///////////////////////////////////////////////////
+Route::post('/updatePayment', [
+    'uses' => 'OrderController@updateOrderPayment',
+    'as' => 'updatePayment'
+]);
+Route::post('/fetchOrderItems', [
+    'uses'  => 'OrderController@fetchOrderItems',
+    'as' => 'fetchOrderItems'
+]);
+/////////////////////////////////////////CATEGORY///////////////////////////////////////////////////
+Route::get('/category',[
+    'uses' => 'CategoryController@getCategory',
+    'as' => 'category',
+    'middleware'=> 'auth'
+]);
+Route::post('/createcategory',[
+    'uses' => 'CategoryController@createCategory',
+    'as' => 'category.create'
+]);
+Route::post('/category/edit',[
+    'uses' => 'CategoryController@editCategory',
+    'as' => 'category.edit',
+]);
+Route::post('/category/delete',[
+    'uses' => 'CategoryController@deleteCategory',
+    'as' => 'category.delete',
+]);
 /////////////////////////////////////////CALENDER///////////////////////////////////////////////////
 Route::get('events', 'EventController@index');

@@ -46,7 +46,7 @@ class OrderController extends Controller
     public function getAddOrder()
     {
         $clients = Client::all();
-        $products = Product::all();
+        $products = Product::where('product_quantity','>',0)->get();
         return view('addOrder',['clients' => $clients, 'products'=>$products]);
 
     }
@@ -55,9 +55,10 @@ class OrderController extends Controller
     {
 
         $this->validate($request, [
-            'product_name'=> 'required:products',
+            'product_name'=> 'required',
             'product_quantity'=>'required',
-            //'unit_price'=>'required:products',
+            'unit_price'=>'required',
+            'total'=>'required:products',
             'order_date'=>'required:orders',
             'client_id'=>'required',
             'total_amount'=>'required:orders',
@@ -80,8 +81,8 @@ class OrderController extends Controller
         $due = $request['due'];
         $payment_type = $request['payment_type'];
         //$quantity = $request['quantity'];
-        $rate = $request['rateValue'];
-        $total = $request['total'];
+        //$unit_price = $request['unit_price'];
+        //$total = $request['total'];
 
         $order = new Order();
         $order->order_date = $order_date;
@@ -98,6 +99,8 @@ class OrderController extends Controller
            //$input = Input::all();
             $product_ids = $request['product_name'];
             $quantities = $request['product_quantity'];
+            $unit_prices = $request['unit_price'];
+            $totals = $request['total'];
             foreach ($product_ids as $key => $product_id) {
 
                $product = Product::find($product_id);
@@ -109,8 +112,8 @@ class OrderController extends Controller
                $order_item->product_id = $product_id;
                $order_item->order_id = $order_id;
                $order_item->quantity = $quantities[$key];
-               //$order_item->rate = $input['rateValue'][$key];
-               //$order_item->total = $input['totalValue'][$key];
+               $order_item->rate = $unit_prices[$key];
+               $order_item->total = $totals[$key];
                $order_item->save();
 
            }
@@ -120,13 +123,17 @@ class OrderController extends Controller
     }
     public function fetchProductData()
     {
-            $product = Product::all(['id','product_name'])->toArray();
+            $product = Product::where('product_quantity','>',0)->get();
             return $product;
     }
 
     public function fetchSelectedProduct(Request $request)
     {
-        $product = Product::find($request['productId']);
+        //$product = Product::find($request['productId']);
+        //$product = Product::where([['id',$request['productId']],['product_quantity','>',0]])->get();
+        $product = Product::where([
+            ['id', '=', $request['productId']],
+            ['product_quantity', '>', 0]])->first();
         return $product;
     }
     public function printOrder(Request $request, $order_id)
@@ -134,5 +141,22 @@ class OrderController extends Controller
         $order = Order::where('id', $order_id)->first();
         $order_items = Order_item::where('order_id', $order_id)->get();
         return view('includes.printOrder',['order' => $order, 'order_items'=> $order_items]);
+    }
+    public function fetchOrderItems(Request $request)
+    {
+        $order_items = Order_item::where('order_id', $request['order_id'])->get();
+        return $order_items;
+    }
+    public function updateOrderPayment(Request $request)
+    {
+        $order = Order::where('id',$request['id'])->first();
+        if($order && $request['paid'] && $request['due'] && $request['payment_type']){
+            $order->paid = $request['paid'];
+            $order->due = $request['due'];
+            $order->payment_type = $request['payment_type'];
+            $order->update();
+
+        }
+        return response()->json($order,200);
     }
 }

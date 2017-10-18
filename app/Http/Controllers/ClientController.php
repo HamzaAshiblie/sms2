@@ -48,7 +48,7 @@ class ClientController extends Controller
         $this->validate($request, [
             'client_name'=> 'required:clients',
             'client_company'=>'required|max:120',
-            'client_email'=>'required|email',
+            'client_email'=>'required|unique:clients|email',
             'client_phone'=>'required|min:10'
         ]);
         $client = Client::where('id',$request['id'])->first();

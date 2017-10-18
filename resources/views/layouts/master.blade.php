@@ -8,7 +8,7 @@
     <link href="{{URL::to('src/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{URL::to('src/plugins/fullcalendar/fullcalendar.min.css')}}" rel="stylesheet">
     <link href="{{URL::to('src/plugins/fullcalendar/fullcalendar.print.css'),array('media' => 'print')}}" rel="stylesheet">
-    <link href="{{ URL::to('src/font-awesome/css/font-awesome.css') }}" rel='stylesheet' media='all' />
+    <link href="{{URL::to('src/font-awesome/css/font-awesome.css') }}" rel='stylesheet' media='all' />
     <link href="{{URL::to('src/css/app.css')}}" rel="stylesheet">
     <link href="{{URL::to('src/css/rtl.css')}}" rel="stylesheet">
 </head>
@@ -22,17 +22,18 @@
     </div>
     <link rel="stylesheet" href="{{URL::to('src/plugins/moment/moment.min.js')}}">
     <link rel="stylesheet" href="{{URL::to('src/plugins/fullcalendar/fullcalendar.min.js')}}">
-    <script  src="//code.jquery.com/jquery-2.2.4.js"> </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script  src="{{URL::to('src/js/jquery-2.2.4.js')}}"> </script>
+    <script  src="{{URL::to('src/js/bootstrap.min.js')}}"> </script>
 
     <script  src="{{URL::to('src/js/app.js')}}"> </script>
     <!-- DataTables -->
     <script src="{{URL::to('src/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{URL::to('src/plugins/datatables.net/1.10.15/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::to('src/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 
     <script>
+        var atable;
         $(document).ready(function() {
-            $('#datatable').DataTable({
+             atable = $('#datatable').DataTable({
                 "language": {
                     "sProcessing":   "جارٍ التحميل...",
                     "sLengthMenu":   "أظهر _MENU_ مدخلات",

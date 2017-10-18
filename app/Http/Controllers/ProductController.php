@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function getProduct(Request $request)
     {
-        $products = Product::paginate();
+        $products = Product::all();
         if($request['message']!=null){
             return view('product',['products'=> $products])->with('message');
         }else{

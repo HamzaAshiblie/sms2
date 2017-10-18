@@ -62,14 +62,6 @@
                     </table>
                     <!-- /table -->
 
-                    <!--PAGINATION-->
-                    <div class="">
-
-                        {{ $products->links() }}
-
-                    </div>
-                    <!--/PAGINATION-->
-
                 </div> <!-- /panel-body -->
             </div> <!-- /panel -->
         </div> <!-- /col-md-12 -->
@@ -81,7 +73,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="addProductForm">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-plus"></i> إضافة منتج</h4>

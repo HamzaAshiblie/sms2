@@ -21,6 +21,8 @@
 
                     <li id="nav-clients" class="{{ Request::is('client*') ? 'active' : '' }}"><a href="{{ route('client') }}"><i class="glyphicon glyphicon-th-list"></i>  العملاء</a></li>
 
+                    <li id="" class="{{ Request::is('category*') ? 'active' : '' }}"><a href="{{ route('category') }}"><i class="glyphicon glyphicon-th-list"></i>  الأصناف</a></li>
+
                     <li id="nav-clients" class="{{ Request::is('product*') ? 'active' : '' }}"><a href="{{ route('product') }}"><i class="glyphicon glyphicon-th-list"></i>  المنتجات</a></li>
 
                     <li class="dropdown {{ Request::is('addOrder*') ? 'active' : '' }}{{ Request::is('manageOrder*') ? 'active' : '' }}" id="navOrder">

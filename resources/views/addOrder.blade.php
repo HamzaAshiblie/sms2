@@ -47,11 +47,12 @@
             <table class="table" id="productTable">
                 <thead>
                 <tr>
+                    <th style="width:10%;">#number</th>
                     <th style="width:40%;">product المنتج</th>
-                    <th style="width:20%;">السعرprice</th>
-                    <th style="width:15%;">الكميةquntity</th>
-                    <th style="width:15%;">المتبقي</th>
-                    <th style="width:15%;">المجموعtotal</th>
+                    <th style="width:10%;">السعرprice</th>
+                    <th style="width:10%;">الكميةquntity</th>
+                    <th style="width:10%;">المتبقي</th>
+                    <th style="width:10%;">المجموعtotal</th>
                     <th style="width:10%;"></th>
                 </tr>
                 </thead>
@@ -60,6 +61,9 @@
                 $arrayNumber = 0;
                 for($x = 1; $x < 4; $x++) { ?>
                 <tr id="row<?php echo $x; ?>" class="<?php echo $arrayNumber; ?>">
+                    <td style="padding-left:20px;">
+                        <input type="text" name="product_id[]" id="product_id<?php echo $x; ?>" onkeyup="getProductDataWithId(<?php echo $x; ?>)" autocomplete="off" class="form-control" />
+                    </td>
                     <td style="margin-left:20px;">
                         <div class="form-group">
 
@@ -82,12 +86,11 @@
                     <td style="padding-left:20px;">
                         <input type="text" name="total_quantity" id="total_quantity<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
                     </td>
-                    <td style="padding-left:20px;">
+                    <td style="padding-left:1px;">
                         <input type="text" name="total[]" id="total<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
                         <input type="hidden" name="totalValue[]" id="totalValue<?php echo $x; ?>" autocomplete="off" class="form-control" />
                     </td>
                     <td>
-
                         <button class="btn btn-default removeProductRowBtn" type="button" id="removeProductRowBtn" onclick="removeProductRow(<?php echo $x; ?>)"><i class="glyphicon glyphicon-trash"></i></button>
                     </td>
                 </tr>
@@ -152,12 +155,12 @@
                 </div> <!--/form-group-->
 
                 <div class="form-group">
-                    <label for="clientContact" class="col-sm-3 control-label">طريقة الدفع</label>
+                    <label for="payment_type" class="col-sm-3 control-label">طريقة الدفع</label>
                     <div class="col-sm-9">
                         <select class="form-control" name="payment_type" id="payment_type">
                             <option value="">~~اختر~~</option>
                             <option value="آجل">آجل</option>
-                            <option value="نفدي">نفدي</option>
+                            <option value="نقدي">نقدي</option>
                         </select>
                     </div>
                 </div> <!--/form-group-->
@@ -185,13 +188,7 @@
     var urlFetchSelectedProduct = '{{ route('fetchSelectedProduct') }}';
     var urlAddOrder = '{{ route('createOrder') }}';
     var urlOrder = '{{ route('addOrder') }}';
-
-
-
 </script>
-
-
-<script src="{{URL::to('src/js/order.js')}}"></script>
 
 @endsection
 
