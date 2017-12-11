@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    إعدادات الحساب
+    إعدادات الحسابات
 @endsection
 
 @section('content')
