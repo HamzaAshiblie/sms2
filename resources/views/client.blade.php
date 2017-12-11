@@ -22,12 +22,11 @@
                     <button class="btn btn-default" id="add-client-modal-btn"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة عميل </button>
                 </div> <!-- /div-action -->
 
-
-                <table class="table" id="datatable">
+                <table class="table" id="clients-table">
                     <thead>
                     <tr>
                         <th  style="text-align: right">العميل</th>
-                        <th  style="text-align: right">الشركة</th>
+                        <th  style="text-align: right">نوع العميل</th>
                         <th  style="text-align: right">البريد الالكتروني</th>
                         <th  style="text-align: right">الهاتف</th>
                         <th style="width:15%; text-align: right">التحكم</th>
@@ -47,7 +46,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a type="button" data-toggle="modal" id="edit-client-modal-btn" data-clientid="{{$client->id}}"> <i class="glyphicon glyphicon-edit"></i> تعديل</a></li>
-                                        <li><a type="button" data-toggle="modal" data-clientid="{{$client->id}}" data-target="#removeCategoriesModal" id="remove-client-modal-btn" onclick=""> <i class="glyphicon glyphicon-trash"></i> حذف</a></li>
+                                        <li><a type="button" data-toggle="modal" data-clientid="{{$client->id}}" data-target="#removeCategoriesModal" id="remove-client-modal-btn"> <i class="glyphicon glyphicon-trash"></i> حذف</a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -88,10 +87,10 @@
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
-                            <label for="client_company" class="col-sm-4 control-label">الشركة </label>
+                            <label for="client_company" class="col-sm-4 control-label">نوع العميل </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_add-client_company">
-                                <input type="text" class="form-control" id="client_company" placeholder="الشركة" name="client_company" autocomplete="off">
+                                <input type="text" class="form-control" id="client_company" placeholder="نوع العميل" name="client_company" autocomplete="off">
                                 <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
@@ -149,10 +148,10 @@
                             </div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
-                            <label for="edit-client_company" class="col-sm-4 control-label">الشركة: </label>
+                            <label for="edit-client_company" class="col-sm-4 control-label">نوع العميل: </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_edit-client_company">
-                                <input type="text" class="form-control" id="edit-client_company" placeholder="الشركة" name="edit-client_company" autocomplete="off">
+                                <input type="text" class="form-control" id="edit-client_company" placeholder="نوع العميل" name="edit-client_company" autocomplete="off">
                                 <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->

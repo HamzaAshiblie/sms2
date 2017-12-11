@@ -2,7 +2,7 @@
     <thead>
     <tr >
         <th colspan="5">
-
+            رقم الطلب : {{$order->id}}
             <center>
                 تاريخ الطلب : {{$order->order_date}}
                 <center>العميل : {{$order->client->client_name}}</center>
@@ -20,6 +20,7 @@
         <th>رقم</th>
         <th>المنتج</th>
         <th>السعر</th>
+        <th>الخصم</th>
         <th>الكمية</th>
         <th>الإجمالي</th>
     </tr>
@@ -30,6 +31,7 @@
         <th>#</th>
         <th>{{$order_item->product->product_name}}</th>
         <th>{{$order_item->rate}}</th>
+        <th>{{$order_item->item_discount}}</th>
         <th>{{$order_item->quantity}}</th>
         <th>{{$order_item->total}}</th>
     </tr>

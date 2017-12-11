@@ -115,8 +115,9 @@ return [
             'required' => 'نوع العميل مطلوب',
         ],
         'client_phone'=> [
-            'required' => 'رقم العميل مطلوب',
-            'min' => 'رقم العميل يحب ان لا يقل عن :min',
+            'required' => 'الهاتف مطلوب',
+            'min' => 'الهاتف يحب ان لا يقل عن :min',
+            'numeric' => 'الهاتف يجب أن يكون أرقام 0-9',
         ],
         'client_email'=> [
             'required' => 'البريد الإلكتروني مطلوب',
@@ -126,8 +127,38 @@ return [
         'product_name'=> [
             'required' => 'اسم المنتج مطلوب'
         ],
+        'product_description'=> [
+            'required' => 'وصف المنتج مطلوب'
+        ],
+        'product_quantity'=> [
+            'required' => 'كمية المنتج مطلوب'
+        ],
+        'product_unit'=> [
+            'required' => 'الرجاء تحديد الوحدة'
+        ],
+        'unit_price'=> [
+            'required' => 'سعر البيع مطلوب'
+        ],
+        'init_price'=> [
+            'required' => 'سعر الشراء مطلوب'
+        ],
+        'supplier'=> [
+            'required' => 'اسم المورد مطلوب'
+        ],
+        'country'=> [
+            'required' => 'الدولة المصنعة مطلوب'
+        ],
         'discount'=> [
             'required' => 'حقل الخصم مطلوب'
+        ],
+        'category_name'=> [
+            'required' => 'اسم الصنف مطلوب',
+        ],
+        'category_description'=> [
+            'required' => 'الوصف مطلوب',
+        ],
+        'category_id'=> [
+            'required' => 'الرجاء تحديد الصنف',
         ],
     ],
 

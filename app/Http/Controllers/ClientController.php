@@ -9,7 +9,7 @@ class ClientController extends Controller
 {
     public function getClient(Request $request)
     {
-        $clients = Client::paginate();
+        $clients = Client::all();
         if($request['message']!=null){
             return view('client',['clients'=> $clients])->with('message');
         }else{
@@ -28,7 +28,7 @@ class ClientController extends Controller
             'client_name'=> 'required:clients',
             'client_company'=>'required|max:120',
             'client_email'=>'required|unique:clients|email',
-            'client_phone'=>'required|min:10'
+            'client_phone'=>'required|numeric|min:10'
         ]);
         $client = new Client();
         $client->client_name = $request['client_name'];
@@ -48,7 +48,7 @@ class ClientController extends Controller
         $this->validate($request, [
             'client_name'=> 'required:clients',
             'client_company'=>'required|max:120',
-            'client_email'=>'required|unique:clients|email',
+            'client_email' => 'required|unique:clients,client_email,'.$request['id'],
             'client_phone'=>'required|min:10'
         ]);
         $client = Client::where('id',$request['id'])->first();
@@ -69,14 +69,13 @@ class ClientController extends Controller
     public function deleteClientSingle( Request $request)
     {
         $client = Client::where('id',$request['id'])->first();
-        $message= 'حدث خطأ، لم يتم حذف العميل';
         if ($client->delete())
         {
-            $message='تمت حذف العميل بنجاح';
             return response()->json($client,200);
+        }else{
+            return redirect()->back();
         }
 
-        return redirect()->route('client')->with(['message'=>$message]);
 
     }
 }

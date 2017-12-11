@@ -72,6 +72,10 @@ Route::post('/createproduct',[
     'uses' => 'ProductController@productCreateProduct',
     'as' => 'product.create'
 ]);
+Route::post('/importProduct',[
+    'uses' => 'ProductController@importProduct',
+    'as' => 'importProduct'
+]);
 Route::get('/producttsingle',[
     'uses' => 'ClientController@getClientSingle',
     'as' => 'product.get',
@@ -84,6 +88,8 @@ Route::post('/productsingle/delete',[
     'uses' => 'ProductController@deleteProductSingle',
     'as' => 'product.delete',
 ]);
+Route::get('/product/{cat_id}','ProductController@getProductByCat');
+Route::get('/productUpdate/{cat_id}','ProductController@getProductUpdate');
 
 ///////////////////////////////////////////ORDERS/////////////////////////////////////////////
 Route::get('/addorder',[
@@ -98,6 +104,12 @@ Route::post('createOrder', [
     'middleware' => 'auth'
 ]);
 
+Route::post('removeOrderItem', [
+    'uses' => 'OrderController@removeOrderItem',
+    'as' => 'removeItem',
+    'middleware' => 'auth'
+]);
+
 Route::post('/fetchProductData', [
    'uses'  => 'OrderController@fetchProductData',
     'as' => 'fetchProductData'
@@ -109,6 +121,11 @@ Route::post('/fetchSelectedProduct', [
 Route::get('/manageOrders',[
     'uses' => 'OrderController@getOrder',
     'as' => 'manageOrders',
+    'middleware' => 'auth'
+]);
+Route::get('/removeOrderItem/{order_id}',[
+    'uses' => 'OrderController@getOrderItem',
+    'as' => 'removeOrderItem',
     'middleware' => 'auth'
 ]);
 Route::get('/printOrder/{order_id}','OrderController@printOrder');
@@ -138,6 +155,10 @@ Route::post('/category/edit',[
 Route::post('/category/delete',[
     'uses' => 'CategoryController@deleteCategory',
     'as' => 'category.delete',
+]);
+Route::post('/fetchCategory', [
+    'uses'  => 'CategoryController@fetchCategory',
+    'as' => 'fetchCategory'
 ]);
 /////////////////////////////////////////CALENDER///////////////////////////////////////////////////
 Route::get('events', 'EventController@index');

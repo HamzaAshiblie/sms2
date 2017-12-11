@@ -1,8 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-
-    <div class="row">
+        <div class="row">
         <div class="col-md-12">
 
             <ol class="breadcrumb">
@@ -21,10 +20,11 @@
                     </div> <!-- /div-action -->
 
 
-                    <table class="table" id="datatable">
+                    <table class="table" id="categories-table">
                         <thead>
                         <tr>
                             <th  style="text-align: right">الصنف</th>
+                            <th  style="text-align: right">الوصف</th>
                             <th  style="text-align: right">عدد المنتجات</th>
                             <th  style="text-align: right">الكمية</th>
                             <th style="width:15%; text-align: right">التحكم</th>
@@ -35,6 +35,7 @@
                             <tr>
                                 <td>{{ $category->category_name }}</td>
                                 <td>{{ $category->category_description }}</td>
+                                <td>{{ count($category->products) }}</td>
                                 <td>{{ $category->category_quantity }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
@@ -172,7 +173,7 @@
                 </div>
                 <div class="modal-footer delete-categories-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> إغلاق</button>
-                    <button type="button" class="btn btn-primary" id="delete-categories-btn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> حفظ</button>
+                    <button type="button" class="btn btn-primary" id="delete-categories-btn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> حذف</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -187,5 +188,4 @@
         var urlDeleteCategory = '{{ route('category.delete')}}';
 
     </script>
-
 @endsection

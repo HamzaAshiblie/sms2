@@ -59,7 +59,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a type="button" data-toggle="modal" id="edit-payment-modal-btn" data-orderid="{{$order->id}}"> <i class="glyphicon glyphicon-edit"></i> تحديث المدفوعات</a></li>
-                                            <li><a type="button" data-toggle="modal" id="remove-order-items-modal-btn" data-orderid="{{$order->id}}"> <i class="glyphicon glyphicon-trash"></i> ترجيع السلع</a></li>
+                                            <li><a type="button" data-toggle="modal" id="remove-order-items-modal-btn" href="/removeOrderItem/{{$order->id}}"> <i class="glyphicon glyphicon-trash"></i> ترجيع السلع</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -169,19 +169,21 @@
                 <form class="form-horizontal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> حذف العميل</h4>
+                        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> ترجيع السلع</h4>
                     </div>
                     <div class="modal-body">
                         <div class="edit-clients-result">
                             <div class="form-group">
-                                <label for="edit-client_name" class="col-sm-5 control-label">المنتج: </label>
+                                <label for="remove-product_name" class="col-sm-5 control-label">المنتج: </label>
                                 <label class="col-sm-1 control-label">: </label>
-                                <label class="col-sm-6 control-label"></label>
+                                <label id="remove-product_name"></label>
                             </div> <!-- /form-group-->
                             <div class="form-group">
-                                <label for="edit-client_company" class="col-sm-5 control-label">العميل: </label>
+                                <label for="remove-item" class="col-sm-5 control-label">الكمية: </label>
                                 <label class="col-sm-1 control-label">: </label>
-                                <label class="col-sm-6 control-label"></label>
+                                <div class="col-sm-5" id="div-remove-item">
+                                    <input type="number" class="form-control" max="100" min="0" class="form-control" id="remove-item" placeholder="الباقي" name="remove-item" autocomplete="off">
+                                </div>
                             </div> <!-- /form-group-->
 
                         </div>
@@ -200,7 +202,7 @@
     <script rel="stylesheet">
         var token = '{{ Session::token() }}';
         var urlEditPayment = '{{ route('updatePayment') }}';
-        var urlfetchOrderItems = '{{ route('fetchOrderItems') }}';
+        var urlFetchOrderItems = '{{ route('fetchOrderItems') }}';
     </script>
 @endsection
 

@@ -19,6 +19,10 @@ class CategoryController extends Controller
 
     public function createCategory(Request $request)
     {
+        $this->validate($request, [
+            'category_name'=> 'required',
+            'category_description'=>'required'
+        ]);
         $category = new Category();
         $category->category_name = $request['category_name'];
         $category->category_description = $request['category_description'];
@@ -32,6 +36,10 @@ class CategoryController extends Controller
     }
     public function editCategory( Request $request)
     {
+        $this->validate($request, [
+            'category_name'=> 'required',
+            'category_description'=>'required'
+        ]);
         $category = Category::where('id',$request['id'])->first();
         $category->category_name = $request['category_name'];
         $category->category_description = $request['category_description'];
@@ -56,5 +64,10 @@ class CategoryController extends Controller
 
         return redirect()->route('category')->with(['message'=>$message]);
 
+    }
+    public function fetchCategory()
+    {
+        $category = Category::all();
+        return $category;
     }
 }

@@ -25,15 +25,15 @@
     <script  src="{{URL::to('src/js/jquery-2.2.4.js')}}"> </script>
     <script  src="{{URL::to('src/js/bootstrap.min.js')}}"> </script>
 
-    <script  src="{{URL::to('src/js/app.js')}}"> </script>
     <!-- DataTables -->
     <script src="{{URL::to('src/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::to('src/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 
-    <script>
-        var atable;
+    <script src="{{URL::to('src/js/datatables.js')}}">
+
+        /*
         $(document).ready(function() {
-             atable = $('#datatable').DataTable({
+             window.atable = $('table.display').DataTable({
                 "language": {
                     "sProcessing":   "جارٍ التحميل...",
                     "sLengthMenu":   "أظهر _MENU_ مدخلات",
@@ -52,9 +52,15 @@
                     }
                 }
             } );
-        } );
-    </script>
+            console.log(window.atable);
+        } );*/
 
+    </script>
+<script>
+
+</script>
+
+<script  src="{{URL::to('src/js/app.js')}}"></script>
 
     <!--Jquery Redirect-->
 

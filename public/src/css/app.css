@@ -44,3 +44,6 @@ nav.navbar:hover {
 .editErrorRed{
     color: red;
 }
+html, body {
+    min-height: 2000px;
+}

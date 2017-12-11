@@ -10,4 +10,13 @@ class Product extends Model
     {
         return  $this->hasMany('App\Order_item');
     }
+    public function category()
+    {
+        return  $this->belongsTo('App\Category');
+    }
+
+    public function product_updates()
+    {
+        return  $this->hasMany('App\Product_update');
+    }
 }

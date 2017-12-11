@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Client;
 use App\Order;
 use App\Order_item;
 use App\Product;
+use App\Product_update;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -66,6 +68,7 @@ class OrderController extends Controller
             'paid'=>'required',
             'payment_type'=>'required',
             'due'=>'required',
+            'item_discount'=>'required',
             'discount'=>'required'
 
         ]);
@@ -93,40 +96,88 @@ class OrderController extends Controller
         $order->paid = $paid;
         $order->due = $due;
         $order->payment_type = $payment_type;
-        $updated_quantity = 0;
 
         if ($order->save()){
            //$input = Input::all();
             $product_ids = $request['product_name'];
             $quantities = $request['product_quantity'];
             $unit_prices = $request['unit_price'];
+            $item_discounts = $request['item_discount'];
             $totals = $request['total'];
             foreach ($product_ids as $key => $product_id) {
-
-               $product = Product::find($product_id);
-               $product->product_quantity = $product->product_quantity - $quantities[$key];
-               $product->save();
-
+               //$product = Product::find($product_id);
+               //$old = $product->product_quantity;
+               //$product->product_quantity = $old - $quantities[$key];
+               //$product->save();
                $order_id =  $order->id;
                $order_item = new Order_item();
                $order_item->product_id = $product_id;
                $order_item->order_id = $order_id;
                $order_item->quantity = $quantities[$key];
                $order_item->rate = $unit_prices[$key];
+               $order_item->item_discount = $item_discounts[$key];
                $order_item->total = $totals[$key];
-               $order_item->save();
-
+               if ($order_item->save()){
+                   $old_quantity = Product::where('id',$product_id)->first()->product_quantity;
+                   $new_quantity = $quantities[$key];
+                   $updated_quantity =   $old_quantity - $new_quantity;
+                   Product::where('id',$product_id)->update(['product_quantity'=>$updated_quantity]);
+                   $product_update = new Product_update();
+                   $product_update->product_id = $product_id;
+                   $product_update->product_quantity = $new_quantity;
+                   $product_update->supplier = '';
+                   $product_update->country ='';
+                   $product_update->operation = 'مبيعات';
+                   $product_update->save();
+               }
            }
        }
-
         return response()->json($order_id,200);
+    }
+    public function removeOrderItem(Request $request)
+    {
+        $product_ids = $request['product_id'];
+        $order_item_ids = $request['order_item_id'];
+        $removed_quantities = $request['removed_quantity'];
+        $totals = $request['total'];
+        $removed_total = $request['removed_total'];
+        $removed_discount = $request['removed_discount'];
+        $order_id = $request['order_id'];
+        foreach ($order_item_ids as $key => $order_item_id){
+            $product = Product::where('id',$product_ids[$key])->first();
+            $old_quantity = $product->product_quantity;
+            $updated_quantity = $old_quantity + $removed_quantities[$key];
+            $product->product_quantity = $updated_quantity;
+            $product->save();
+            $order_item = Order_item::where('id',$order_item_id)->first();
+            $old_item_quantity = $order_item->quantity;
+            $old_item_total = $order_item->total;
+            $updated_item_quantity = $old_item_quantity - $removed_quantities[$key];
+            $updated_item_total = $old_item_total - $totals[$key];
+            $order_item->quantity = $updated_item_quantity;
+            $order_item->total = $updated_item_total;
+            $order_item->save();
+            $product_update = new Product_update();
+            $product_update->product_id = $product_ids[$key];
+            $product_update->product_quantity = $removed_quantities[$key];
+            $product_update->supplier = '';
+            $product_update->country ='';
+            $product_update->operation = 'مرتجع';
+            $product_update->save();
+        }
+        $order = Order::where('id',$order_id)->first();
+        $old_grand_total = $order->grand_total;
+        $old_discount = $order->discount;
+        $order->grand_total = $old_grand_total - $removed_total;
+        $order->discount = $old_discount - $removed_discount;
+        $order->save();
+        return response()->json($order,200);
     }
     public function fetchProductData()
     {
             $product = Product::where('product_quantity','>',0)->get();
             return $product;
     }
-
     public function fetchSelectedProduct(Request $request)
     {
         //$product = Product::find($request['productId']);
@@ -136,26 +187,31 @@ class OrderController extends Controller
             ['product_quantity', '>', 0]])->first();
         return $product;
     }
-    public function printOrder(Request $request, $order_id)
+    public function printOrder($order_id)
     {
         $order = Order::where('id', $order_id)->first();
         $order_items = Order_item::where('order_id', $order_id)->get();
         return view('includes.printOrder',['order' => $order, 'order_items'=> $order_items]);
     }
+    public function getOrderItem($order_id)
+    {
+        $order = Order::where('id', $order_id)->first();
+        $order_items = Order_item::where('order_id', $order_id)->get();
+        return view('removeOrderItem',['order' => $order, 'order_items'=> $order_items]);
+    }
     public function fetchOrderItems(Request $request)
     {
         $order_items = Order_item::where('order_id', $request['order_id'])->get();
-        return $order_items;
+        return response()->json($order_items,200);
     }
     public function updateOrderPayment(Request $request)
     {
         $order = Order::where('id',$request['id'])->first();
-        if($order && $request['paid'] && $request['due'] && $request['payment_type']){
+        if($order){
             $order->paid = $request['paid'];
             $order->due = $request['due'];
             $order->payment_type = $request['payment_type'];
             $order->update();
-
         }
         return response()->json($order,200);
     }

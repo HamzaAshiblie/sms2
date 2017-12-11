@@ -21,19 +21,19 @@
 
                     <li id="nav-clients" class="{{ Request::is('client*') ? 'active' : '' }}"><a href="{{ route('client') }}"><i class="glyphicon glyphicon-th-list"></i>  العملاء</a></li>
 
-                    <li id="" class="{{ Request::is('category*') ? 'active' : '' }}"><a href="{{ route('category') }}"><i class="glyphicon glyphicon-th-list"></i>  الأصناف</a></li>
+                    <li id="" class="{{ Request::is('category*') ? 'active' : '' }}"><a href="{{ route('category') }}"><i class="glyphicon glyphicon-th-list"></i>  العائلات</a></li>
 
-                    <li id="nav-clients" class="{{ Request::is('product*') ? 'active' : '' }}"><a href="{{ route('product') }}"><i class="glyphicon glyphicon-th-list"></i>  المنتجات</a></li>
+                    <li id="nav-clients" class="{{ Request::is('product') ? 'active' : '' }}"><a href="{{ route('product') }}"><i class="glyphicon glyphicon-th-list"></i>  المنتجات</a></li>
 
                     <li class="dropdown {{ Request::is('addOrder*') ? 'active' : '' }}{{ Request::is('manageOrder*') ? 'active' : '' }}" id="navOrder">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> الطلبات <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> المشتريات<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li id="topNavAddOrder" class="{{ Request::is('addOrder*') ? 'active' : '' }}"><a href="{{ route('addOrder') }}"> <i class="glyphicon glyphicon-plus"></i> إضافة طلب</a></li>
-                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? 'active' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة الطلبات</a></li>
+                            <li id="topNavAddOrder" class="{{ Request::is('addOrder*') ? 'active' : '' }}"><a href="{{ route('addOrder') }}"> <i class="glyphicon glyphicon-plus"></i> إضافة عملية شرائية</a></li>
+                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? 'active' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة المشتريات</a></li>
                         </ul>
                     </li>
 
-                    <li id="navReport"><a href="report.php"> <i class="glyphicon glyphicon-check"></i> التقارير </a></li>
+                    <li id="navReport"><a href="#"> <i class="glyphicon glyphicon-check"></i> التقارير </a></li>
 
                     <li class="dropdown" id="navSetting">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>

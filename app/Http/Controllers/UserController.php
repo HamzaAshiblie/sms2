@@ -67,15 +67,16 @@ class UserController extends Controller
     public function postSignIn(Request $request)
     {
         $this->validate($request, [
-            'email'   => 'required',
+            'email'   => 'required|email',
             'password'=> 'required'
         ]);
+        $message = 'البريد الالكتروني أو كلمة المرور غير صحيحة';
         if(Auth::attempt(['email'=>$request['email'],'password'=>$request['password']])|| Auth::attempt(['username'=>$request['email'],'password'=>$request['password']]))
         {
             return redirect()->route('dashboard');
         }
         else{
-            return redirect()->back();
+            return redirect('home')->with('message',$message);
         }
     }
 

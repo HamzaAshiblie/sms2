@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
     <ol class="breadcrumb">
         <li><a href="{{ route('home') }}">الرئيسية</a></li>
         <li>الطلبات</li>
@@ -11,29 +10,21 @@
     </ol>
     <div class="panel panel-default">
         <div class="panel-heading">
-
-
             <i class="glyphicon glyphicon-plus-sign"></i>	إضافة طلب
-
-
         </div> <!--/panel-->
         <div class="panel-body">
 
-
-
-            <div class="success-messages">
-                @include('includes.message-block')
-            </div> <!--/success-messages-->
+            <div id="success-order"></div>
             <form class="form-horizontal" method="POST" action="{{ route('createOrder') }}" id="createOrderForm">
 
                 <div class="form-group">
-                    <label for="order_date" class="col-sm-2 control-label">date التاريخ</label>
+                    <label for="order_date" class="col-sm-2 control-label">التاريخ </label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="order_date" name="order_date" value="{{ date('Y-m-d') }}" autocomplete="off" />
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
-                    <label for="clientName" class="col-sm-2 control-label">client name اسم العميل</label>
+                    <label for="client_id" class="col-sm-2 control-label">اسم العميل </label>
                     <div class="col-sm-10">
                         <select name="client_id" id="client_id" class="form-control">
                             <option value="">اختر</option>
@@ -47,12 +38,13 @@
             <table class="table" id="productTable">
                 <thead>
                 <tr>
-                    <th style="width:10%;">#number</th>
-                    <th style="width:40%;">product المنتج</th>
-                    <th style="width:10%;">السعرprice</th>
-                    <th style="width:10%;">الكميةquntity</th>
-                    <th style="width:10%;">المتبقي</th>
-                    <th style="width:10%;">المجموعtotal</th>
+                    <th style="width:10%;">#رقم المنتج </th>
+                    <th style="width:40%;">المنتج </th>
+                    <th style="width:10%;">السعر </th>
+                    <th style="width:10%;">الخصم </th>
+                    <th style="width:10%;">الكمية </th>
+                    <th style="width:10%;">المتبقي </th>
+                    <th style="width:10%;">المجموع </th>
                     <th style="width:10%;"></th>
                 </tr>
                 </thead>
@@ -62,6 +54,7 @@
                 for($x = 1; $x < 4; $x++) { ?>
                 <tr id="row<?php echo $x; ?>" class="<?php echo $arrayNumber; ?>">
                     <td style="padding-left:20px;">
+                        <input type="hidden" id="index" value="<?php echo $x; ?>">
                         <input type="text" name="product_id[]" id="product_id<?php echo $x; ?>" onkeyup="getProductDataWithId(<?php echo $x; ?>)" autocomplete="off" class="form-control" />
                     </td>
                     <td style="margin-left:20px;">
@@ -76,11 +69,14 @@
                         </div>
                     </td>
                     <td style="padding-left:20px;">
-                        <input type="text" name="unit_price[]" id="unit_price<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" />
+                        <input type="number" name="unit_price[]" id="unit_price<?php echo $x; ?>" disabled="true" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" />
+                    </td>
+                    <td style="padding-left:20px;">
+                        <input type="number" name="discount[]" id="discount<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" disabled="true" min="0" />
                     </td>
                     <td style="padding-left:20px;">
                         <div class="form-group">
-                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onchange="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" />
+                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onkeyup="this.value = minMax(this.value, 1, row<?php echo $x;?>); updateTotal(row<?php echo $x;?>)" autocomplete="off" class="form-control" disabled="true" />
                         </div>
                     </td>
                     <td style="padding-left:20px;">
@@ -125,9 +121,9 @@
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
-                    <label for="discount" class="col-sm-3 control-label">الخصم</label>
+                    <label for="discount" class="col-sm-3 control-label">اجمالي الخصم</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" autocomplete="off" />
+                        <input type="text" class="form-control" id="discount" name="discount" onkeyup="discountFunc()" autocomplete="off" disabled="true" />
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
@@ -179,7 +175,6 @@
             </div>
 <div class="clearfix"></div>
             </form>
-            <div id="success-order"></div>
     </div> <!--/panel-->
 </div> <!--/panel-->
 <script>
@@ -189,6 +184,29 @@
     var urlAddOrder = '{{ route('createOrder') }}';
     var urlOrder = '{{ route('addOrder') }}';
 </script>
+    <script type="text/javascript">
+        var v = 0;
+        var m = 0;
+        function minMax(value, min, row)
+        {
+            v = value;
+            m = original[row.id.substring(3)];
+            if(parseInt(value) < min || isNaN(value)){
+                return min;
+            } else if(parseInt(value) > m){
+                return min;
+            } else {
+                return value;
+            }
+        }
+        function updateTotal(row) {
+            if (parseInt(v) <= parseInt(m)){
+                getTotal(row.id.substring(3));
+            }else {
+                $("#total_quantity"+row.id.substring(3)).val(m-1);
+            }
+        }
 
+    </script>
 @endsection
 
