@@ -47,3 +47,26 @@ nav.navbar:hover {
 html, body {
     min-height: 2000px;
 }
+.tdTitle{
+    background-color:#D4D4D4;
+    color:#3B3B3B;
+    width:25%;
+    text-align:right;
+    padding-right:5px;
+}
+.tdFactor{
+    background-color:#F7F7F7;
+    color:#3B3B3B;
+    width:15%;
+    text-align:right;
+    padding-right:5px;
+}
+.tdSearch{
+    background-color:#F7F7F7;
+    text-align:left;
+}
+.reportTable{
+    width:530px;
+}
+.trReport{
+}

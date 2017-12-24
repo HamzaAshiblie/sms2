@@ -35,9 +35,13 @@ class ProductController extends Controller
     }
     public function productCreateProduct(Request $request)
     {
+        $category = 'category_id';
+        if ($request['new_category'] != null){
+            $category = 'new-category';
+        }
         $this->validate($request, [
             'product_name'=> 'required|unique:products',
-            'category_id'=>'required',
+            $category=>'required',
             'product_quantity'=>'required',
             'product_unit'=>'required',
             'supplier'=>'required',

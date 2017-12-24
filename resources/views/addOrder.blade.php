@@ -38,14 +38,15 @@
             <table class="table" id="productTable">
                 <thead>
                 <tr>
-                    <th style="width:10%;">#رقم المنتج </th>
-                    <th style="width:40%;">المنتج </th>
-                    <th style="width:10%;">السعر </th>
-                    <th style="width:10%;">الخصم </th>
-                    <th style="width:10%;">الكمية </th>
-                    <th style="width:10%;">المتبقي </th>
-                    <th style="width:10%;">المجموع </th>
-                    <th style="width:10%;"></th>
+                    <th style="width:7%;">#رقم المنتج </th>
+                    <th style="width:28%;">المنتج </th>
+                    <th style="width:7%;">السعر </th>
+                    <th style="width:7%;">الخصم </th>
+                    <th style="width:7%;">الكمية </th>
+                    <th style="width:7%;">المتبقي </th>
+                    <th style="width:9%;">القيمة المضافة </th>
+                    <th style="width:7%;">المجموع </th>
+                    <th style="width:6%;"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,7 +58,7 @@
                         <input type="hidden" id="index" value="<?php echo $x; ?>">
                         <input type="text" name="product_id[]" id="product_id<?php echo $x; ?>" onkeyup="getProductDataWithId(<?php echo $x; ?>)" autocomplete="off" class="form-control" />
                     </td>
-                    <td style="margin-left:20px;">
+                    <td>
                         <div class="form-group">
 
                             <select class="form-control" name="product_name[]" id="product_name<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)" >
@@ -68,19 +69,22 @@
                             </select>
                         </div>
                     </td>
-                    <td style="padding-left:20px;">
-                        <input type="number" name="unit_price[]" id="unit_price<?php echo $x; ?>" disabled="true" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" />
+                    <td style="padding-left:1px;">
+                        <input type="text" name="unit_price[]" id="unit_price<?php echo $x; ?>" disabled="true" onkeyup="this.value = numericInput(this.value);getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" />
                     </td>
-                    <td style="padding-left:20px;">
-                        <input type="number" name="discount[]" id="discount<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" disabled="true" min="0" />
+                    <td style="padding-left:15px;">
+                        <input type="text" name="discount[]" id="discount<?php echo $x; ?>" onkeyup="this.value = numericInput(this.value);getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" disabled="true" min="0" />
                     </td>
                     <td style="padding-left:20px;">
                         <div class="form-group">
-                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onkeyup="this.value = minMax(this.value, 1, row<?php echo $x;?>); updateTotal(row<?php echo $x;?>)" autocomplete="off" class="form-control" disabled="true" />
+                            <input type="text" name="product_quantity[]" id="product_quantity<?php echo $x; ?>" onkeyup="this.value = minMax(this.value, 1, row<?php echo $x;?>); updateTotal(row<?php echo $x;?>); getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" disabled="true" />
                         </div>
                     </td>
-                    <td style="padding-left:20px;">
+                    <td style="padding-left:1px;">
                         <input type="text" name="total_quantity" id="total_quantity<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
+                    </td>
+                    <td style="padding-left:1px;">
+                        <input type="text" name="vat[]" id="vat<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
                     </td>
                     <td style="padding-left:1px;">
                         <input type="text" name="total[]" id="total<?php echo $x; ?>" autocomplete="off" class="form-control" disabled="true" />
@@ -106,13 +110,6 @@
                         <input type="hidden" class="form-control" id="subTotalValue" name="subTotalValue" />
                     </div>
                 </div> <!--/form-group-->
-                <div class="form-group" style="display: none">
-                    <label for="vat" class="col-sm-3 control-label">VAT 13%</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="vat" name="vat" disabled="true" />
-                        <input type="hidden" class="form-control" id="vatValue" name="vatValue" />
-                    </div>
-                </div> <!--/form-group-->
                 <div class="form-group">
                     <label for="total_amount" class="col-sm-3 control-label">المجموع الكلي</label>
                     <div class="col-sm-9">
@@ -127,15 +124,22 @@
                     </div>
                 </div> <!--/form-group-->
                 <div class="form-group">
+                    <label for="total_vat" class="col-sm-3 control-label">اجمالي القيمة المضافة</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="total_vat" name="total_vat" disabled="true" />
+                        <input type="hidden" class="form-control" id="vatValue" name="vatValue" />
+                    </div>
+                </div> <!--/form-group-->
+            </div> <!--/col-md-6-->
+
+            <div class="col-md-6">
+                <div class="form-group">
                     <label for="grand_total" class="col-sm-3 control-label">المجموع النهائي</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="grand_total" name="grand_total" />
                         <input type="hidden" class="form-control" id="grandTotalValue" name="grandTotalValue" />
                     </div>
                 </div> <!--/form-group-->
-            </div> <!--/col-md-6-->
-
-            <div class="col-md-6">
                 <div class="form-group">
                     <label for="paid" class="col-sm-3 control-label">المدفوع</label>
                     <div class="col-sm-9">
@@ -184,29 +188,6 @@
     var urlAddOrder = '{{ route('createOrder') }}';
     var urlOrder = '{{ route('addOrder') }}';
 </script>
-    <script type="text/javascript">
-        var v = 0;
-        var m = 0;
-        function minMax(value, min, row)
-        {
-            v = value;
-            m = original[row.id.substring(3)];
-            if(parseInt(value) < min || isNaN(value)){
-                return min;
-            } else if(parseInt(value) > m){
-                return min;
-            } else {
-                return value;
-            }
-        }
-        function updateTotal(row) {
-            if (parseInt(v) <= parseInt(m)){
-                getTotal(row.id.substring(3));
-            }else {
-                $("#total_quantity"+row.id.substring(3)).val(m-1);
-            }
-        }
 
-    </script>
 @endsection
 

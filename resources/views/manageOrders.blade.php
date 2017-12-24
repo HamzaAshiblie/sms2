@@ -32,6 +32,7 @@
                             <th>عدد السلع</th>
                             <th>المجموع الكلي</th>
                             <th>الخصم</th>
+                            <th>القيمة المضافة</th>
                             <th>المجموع النهائي</th>
                             <th>المدفوع</th>
                             <th>الباقي</th>
@@ -48,6 +49,7 @@
                                 <td>{{ $order_items->has($order->id) ? count($order_items[$order->id]) : 0 }}</td>
                                 <td>{{ $order->total_amount }}</td>
                                 <td>{{ $order->discount }}</td>
+                                <td>{{ $order->vat }}</td>
                                 <td>{{ $order->grand_total }}</td>
                                 <td>{{ $order->paid }}</td>
                                 <td>{{ $order->due }}</td>
@@ -105,6 +107,14 @@
                                 </div>
                             </div> <!-- /form-group-->
                             <div class="form-group">
+                                <label for="edit-vat" class="col-sm-4 control-label">القيمة المضافة: </label>
+                                <label class="col-sm-1 control-label">: </label>
+                                <div class="col-sm-7" id="error_edit-vat">
+                                    <input type="text" class="form-control" id="edit-vat" placeholder="" name="edit-vat" autocomplete="off" disabled="true">
+                                    <h6 class="editErrorRed"></h6>
+                                </div>
+                            </div> <!-- /form-group-->
+                            <div class="form-group">
                                 <label for="edit-grand_total" class="col-sm-4 control-label">المجموع النهائي: </label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7" id="error_edit-grand_total">
@@ -116,7 +126,7 @@
                                 <label for="edit-paid" class="col-sm-4 control-label">المدفوع: </label>
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7" id="error_edit-paid">
-                                    <input type="text" class="form-control" id="edit-paid" placeholder="المدفوع" name="edit-paid" autocomplete="off" onkeyup="updatePayment()">
+                                    <input type="text" class="form-control" id="edit-paid" placeholder="المدفوع" name="edit-paid" autocomplete="off" disabled="true">
                                     <h6 class="editErrorRed"></h6>
                                 </div>
                             </div> <!-- /form-group-->
@@ -125,6 +135,14 @@
                                 <label class="col-sm-1 control-label">: </label>
                                 <div class="col-sm-7" id="error_edit-due">
                                     <input type="text" class="form-control" id="edit-due" placeholder="الباقي" name="edit-due" autocomplete="off" disabled="true">
+                                    <h6 class="editErrorRed"></h6>
+                                </div>
+                            </div> <!-- /form-group-->
+                            <div class="form-group">
+                                <label for="edit-pay" class="col-sm-4 control-label">دفع: </label>
+                                <label class="col-sm-1 control-label">: </label>
+                                <div class="col-sm-7" id="error_edit-pay">
+                                    <input type="text" class="form-control" id="edit-pay" placeholder="0" name="edit-pay" autocomplete="off" onkeyup="this.value=minMax2(this.value)">
                                     <h6 class="editErrorRed"></h6>
                                 </div>
                             </div> <!-- /form-group-->
@@ -203,6 +221,17 @@
         var token = '{{ Session::token() }}';
         var urlEditPayment = '{{ route('updatePayment') }}';
         var urlFetchOrderItems = '{{ route('fetchOrderItems') }}';
+        function minMax2(value)
+        {
+            var paid = $("#edit-due").val();
+            console.log(paid);
+            console.log(value);
+            if(parseInt(value) < 0 || isNaN(value) || parseInt(paid) < value){
+                return 0;
+            } else {
+                return value;
+            }
+        }
     </script>
 @endsection
 

@@ -98,6 +98,17 @@
                             <div class="col-sm-7" id="error_add-category_id"></div>
                         </div> <!-- /form-group-->
                         <div class="form-group">
+                            <label for="check-category" class="col-sm-4 control-label">
+                                صنف جديد؟
+                                <input type="checkbox" id="check-category" name="check-category" onchange="newCat(this)" value="">
+                            </label>
+                            <label class="col-sm-1 control-label">: </label>
+                            <div class="col-sm-7" id="error_add-new-category">
+                                <input type="text" class="form-control" id="new-category" placeholder="صنف جديد" name="new-category" autocomplete="off" disabled="true">
+                                <h6 class="editErrorRed"></h6>
+                            </div>
+                        </div> <!-- /form-group-->
+                        <div class="form-group">
                             <label for="product_name" class="col-sm-4 control-label">اسم المنتج </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_add-product_name">
@@ -125,7 +136,7 @@
                             <label for="product_quantity" class="col-sm-4 control-label">الكمية </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_add-product_quantity">
-                                <input type="number" class="form-control" id="product_quantity" placeholder="الكمية" name="product_quantity" autocomplete="off">
+                                <input type="text" class="form-control" id="product_quantity" placeholder="الكمية" name="product_quantity" onkeyup="this.value = numInput(this.value)" autocomplete="off">
                                 <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
@@ -145,7 +156,7 @@
                             <label for="init_price" class="col-sm-4 control-label">سعر الشراء </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_add-init_price">
-                                <input type="text" class="form-control" id="init_price" placeholder="سعر الشراء" name="init_price" autocomplete="off">
+                                <input type="text" class="form-control" id="init_price" placeholder="سعر الشراء" name="init_price" onkeyup="this.value = numInput(this.value)" autocomplete="off">
                                 <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
@@ -153,7 +164,7 @@
                             <label for="unit_price" class="col-sm-4 control-label">سعر البيع </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_add-unit_price">
-                                <input type="text" class="form-control" id="unit_price" placeholder="سعر البيع" name="unit_price" autocomplete="off">
+                                <input type="text" class="form-control" id="unit_price" placeholder="سعر البيع" name="unit_price" onkeyup="this.value = numInput(this.value)" autocomplete="off">
                                 <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
@@ -161,7 +172,7 @@
                             <label for="discount" class="col-sm-4 control-label">الخصم </label>
                             <label class="col-sm-1 control-label">: </label>
                             <div class="col-sm-7" id="error_add-discount">
-                                <input type="number" class="form-control" id="discount" placeholder="الخصم" name="discount" autocomplete="off">
+                                <input type="text" class="form-control" id="discount" placeholder="الخصم" name="discount" onkeyup="this.value = numericInput(this.value)" autocomplete="off">
                                 <h6 class="editErrorRed"></h6>
                             </div>
                         </div> <!-- /form-group-->
@@ -340,5 +351,23 @@
         var urlEditProduct = '{{ route('product.edit')}}';
         var urlDeleteProduct = '{{ route('product.delete')}}';
         var categoryIdSelect = '{{Route::Input('cat_id')}}';
+
+        function newCat(checkboxElem) {
+            if (checkboxElem.checked) {
+                $("#check-category").val('yes');
+                console.log('checked');
+                console.log($("#check-category").val());
+                $("#add-category_id").val('');
+                $("#add-category_id").attr("disabled",true);
+                $("#new-category").attr("disabled",false);
+            } else {
+                $("#check-category").val('');
+                console.log('unChecked');
+                console.log($("#check-category").val());
+                $("#add-category_id").attr("disabled",false);
+                $("#new-category").val('');
+                $("#new-category").attr("disabled",true);
+            }
+        }
     </script>
 @endsection

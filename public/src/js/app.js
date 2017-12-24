@@ -1,4 +1,72 @@
-﻿var clientId = 0;
+﻿//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////PAYMENTS-MOVED//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var orderId = 0;
+var orderTotalAmountElement = null;
+var orderDiscountElement = null;
+var orderVatElement = null;
+var orderGrandTotalElement = null;
+var orderPaidElement = null;
+var orderDueElement = null;
+var orderPaymentTypeElement = null;
+$('.panel').find('.panel-body').find('.table').find('.btn-group').find('.dropdown-menu').find('#edit-payment-modal-btn').on('click', function(event){
+    event.preventDefault();
+    orderId = event.target.dataset['orderid'];
+    orderTotalAmountElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[9];
+    orderDiscountElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[11];
+    orderVatElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[13];
+    orderGrandTotalElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[15];
+    orderPaidElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[17];
+    orderDueElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[19];
+    orderPaymentTypeElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[21];
+    var orderTotalAmount = orderTotalAmountElement.textContent;
+    var orderDiscount = orderDiscountElement.textContent;
+    var orderVat = orderVatElement.textContent;
+    var orderGrandTotal = orderGrandTotalElement.textContent;
+    var orderPaid = orderPaidElement.textContent;
+    var orderDue = orderDueElement.textContent;
+    var orderPaymentType = orderPaymentTypeElement.textContent;
+    $('#edit-total_amount').val(orderTotalAmount);
+    $('#edit-discount').val(orderDiscount);
+    $('#edit-vat').val(orderVat);
+    $('#edit-grand_total').val(orderGrandTotal);
+    $('#edit-paid').val(orderPaid);
+    $('#edit-due').val(orderDue);
+    $('#edit-payment_type').val(orderPaymentType);
+    $(".clean-edit-payment").html('');
+    $(".edit-payment-footer").removeClass('div-hide');
+    $('#edit-payment-modal').modal();
+});
+$('#edit-payment-btn').on('click', function () {
+    $(".clean-edit-payment").html('');
+    $.ajax({
+        method:'post',
+        url:urlEditPayment,
+        data:{due: $('#edit-due').val(), paid: $('#edit-paid').val(), payment_type: $('#edit-payment_type').val(), id: orderId, _token: token}
+    }).done(function (msg) {
+        $(".edit-payment-footer").addClass('div-hide');
+        $("#edit-payment-msg").html('<p class="text-success clean-edit-payment" style="text-align: center"> تم تحديث المدفوعات بنجاح </p>');
+        setTimeout(function() {$('#edit-payment-modal').modal('hide');}, 600);
+
+
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+        console.log('Text Status:');
+        console.log(textStatus);
+        console.log('Error Thrown:');
+        console.log(errorThrown);
+        console.log('jqXHR:');
+        console.log(jqXHR.responseText);
+
+
+        //  edit-payment
+    });
+});
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////PAYMENTS-MOVED//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var original = [];
+var clientId = 0;
 var clientNameElement = null;
 var clientCompanyElement = null;
 var clientEmailElement = null;
@@ -320,6 +388,7 @@ $(document).ready(function() {
             data: {
                 product_name: $('#product_name').val(),
                 category_id: $('#add-category_id').val(),
+                new_category: $('#new-category').val(),
                 product_quantity: $('#product_quantity').val(),
                 product_unit: $('#product_unit').val(),
                 unit_price: $('#unit_price').val(),
@@ -590,7 +659,6 @@ function removeProductRow(row) {
 }
 
 // select on product data
-var original = [];
 function getProductData(row) {
     if(row) {
         var productId = $("#product_name"+row).val();
@@ -619,6 +687,7 @@ function getProductData(row) {
                     $("#product_quantity"+count).prop('disabled', true);
                     $("#unit_price"+count).prop('disabled', true);
                     $("#unit_price"+count).val("");
+                    $("#vat"+count).val("");
                     $("#total_quantity"+count).val("");
                     $("#product_quantity"+count).val("");
                     $("#total"+count).val("");
@@ -645,7 +714,11 @@ function getProductData(row) {
                     $("#unit_price"+row).val(price);
                     $("#unit_price"+row).attr("min",response.unit_price);
                     $("#discount"+row).attr("max",response.discount);
-                    original[row] = response.product_quantity;
+                    console.log(original);
+                    console.log(response.product_quantity);
+                    original[row]=response.product_quantity;
+                    console.log(response.product_quantity);
+                    console.log(row);
                     $("#total_quantity"+row).val(original[row]);
                     $("#product_quantity"+row).val(0);
                     $("#product_id"+row).val(response.id);
@@ -704,6 +777,7 @@ function getProductDataWithId(row) {
                     $("#product_quantity"+count).prop('disabled', true);
                     $("#unit_price"+count).prop('disabled', true);
                     $("#unit_price"+count).val("");
+                    $("#vat"+count).val("");
                     $("#total_quantity"+count).val("");
                     $("#product_quantity"+count).val("");
                     $("#total"+count).val("");
@@ -775,7 +849,9 @@ function getTotal(row) {
     var unit_price = $("#unit_price"+row).val();
     if(row && !isNaN(parseFloat(unit_price)) && isFinite(unit_price)) {
         var total = (unit_price - discount) * quantity;
+        var vat = (5 * total)/100;
         total = total.toFixed(2);
+        $("#vat"+row).val(vat);
         $("#total"+row).val(total);
         $("#totalValue"+row).val(total);
 
@@ -816,11 +892,11 @@ function subAmount() {
     // vat
     var vat = (Number($("#subTotal").val())/100) * 0;
     vat = vat.toFixed(2);
-    $("#vat").val(vat);
+    $("#total_vat").val(vat);
     $("#vatValue").val(vat);
 
     // total amount
-    var total_amount = (Number($("#subTotal").val()) + Number($("#vat").val()) + Number(totalDiscount));
+    var total_amount = (Number($("#subTotal").val()) + Number($("#total_vat").val()) + Number(totalDiscount));
     total_amount = total_amount.toFixed(2);
     $("#total_amount").val(total_amount);
     $("#totalAmountValue").val(total_amount);
@@ -828,7 +904,10 @@ function subAmount() {
     var discount = $("#discount").val();
     if(discount) {
         var grand_total = Number($("#total_amount").val()) - Number(discount);
+        var vat_total = (grand_total*5/100);
+        grand_total += vat_total;
         grand_total = grand_total.toFixed(2);
+        $("#total_vat").val(vat_total);
         $("#grand_total").val(grand_total);
         $("#grandTotalValue").val(grand_total);
     } else {
@@ -912,11 +991,13 @@ function removedTotal() {
     var tableLength = $("#removedItemTable tbody tr").length;
     var removedTotalAmount = 0;
     var removedDiscountAmount = 0;
+    var removedVatAmount = 0;
     for(x = 0; x < tableLength; x++) {
         var tr = $("#removedItemTable tbody tr")[x];
         var count = $(tr).attr('id');
         count = count.substring(3);
         removedTotalAmount = Number(removedTotalAmount) + Number($("#total"+count).val());
+        removedVatAmount = Number(removedVatAmount) + Number($("#vat"+count).val());
         removedDiscountAmount = Number(removedDiscountAmount) + (Number($("#removed_quantity"+count).val())*Number($("#item_discount"+count).val()));
     } // /for
     removedTotalAmount = removedTotalAmount.toFixed(2);
@@ -924,6 +1005,8 @@ function removedTotal() {
     $("#removed_total").val(removedTotalAmount);
     // removed discount amount
     $("#removed_discount").val(removedDiscountAmount);
+    // removed vat amount
+    $("#removed_vat").val(removedVatAmount);
 } // /removedTotal
 
 $('#createOrderForm').on('submit', function(e) {
@@ -1055,63 +1138,6 @@ $('#createOrderForm').on('submit', function(e) {
 //////////////////////////////////////PAYMENTS////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var orderId = 0;
-var orderTotalAmountElement = null;
-var orderDiscountElement = null;
-var orderGrandTotalElement = null;
-var orderPaidElement = null;
-var orderDueElement = null;
-var orderPaymentTypeElement = null;
-$('.panel').find('.panel-body').find('.table').find('.btn-group').find('.dropdown-menu').find('#edit-payment-modal-btn').on('click', function(event){
-    event.preventDefault();
-    orderId = event.target.dataset['orderid'];
-    orderTotalAmountElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[9];
-    orderDiscountElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[11];
-    orderGrandTotalElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[13];
-    orderPaidElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[15];
-    orderDueElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[17];
-    orderPaymentTypeElement = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[19];
-    var orderTotalAmount = orderTotalAmountElement.textContent;
-    var orderDiscount = orderDiscountElement.textContent;
-    var orderGrandTotal = orderGrandTotalElement.textContent;
-    var orderPaid = orderPaidElement.textContent;
-    var orderDue = orderDueElement.textContent;
-    var orderPaymentType = orderPaymentTypeElement.textContent;
-    $('#edit-total_amount').val(orderTotalAmount);
-    $('#edit-discount').val(orderDiscount);
-    $('#edit-grand_total').val(orderGrandTotal);
-    $('#edit-paid').val(orderPaid);
-    $('#edit-due').val(orderDue);
-    $('#edit-payment_type').val(orderPaymentType);
-    $(".clean-edit-payment").html('');
-    $(".edit-payment-footer").removeClass('div-hide');
-    $('#edit-payment-modal').modal();
-});
-$('#edit-payment-btn').on('click', function () {
-    $(".clean-edit-payment").html('');
-    $.ajax({
-        method:'post',
-        url:urlEditPayment,
-        data:{due: $('#edit-due').val(), paid: $('#edit-paid').val(), payment_type: $('#edit-payment_type').val(), id: orderId, _token: token}
-    }).done(function (msg) {
-        $(".edit-payment-footer").addClass('div-hide');
-        $("#edit-payment-msg").html('<p class="text-success clean-edit-payment" style="text-align: center"> تم تحديث المدفوعات بنجاح </p>');
-        setTimeout(function() {$('#edit-payment-modal').modal('hide');}, 600);
-
-
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-
-        console.log('Text Status:');
-        console.log(textStatus);
-        console.log('Error Thrown:');
-        console.log(errorThrown);
-        console.log('jqXHR:');
-        console.log(jqXHR.responseText);
-
-
-        //  edit-payment
-    });
-});
 function updatePayment() {
     var updatedDue = $('#edit-grand_total').val() - $('#edit-paid').val();
     $('#edit-due').val(updatedDue);
@@ -1133,7 +1159,7 @@ $('#removeOrderItemForm').on('submit', function(e) {
 
     $('input[name^="product_id"]').each(function() {
         productIdData.push($(this).val());
-     });
+    });
 
     $('input[name^="order_item_id"]').each(function() {
         orderItemIdData.push($(this).val());
@@ -1190,3 +1216,62 @@ $('#removeOrderItemForm').on('submit', function(e) {
     });
 
 });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////VALIDATE NUMERIC INPUTS /////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var v = 0;
+var m = 0;
+
+function minMax(value, min, row)
+{
+    console.log('original');
+    console.log(original);
+    console.log('row');
+    console.log(row);
+    console.log('row-id');
+    console.log(row.id);
+    console.log('id');
+    console.log('id');
+    console.log('m');
+    console.log(m);
+    v = value;
+    m = original[row.id.substring(3)];
+    if(parseInt(value) < min || isNaN(value)){
+        return min;
+    } else if(parseInt(value) > m){
+        return min;
+    } else {
+        return value;
+    }
+}
+function updateTotal(row) {
+    if (parseInt(v) <= parseInt(m)){
+        getTotal(row.id.substring(3));
+    }else {
+        $("#total_quantity"+row.id.substring(3)).val(m-1);
+    }
+}
+function numInput(value)
+{
+    //v = value;
+    if(parseInt(value) < 0 || isNaN(value)){
+        return 0;
+    } else {
+        return value;
+    }
+}
+function numericInput(value)
+{
+    //v = value;
+    if(parseInt(value) < 0 || isNaN(value)){
+        return 0;
+    } else if($("#unit_price").val()=='' ||value > parseInt($("#unit_price").val())){
+        return 0;
+    } else {
+        return value;
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////END OF VALIDATE NUMERIC INPUTS //////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

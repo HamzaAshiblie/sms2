@@ -162,3 +162,24 @@ Route::post('/fetchCategory', [
 ]);
 /////////////////////////////////////////CALENDER///////////////////////////////////////////////////
 Route::get('events', 'EventController@index');
+/////////////////////////////////////////REPORTS///////////////////////////////////////////////////
+Route::get('/reportSales',[
+    'uses'=>'ReportController@getReportSales',
+    'as' => 'reportSales'
+]);
+Route::get('/reportPurchases',[
+    'uses'=>'ReportController@getReportPurchases',
+    'as' => 'reportPurchases'
+]);
+Route::get('/reportInvoices',[
+    'uses'=>'ReportController@getReportInvoices',
+    'as' => 'reportInvoices'
+]);
+Route::get('/reportRemoved',[
+    'uses'=>'ReportController@getReportRemoved',
+    'as' => 'reportRemoved'
+]);
+Route::get('/reportVats',[
+    'uses'=>'ReportController@getReportVats',
+    'as' => 'reportVats'
+]);

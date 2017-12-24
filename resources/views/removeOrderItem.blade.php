@@ -24,7 +24,7 @@
             <form class="form-horizontal" method="POST" action="" id="removeOrderItemForm">
 
                 <div class="form-group">
-                    <label for="client_ame" class="col-sm-2 control-label">اسم العميل </label>
+                    <label for="clientName" class="col-sm-2 control-label">اسم العميل </label>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" value="{{ $order->client->client_name }}" id="clientName" name="client_name" autocomplete="off" disabled="true"/>
                     </div>
@@ -41,6 +41,7 @@
                         <th style="width:10%;">السعر </th>
                         <th style="width:10%;">الخصم </th>
                         <th style="width:10%;">الكمية </th>
+                        <th style="width:10%;">القيمة المضافة </th>
                         <th style="width:10%;">الكمية المرتجعة </th>
                         <th style="width:10%;">المجموع </th>
                     </tr>
@@ -67,6 +68,9 @@
                                     <input type="number" value="{{ $order_item->quantity }}" name="quantity[]" id="quantity<?=$row?>"  autocomplete="off" disabled="true" class="form-control" />
                                 </div>
                             </td>
+                            <td style="padding-left:1px;">
+                                <input type="text" name="vat[]" id="vat<?=$row?>" value="55" autocomplete="off" class="form-control" disabled="true" />
+                            </td>
                             <td style="padding-left:20px;">
                                 <input type="number" value="0" min="0" max="{{ $order_item->quantity }}" name="removed_quantity[]" id="removed_quantity<?=$row?>" data-quantity="1" onkeyup="setQuantity(<?php echo $row; ?>)" autocomplete="off" class="form-control" />
                             </td>
@@ -80,19 +84,23 @@
                 </table>
 
                 <div class="form-group">
-                    <label for="grand_total" class="col-sm-2 control-label">المجموع الأولي </label>
+                    <label for="grand_total" class="col-sm-6 control-label">المجموع الأولي </label>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" id="grand_total" name="grand_total" value="{{ $order->grand_total }}" autocomplete="off" disabled="true"/>
                     </div>
-                    <label for="removed_total" class="col-sm-2 control-label">المجموع المرتجع </label>
+                    <label for="removed_total" class="col-sm-6 control-label">المجموع المرتجع </label>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" value="0" id="removed_total" name="removed_total" autocomplete="off" disabled="true"/>
                         <input type="hidden" value="{{ Route::current()->getParameter('order_id') }}" name="order_id" id="order_id" />
 
                     </div>
-                    <label for="removed_discount" class="col-sm-2 control-label">الخصم المرتجع </label>
+                    <label for="removed_discount" class="col-sm-6 control-label">الخصم المرتجع </label>
                     <div class="col-sm-3">
                         <input type="number" class="form-control" value="0" id="removed_discount" name="removed_discount" autocomplete="off" disabled="true"/>
+                    </div>
+                    <label for="removed_vat" class="col-sm-6 control-label">القيمة المضافة المرتجعة </label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" value="0" id="removed_vat" name="removed_vat" autocomplete="off" disabled="true"/>
                     </div>
                 </div> <!--/form-group-->
 
