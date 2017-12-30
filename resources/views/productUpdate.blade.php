@@ -3,9 +3,21 @@
 @section('content')
 
     @include('includes.message-block')
+    <div id="switchUpdateDiv">
+        <label for="product_update_select" class="col-sm-1">تفاصيل العملية </label>
+        <label class="col-sm-1 control-label">: </label>
+        <div class="col-sm-3" id="switchPU">
+            <select class="form-control" id="product_update_select" name="product_update_select">
+                <option value="">اختر</option>
+                <option value="all">الكل</option>
+                <option value="توريد">توريد</option>
+                <option value="مبيعات">مبيعات</option>
+                <option value="مرتجع">مرتجع</option>
+            </select>
+        </div>
+    </div> <!-- /form-group-->
     <div class="row">
         <div class="col-md-12">
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="page-heading"> <i class="glyphicon glyphicon-edit"></i>سجل المنتج</div>
@@ -46,5 +58,8 @@
             </div> <!-- /panel -->
         </div> <!-- /col-md-12 -->
     </div> <!-- /row -->
+    <script>
+        var product_id = '{{Route::Input('product_id')}}';
+    </script>
 
 @endsection

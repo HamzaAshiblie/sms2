@@ -89,7 +89,8 @@ Route::post('/productsingle/delete',[
     'as' => 'product.delete',
 ]);
 Route::get('/product/{cat_id}','ProductController@getProductByCat');
-Route::get('/productUpdate/{cat_id}','ProductController@getProductUpdate');
+Route::get('/productUpdate/{product_id}/{operation}','ProductController@getProductUpdateByOperation');
+Route::get('/productUpdate/{product_id}','ProductController@getProductUpdate');
 
 ///////////////////////////////////////////ORDERS/////////////////////////////////////////////
 Route::get('/addorder',[
@@ -167,6 +168,10 @@ Route::get('/reportSales',[
     'uses'=>'ReportController@getReportSales',
     'as' => 'reportSales'
 ]);
+Route::post('/postReportSales',[
+    'uses'=>'ReportController@postReportSales',
+    'as' => 'postReportSales'
+]);
 Route::get('/reportPurchases',[
     'uses'=>'ReportController@getReportPurchases',
     'as' => 'reportPurchases'
@@ -174,6 +179,10 @@ Route::get('/reportPurchases',[
 Route::get('/reportInvoices',[
     'uses'=>'ReportController@getReportInvoices',
     'as' => 'reportInvoices'
+]);
+Route::get('/postReportInvoice',[
+    'uses'=>'ReportController@postReportInvoice',
+    'as' => 'postReportInvoice'
 ]);
 Route::get('/reportRemoved',[
     'uses'=>'ReportController@getReportRemoved',
@@ -183,3 +192,9 @@ Route::get('/reportVats',[
     'uses'=>'ReportController@getReportVats',
     'as' => 'reportVats'
 ]);
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
+Route::get('/admin', 'AdminController@index')->name('admin.dashboard');
+Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');

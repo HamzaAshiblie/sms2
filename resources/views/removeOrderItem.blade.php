@@ -18,9 +18,8 @@
 
         </div> <!--/panel-->
         <div class="panel-body">
-            <div class="success-messages">
-                @include('includes.message-block')
-            </div> <!--/success-messages-->
+            <div class="success-remove">
+            </div> <!--/success-remove-->
             <form class="form-horizontal" method="POST" action="" id="removeOrderItemForm">
 
                 <div class="form-group">
@@ -69,7 +68,7 @@
                                 </div>
                             </td>
                             <td style="padding-left:1px;">
-                                <input type="text" name="vat[]" id="vat<?=$row?>" value="55" autocomplete="off" class="form-control" disabled="true" />
+                                <input type="text" name="vat[]" id="vat<?=$row?>" value="{{ $order_item->item_vat }}" autocomplete="off" class="form-control" disabled="true" />
                             </td>
                             <td style="padding-left:20px;">
                                 <input type="number" value="0" min="0" max="{{ $order_item->quantity }}" name="removed_quantity[]" id="removed_quantity<?=$row?>" data-quantity="1" onkeyup="setQuantity(<?php echo $row; ?>)" autocomplete="off" class="form-control" />
@@ -119,6 +118,7 @@
     <script>
         var token = '{{ Session::token() }}';
         var urlRemoveOrderItem = '{{ route('removeItem') }}';
+        var urlOrder = '{{ route('addOrder') }}';
     </script>
 
 

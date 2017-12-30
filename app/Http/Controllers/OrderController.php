@@ -79,6 +79,7 @@ class OrderController extends Controller
         $product_id = $request['product_name'];
         $total_amount = $request['total_amount'];
         $discount = $request['discount'];
+        $vat = $request['vat'];
         $grand_total = $request['grand_total'];
         $paid = $request['paid'];
         $due = $request['due'];
@@ -92,17 +93,19 @@ class OrderController extends Controller
         $order->client_id = $client_id;
         $order->total_amount = $total_amount;
         $order->discount =  $discount;
+        $order->vat =  $vat;
         $order->grand_total = $grand_total;
         $order->paid = $paid;
         $order->due = $due;
         $order->payment_type = $payment_type;
 
-        if ($order->save()){
+        if ($request->user()->orders()->save($order)){
            //$input = Input::all();
             $product_ids = $request['product_name'];
             $quantities = $request['product_quantity'];
             $unit_prices = $request['unit_price'];
             $item_discounts = $request['item_discount'];
+            $item_vats = $request['item_vat'];
             $totals = $request['total'];
             foreach ($product_ids as $key => $product_id) {
                //$product = Product::find($product_id);
@@ -116,6 +119,7 @@ class OrderController extends Controller
                $order_item->quantity = $quantities[$key];
                $order_item->rate = $unit_prices[$key];
                $order_item->item_discount = $item_discounts[$key];
+               $order_item->item_vat = $item_vats[$key];
                $order_item->total = $totals[$key];
                if ($order_item->save()){
                    $old_quantity = Product::where('id',$product_id)->first()->product_quantity;
@@ -142,6 +146,7 @@ class OrderController extends Controller
         $totals = $request['total'];
         $removed_total = $request['removed_total'];
         $removed_discount = $request['removed_discount'];
+        $removed_vat = $request['removed_vat'];
         $order_id = $request['order_id'];
         foreach ($order_item_ids as $key => $order_item_id){
             $product = Product::where('id',$product_ids[$key])->first();
@@ -168,8 +173,10 @@ class OrderController extends Controller
         $order = Order::where('id',$order_id)->first();
         $old_grand_total = $order->grand_total;
         $old_discount = $order->discount;
+        $old_vat = $order->vat;
         $order->grand_total = $old_grand_total - $removed_total;
         $order->discount = $old_discount - $removed_discount;
+        $order->vat = $old_vat - $removed_vat;
         $order->save();
         return response()->json($order,200);
     }

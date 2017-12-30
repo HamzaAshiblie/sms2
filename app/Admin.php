@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use \Illuminate\Auth\Authenticatable;
     /**
@@ -12,8 +12,10 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    protected $guard = 'admin';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'job_title'
     ];
 
     /**
@@ -24,8 +26,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function orders()
-    {
-        return $this->hasMany('App\Order');
-    }
 }

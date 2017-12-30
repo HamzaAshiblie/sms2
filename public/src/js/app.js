@@ -1,4 +1,273 @@
-﻿//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿//////////////////////////////////////////////////////////////////////////
+///////////////////////CREATE ORDER///////////////////////////////////////
+$('#createOrderForm').on('submit', function(e) {
+
+    e.preventDefault();
+
+    /* NOT WROKING !!!!!!!!!
+     $('input[name^="product_name"]').each(function() {
+     console.log($(this).val());
+     });
+     */
+
+    var productNameData = [];
+
+    var inps = document.getElementsByName('product_name[]');
+    for (var i = 0; i <inps.length; i++) {
+        var inp = inps[i];
+        productNameData.push(inp.value);
+    }
+    var quantityData = [];
+    var inpsq = document.getElementsByName('product_quantity[]');
+    for (var iq = 0; iq <inpsq.length; iq++) {
+        var inpq = inpsq[iq];
+        quantityData.push(inpq.value);
+    }
+    var unitPriceData = [];
+    var inpsup = document.getElementsByName('unit_price[]');
+    for (var iup = 0; iup <inpsup.length; iup++) {
+        var inpup = inpsup[iup];
+        unitPriceData.push(inpup.value);
+    }
+    var totalData = [];
+    var inpst = document.getElementsByName('total[]');
+    for (var it = 0; it <inpst.length; it++) {
+        var inpt = inpst[it];
+        totalData.push(inpt.value);
+    }
+    var itemDiscount = [];
+    var inpsid = document.getElementsByName('discount[]');
+    for (var iid = 0; iid <inpsid.length; iid++) {
+        var inpid = inpsid[iid];
+        itemDiscount.push(inpid.value);
+    }
+    var itemVat = [];
+    var inpsvid = document.getElementsByName('vat[]');
+    for (var viid = 0; viid <inpsvid.length; viid++) {
+        var inpvid = inpsvid[viid];
+        itemVat.push(inpvid.value);
+    }
+    console.log('VAT');
+    console.log(itemVat);
+    console.log($('#total_vat').val());
+    $.ajax({
+        type: "POST",
+        url: urlAddOrder,
+        data:{
+            order_date:   $('#order_date').val(),
+            client_id:    $('#client_id').val(),
+            product_name:         productNameData,
+            product_quantity:     quantityData,
+            total_amount: $('#total_amount').val(),
+            discount:     $('#discount').val(),
+            vat:     $('#total_vat').val(),
+            grand_total:  $('#grand_total').val(),
+            paid:         $('#paid').val(),
+            unit_price:   unitPriceData,
+            total:        totalData,
+            item_discount: itemDiscount,
+            item_vat: itemVat,
+            due:          $('#due').val(),
+            payment_type: $('#payment_type').val(),
+            _token: token},
+        success: function(data) {
+            $("#createOrderForm")[0].reset();
+            console.log('success');
+            console.log(data);
+            // create order button
+            var printOrderId = data;
+            $("#success-order").html('<div class="alert alert-success"> ' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" href="/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
+                '</div>');
+
+            $("html, body, div.panel, div.panel-body").animate({scrollTop: '0px'}, 100);
+
+            // disable the modal footer button
+            $(".submitButtonFooter").addClass('div-hide');
+            // remove the product row
+            //$(".removeProductRowBtn").addClass('div-hide');
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+        console.log('Text Status:');
+        console.log(textStatus);
+        console.log('Error Thrown:');
+        console.log(errorThrown);
+        console.log('jqXHR:');
+        console.log(jqXHR.responseText);
+        var responseError = JSON.parse(jqXHR.responseText);
+
+        var product_name = document.getElementsByName('product_name[]');
+        var product_quantity = document.getElementsByName('product_quantity[]');
+        $(".clean_product_name").html('');
+        $(".clean_product_quantity").html('');
+        $(".clean_product_name").closest('.form-group').removeClass('has-error');
+        $(".clean_product_quantity").closest('.form-group').removeClass('has-error');
+        for (var x = 0; x < product_name.length; x++) {
+            var product_nameId = product_name[x].id;
+            if(product_name[x].value == ''){
+                $("#"+product_nameId+"").after('<p class="clean_product_name text-danger"> الرجاء اختيار منتج </p>');
+                $("#"+product_nameId+"").closest('.form-group').addClass('has-error');
+            }
+            console.log('IDDDD: '+ product_nameId);
+        }
+        for (var x = 0; x < product_quantity.length; x++) {
+            var product_quantityId = product_quantity[x].id;
+            if(product_quantity[x].value == ''){
+                $("#"+product_quantityId+"").after('<p class="clean_product_quantity text-danger"> حقل الكمية مطلوب </p>');
+                $("#"+product_quantityId+"").closest('.form-group').addClass('has-error');
+            }
+        }
+        $.each(responseError, function(k, v) {
+            console.log('Key:');
+            console.log(k);
+            console.log('Value:');
+            console.log(v[0]);
+            $('input#' + k).closest('div').addClass('has-error');
+            $('select#' + k).closest('div').addClass('has-error');
+            //$('div#error_edit-'+ k +' h6').html(v[0]);
+        });
+    });
+
+});
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+///////////////////////REMOVE ORDER ITEMS/////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+$('#removeOrderItemForm').on('submit', function(e) {
+
+    e.preventDefault();
+    var productIdData = [];
+    var orderItemIdData = [];
+    var removedQuantityData = [];
+    var totalData = [];
+    var totalDiscountData = [];
+
+    $('input[name^="product_id"]').each(function() {
+        productIdData.push($(this).val());
+    });
+
+    $('input[name^="order_item_id"]').each(function() {
+        orderItemIdData.push($(this).val());
+    });
+
+    $('input[name^="removed_quantity"]').each(function() {
+        removedQuantityData.push($(this).val());
+    });
+
+    $('input[name^="total"]').each(function() {
+        totalData.push($(this).val());
+    });
+    $.ajax({
+        type: "POST",
+        url: urlRemoveOrderItem,
+        data:{
+            product_id:        productIdData,
+            order_item_id:     orderItemIdData,
+            removed_quantity: removedQuantityData,
+            total:             totalData,
+            removed_total:     $('#removed_total').val(),
+            removed_discount:  $("#removed_discount").val(),
+            order_id:          $('#order_id').val(),
+            _token: token},
+        success: function(data) {
+            $("#removeOrderItemForm")[0].reset();
+            var printOrderId = $('#order_id').val();
+            $("#success-order").html('<div class="alert alert-success"> ' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تعديل الطلب <br /> <br /> <a type="button" href="/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
+                '</div>');
+            // disable the modal footer button
+            $(".submitButtonFooter").addClass('div-hide');
+            // remove the product row
+            //$(".removeProductRowBtn").addClass('div-hide');
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+    });
+
+});
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+///////////////////////PRODUCT UPDATE BY OPERATION////////////////////////
+$('#product_update_select').on('change',function (event) {
+    var selectedOperation = event.target.value;
+    console.log(selectedOperation);
+    if (selectedOperation == 'all'){
+        selectedOperation = '';
+    }
+    console.log(selectedOperation);
+    if (selectedOperation){
+        var urlPU = "/productUpdate/"+product_id + "/";
+        $(location).attr('href',urlPU+selectedOperation);
+    }else {
+        $(location).attr('href',"/productUpdate/"+product_id);
+
+    }
+});
+/////////////////////////////////////////////////////////////////////////
+
+$('#showInvoice').on('click', function (e) {
+    e.preventDefault();
+    var orderId = $('#order_id').val();
+    console.log(orderId);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: urlReportInvoice,
+        data:{
+            order_id: orderId,
+            _token: token},
+        success: function() {
+            var orderId = $('#order_id').val();
+            var urlInvoice = "/printOrder/"+orderId;
+            window.open(urlInvoice);
+        }
+    });
+    var orderId = $('#order_id').val();
+    var urlInvoice = "/printOrder/"+orderId;
+    window.open(urlInvoice);
+});
+$('#showReportSales').on('click', function (e) {
+    e.preventDefault();
+    var condition1 = $('#condition1').val();
+    var from_date = $('#from_date').val();
+    var to_date = $('#to_date').val();
+    console.log(condition1);
+    $.ajax({
+        type: "POST",
+        url: urlReportSales,
+        data:{
+            start_date: from_date,
+            end_date:   to_date,
+            client_id:  condition1,
+            _token: token},
+            success: function(data) {
+            $("#reportSalesForm")[0].reset();
+            console.log('success');
+            console.log(data);
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+
+        console.log('Text Status:');
+        console.log(textStatus);
+        console.log('Error Thrown:');
+        console.log(errorThrown);
+        console.log('jqXHR:');
+        console.log(jqXHR.responseText);
+    });
+
+});
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////PAYMENTS-MOVED//////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var orderId = 0;
@@ -997,7 +1266,7 @@ function removedTotal() {
         var count = $(tr).attr('id');
         count = count.substring(3);
         removedTotalAmount = Number(removedTotalAmount) + Number($("#total"+count).val());
-        removedVatAmount = Number(removedVatAmount) + Number($("#vat"+count).val());
+        removedVatAmount = Number(removedVatAmount) + (Number($("#vat"+count).val())*Number($("#removed_quantity"+count).val()));
         removedDiscountAmount = Number(removedDiscountAmount) + (Number($("#removed_quantity"+count).val())*Number($("#item_discount"+count).val()));
     } // /for
     removedTotalAmount = removedTotalAmount.toFixed(2);

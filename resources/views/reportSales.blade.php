@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <form class="form-horizontal" id="reportSales">
+    <form class="form-horizontal" id="reportSalesForm">
         <table class="reportTable" id="width1">
             <tbody>
                 <tr class="trReport">
@@ -11,16 +11,16 @@
                 </tr>
                 <tr class="trReport">
                     <td class="tdFactor">
-                        <input style="width:350px;" type="text" name="from_date" value="" placeholder="ابحث برقم القطعة أو اسم المورد أو اسم العميل">
+                        <input style="width:350px;" type="text" name="condition1" id="condition1" value="" placeholder="ابحث برقم القطعة أو اسم المورد أو اسم العميل">
                     </td>
                     <td class="tdFactor">
-                        <input style="width:150px;" type="text" name="from_date" value="" placeholder="بداية التاريخ">
+                        <input style="width:150px;" type="text" name="from_date" id="from_date" value="" placeholder="بداية التاريخ">
                     </td>
                     <td class="tdFactor">
-                        <input style="width:150px" type="text" name="to_date" value="" placeholder="نهاية التاريخ">
+                        <input style="width:150px" type="text" name="to_date" id="to_date" value="" placeholder="نهاية التاريخ">
                     </td>
                     <td colspan="2" class="tdSearch">
-                        <input style="height:29px;" type="submit" name="submit" value="إرسال">
+                        <button type="button" class="btn btn-primary" id="showReportSales" data-loading-text="Loading..." autocomplete="off"> <i class="glyphicon glyphicon-ok-sign"></i> إرسال</button>
                     </td>
                 </tr>
             </tbody>
@@ -43,4 +43,9 @@
         <tbody>
         </tbody>
     </table>
+
+    <script>
+        var token = '{{ Session::token() }}';
+        var urlReportSales = '{{ route('postReportSales') }}';
+    </script>
 @endsection

@@ -17,7 +17,6 @@ class ProductController extends Controller
             return view('product',['products'=> $products]);
         }
     }
-
     public function getProductSingle(Request $request)
     {
         $products = Product::find($request['product_id']);
@@ -31,6 +30,13 @@ class ProductController extends Controller
     public function getProductUpdate($product_id)
     {
         $product_updates = Product_update::where('product_id', $product_id)->get();
+        return view('productUpdate',['product_updates'=> $product_updates]);
+    }
+    public function getProductUpdateByOperation($product_id, $operation)
+    {
+        $product_updates = Product_update::where([
+            ['product_id', '=', $product_id],
+            ['operation', '=', $operation]])->get();
         return view('productUpdate',['product_updates'=> $product_updates]);
     }
     public function productCreateProduct(Request $request)

@@ -15,11 +15,9 @@
                     <div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> إدارة المنتجات</div>
                 </div> <!-- /panel-heading -->
                 <div class="panel-body div-body-modal">
-
                     <div class="div-add-product-modal pull-right" style="padding-bottom:20px;">
                         <button class="btn btn-default" id="add-product-modal-btn"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة منتج </button>
                     </div> <!-- /div-action -->
-
                     <div id="switchCategoryDiv">
                         <label for="category_id" class="col-sm-1">الصنف </label>
                         <label class="col-sm-1 control-label">: </label>
