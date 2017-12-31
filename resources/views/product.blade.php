@@ -38,7 +38,9 @@
                             <th  style="text-align: right">المنتج</th>
                             <th  style="text-align: right">الكمية</th>
                             <th  style="text-align: right">الوحدة</th>
+                            @if(Auth::user()->isAdmin)
                             <th  style="text-align: right">سعر الشراء</th>
+                            @endif
                             <th  style="text-align: right">سعر البيع</th>
                             <th style="width:15%; text-align: right">التحكم</th>
                         </tr>
@@ -51,7 +53,9 @@
                                 <td>{{ $product->product_name }}</td>
                                 <td>{{ $product->product_quantity }}</td>
                                 <td>{{ $product->product_unit }}</td>
+                                @if(Auth::user()->isAdmin)
                                 <td>{{ $product->init_price }}</td>
+                                @endif
                                 <td>{{ $product->unit_price }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
