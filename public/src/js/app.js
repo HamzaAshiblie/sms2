@@ -78,7 +78,7 @@ $('#createOrderForm').on('submit', function(e) {
             var printOrderId = data;
             $("#success-order").html('<div class="alert alert-success"> ' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" href="/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" href="/sms2/public/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
                 '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
                 '</div>');
 
@@ -178,7 +178,7 @@ $('#removeOrderItemForm').on('submit', function(e) {
             var printOrderId = $('#order_id').val();
             $("#success-order").html('<div class="alert alert-success"> ' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تعديل الطلب <br /> <br /> <a type="button" href="/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تعديل الطلب <br /> <br /> <a type="button" href="/sms2/public/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
                 '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
                 '</div>');
             // disable the modal footer button
@@ -229,12 +229,12 @@ $('#showInvoice').on('click', function (e) {
             _token: token},
         success: function() {
             var orderId = $('#order_id').val();
-            var urlInvoice = "/printOrder/"+orderId;
+            var urlInvoice = "/sms2/public/printOrder/"+orderId;
             window.open(urlInvoice);
         }
     });
     var orderId = $('#order_id').val();
-    var urlInvoice = "/printOrder/"+orderId;
+    var urlInvoice = "/sms2/public/printOrder/"+orderId;
     window.open(urlInvoice);
 });
 $('#showReportSales').on('click', function (e) {
@@ -1348,7 +1348,7 @@ $('#createOrderForm').on('submit', function(e) {
             var printOrderId = data;
             $("#success-order").html('<div class="alert alert-success"> ' +
                 '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" href="/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
+                '<strong><i class="glyphicon glyphicon-ok-sign"></i></strong> تم تسجيل الطلب <br /> <br /> <a type="button" href="/sms2/public/printOrder/'+printOrderId+'"  class="btn btn-primary"> <i class="glyphicon glyphicon-print"></i> طباعة </a>'+
                 '<a href="'+urlOrder +'" class="btn btn-default" style="margin-left:10px;"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة طلب جديد </a>'+
                 '</div>');
 
