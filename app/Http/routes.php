@@ -12,8 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 })->name('home');
+
+Route::auth();
+
 Route::get('/account',[
     'uses'=>'UserController@getAccount',
     'as' => 'account'
@@ -192,7 +195,23 @@ Route::get('/reportVats',[
     'uses'=>'ReportController@getReportVats',
     'as' => 'reportVats'
 ]);
-Route::auth();
+
+Route::get('/reportBetween',[
+    'uses'=>'ReportController@getReportBetweenDate',
+    'as' => 'report.betweenDate'
+]);
+
+Route::get('/reportProductBetween',[
+    'uses'=>'ReportController@getReportPurchasesBetweenDate',
+    'as' => 'report.betweenProductDate'
+]);
+
+Route::get('/reportVatBetween',[
+    'uses'=>'ReportController@getReportVatBetweenDate',
+    'as' => 'report.betweenVatDate'
+]);
+
+
 
 Route::get('/home', 'HomeController@index');
 Route::get('/admin', 'AdminController@index')->name('admin.dashboard');

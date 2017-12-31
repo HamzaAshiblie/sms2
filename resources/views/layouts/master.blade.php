@@ -11,6 +11,8 @@
     <link href="{{URL::to('src/font-awesome/css/font-awesome.css') }}" rel='stylesheet' media='all' />
     <link href="{{URL::to('src/css/app.css')}}" rel="stylesheet">
     <link href="{{URL::to('src/css/rtl.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::to('src/jquery-ui/jquery-ui.min.css')}}">
+
 </head>
 <body>
 @section('header')
@@ -29,39 +31,17 @@
     <script src="{{URL::to('src/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::to('src/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 
-    <script src="{{URL::to('src/js/datatables.js')}}">
+    <script src="{{URL::to('src/js/datatables.js')}}"></script>
 
-        /*
-        $(document).ready(function() {
-             window.atable = $('table.display').DataTable({
-                "language": {
-                    "sProcessing":   "جارٍ التحميل...",
-                    "sLengthMenu":   "أظهر _MENU_ مدخلات",
-                    "sZeroRecords":  "لم يعثر على أية سجلات",
-                    "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "ابحث:",
-                    "sUrl":          "",
-                    "oPaginate": {
-                        "sFirst":    "الأول",
-                        "sPrevious": "السابق",
-                        "sNext":     "التالي",
-                        "sLast":     "الأخير"
-                    }
-                }
-            } );
-            console.log(window.atable);
-        } );*/
-
-    </script>
-<script>
-
-</script>
 
 <script  src="{{URL::to('src/js/app.js')}}"></script>
-
+<script src="{{ URL::to('src/jquery-ui/jquery-ui.min.js')}}"></script>
+<script>
+    $( function() {
+        $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+        $( "#datepicker2" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    } );
+</script>
     <!--Jquery Redirect-->
 
 </body>

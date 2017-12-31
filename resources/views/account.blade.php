@@ -11,7 +11,7 @@
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="username">اسم المستخدم</label>
-                    <input type="text" name="username" class="form-control" value="{{ $user->username }}" id="username">
+                    <input type="text" name="username" class="form-control" value="{{ $user->name }}" id="username">
                 </div>
                 <div class="form-group">
                     <label for="passsword">كلمة المرور</label>

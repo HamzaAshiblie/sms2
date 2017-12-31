@@ -1,7 +1,21 @@
 @extends('layouts.master')
 
 @section('content')
+    <div class="row">
+        <div class="col-md-12">
+
+            <ol class="breadcrumb">
+                <li><a href="#">الرئيسية</a></li>
+                <li>التقارير</li>
+                <li class="active">الفاوتير</li>
+            </ol>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> الفواتير</div>
+                </div> <!-- /panel-heading -->
+                <div class="panel-body div-body-modal">
     <form class="form-horizontal" id="reportInvoiceForm">
+        @include('includes.message-block')
         <table class="reportTable" id="width1">
             <tbody>
             <tr class="trReport">
@@ -20,6 +34,10 @@
             </tbody>
         </table>
     </form> <!-- /.form -->
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         var token = '{{ Session::token() }}';
         var urlReportInvoice = '{{ route('postReportInvoice') }}';

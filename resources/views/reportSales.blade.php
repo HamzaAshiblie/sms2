@@ -1,33 +1,84 @@
 @extends('layouts.master')
 
 @section('content')
-    <form class="form-horizontal" id="reportSalesForm">
-        <table class="reportTable" id="width1">
-            <tbody>
-                <tr class="trReport">
-                    <td class="tdTitle">
-                        اجمالي المبيعات
-                    </td>
-                </tr>
-                <tr class="trReport">
-                    <td class="tdFactor">
-                        <input style="width:350px;" type="text" name="condition1" id="condition1" value="" placeholder="ابحث برقم القطعة أو اسم المورد أو اسم العميل">
-                    </td>
-                    <td class="tdFactor">
-                        <input style="width:150px;" type="text" name="from_date" id="from_date" value="" placeholder="بداية التاريخ">
-                    </td>
-                    <td class="tdFactor">
-                        <input style="width:150px" type="text" name="to_date" id="to_date" value="" placeholder="نهاية التاريخ">
-                    </td>
-                    <td colspan="2" class="tdSearch">
-                        <button type="button" class="btn btn-primary" id="showReportSales" data-loading-text="Loading..." autocomplete="off"> <i class="glyphicon glyphicon-ok-sign"></i> إرسال</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form> <!-- /.form -->
+    <div class="row">
+        <div class="col-md-12">
 
-    <div style="height: 50px"></div>
+            <ol class="breadcrumb">
+                <li><a href="#">الرئيسية</a></li>
+                <li>التقارير</li>
+                <li class="active">المبيعات</li>
+            </ol>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> المبيعات</div>
+                </div> <!-- /panel-heading -->
+                <div class="panel-body div-body-modal">
+                    <form class="form-inline" action="{{ route('report.betweenDate') }}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="datepicker" name="start" placeholder="بداية التاريخ">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="datepicker2" name="end" placeholder="نهاية التاريخ">
+                        </div>
+                        <button class="btn btn-default" type="submit">إرسال</button>
+                    </form>
+                    <div style="height: 50px">
+                             @if($betweenOrders)
+                                المجموع:
+                              {{ $betweenOrders->sum('total_amount') }}
+                                ريال
+                            @endif
+                    </div>
+
+                    <table class="table" id="reportSalesBetween-table">
+                        <thead>
+                        <tr>
+                            <th  style="text-align: right">رقم المنتج</th>
+                            <th  style="text-align: right">العائلة</th>
+                            <th  style="text-align: right">المنتج</th>
+                            <th  style="text-align: right">الكمية</th>
+                            <th  style="text-align: right">سعر البيع</th>
+                            <th  style="text-align: right">العميل</th>
+                            <th  style="text-align: right">التاريخ</th>
+                            <th  style="text-align: right">الكمية</th>
+                            <th  style="text-align: right">سعر البيع</th>
+                            <th  style="text-align: right">العميل</th>
+                            <th  style="text-align: right">التاريخ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($betweenOrders as $order)
+                            <tr>
+                                <td>{{ $order->id }}</td>
+                                <td>{{ $order->order_date }}</td>
+                                <td>{{ $order->client->client_name }}</td>
+                                <td>{{ $order_items->has($order->id) ? count($order_items[$order->id]) : 0 }}</td>
+                                <td>{{ $order->total_amount }}</td>
+                                <td>{{ $order->discount }}</td>
+                                <td>{{ $order->vat }}</td>
+                                <td>{{ $order->grand_total }}</td>
+                                <td>{{ $order->paid }}</td>
+                                <td>{{ $order->due }}</td>
+                                <td>{{ $order->payment_type }}</td>
+                            </tr>
+
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> المبيعات</div>
+                </div> <!-- /panel-heading -->
+                <div class="panel-body div-body-modal">
+    <div style="height: 50px">
+        المجموع:
+           {{ $orders->sum('total_amount') }}
+        ريال
+    </div>
+
     <table class="table" id="reportSales-table">
         <thead>
         <tr>
@@ -38,14 +89,37 @@
             <th  style="text-align: right">سعر البيع</th>
             <th  style="text-align: right">العميل</th>
             <th  style="text-align: right">التاريخ</th>
+            <th  style="text-align: right">الكمية</th>
+            <th  style="text-align: right">سعر البيع</th>
+            <th  style="text-align: right">العميل</th>
+            <th  style="text-align: right">التاريخ</th>
         </tr>
         </thead>
         <tbody>
+     @foreach($orders as $order)
+            <tr>
+                <td>{{ $order->id }}</td>
+                <td>{{ $order->order_date }}</td>
+                <td>{{ $order->client->client_name }}</td>
+                <td>{{ $order_items->has($order->id) ? count($order_items[$order->id]) : 0 }}</td>
+                <td>{{ $order->total_amount }}</td>
+                <td>{{ $order->discount }}</td>
+                <td>{{ $order->vat }}</td>
+                <td>{{ $order->grand_total }}</td>
+                <td>{{ $order->paid }}</td>
+                <td>{{ $order->due }}</td>
+                <td>{{ $order->payment_type }}</td>
+            </tr>
+
+        @endforeach
         </tbody>
     </table>
-
+                </div>
+            </div>
+        </div>
     <script>
         var token = '{{ Session::token() }}';
         var urlReportSales = '{{ route('postReportSales') }}';
+
     </script>
 @endsection

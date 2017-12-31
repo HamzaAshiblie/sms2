@@ -16,7 +16,9 @@
                 <div class="panel-body div-body-modal">
 
                     <div class="div-add-category-modal pull-right" style="padding-bottom:20px;">
+                        @if(Auth::user()->isAdmin)
                         <button class="btn btn-default" id="add-category-modal-btn"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة صنف </button>
+                        @endif
                     </div> <!-- /div-action -->
 
 

@@ -197,8 +197,14 @@ class OrderController extends Controller
     public function printOrder($order_id)
     {
         $order = Order::where('id', $order_id)->first();
+        if($order){
         $order_items = Order_item::where('order_id', $order_id)->get();
         return view('includes.printOrder',['order' => $order, 'order_items'=> $order_items]);
+        }
+        else{
+            $message = 'رقم الطلب غير صحيح';
+            return redirect()->back()->with(['message' => $message]);
+        }
     }
     public function getOrderItem($order_id)
     {

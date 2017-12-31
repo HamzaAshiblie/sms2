@@ -26,10 +26,10 @@
                     <li id="nav-clients" class="{{ Request::is('product') ? 'active' : '' }}"><a href="{{ route('product') }}"><i class="glyphicon glyphicon-th"></i>  المنتجات</a></li>
 
                     <li class="dropdown {{ Request::is('addorder*') ? 'active' : '' }}{{ Request::is('manageOrder*') ? 'active' : '' }}" id="navOrder">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> المشتريات<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> المبيعات<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li id="topNavAddOrder" class="{{ Request::is('addOrder*') ? 'active' : '' }}"><a href="{{ route('addOrder') }}"> <i class="glyphicon glyphicon-plus"></i> إضافة عملية شرائية</a></li>
-                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? '' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة المشتريات</a></li>
+                            <li id="topNavAddOrder" class="{{ Request::is('addOrder*') ? 'active' : '' }}"><a href="{{ route('addOrder') }}"> <i class="glyphicon glyphicon-plus"></i> إضافة عملية بيع</a></li>
+                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? '' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة المبيعات</a></li>
                         </ul>
                     </li>
 
@@ -45,7 +45,9 @@
                     <li class="dropdown" id="navSetting">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            @if(Auth::user()->isAdmin)
                             <li id="topNavSetting"><a href="{{ route('account') }}"> <i class="glyphicon glyphicon-wrench"></i> الإعدادات</a></li>
+                            @endif
                             <li id="topNavLogout"><a href="/logout"> <i class="glyphicon glyphicon-log-out"></i> تسجيل الخروج</a></li>
                         </ul>
                     </li>

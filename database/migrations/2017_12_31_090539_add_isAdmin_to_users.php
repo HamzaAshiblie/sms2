@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdToUsers extends Migration
+class AddIsAdminToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,9 @@ class AddUserIdToUsers extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('users', function($table) {
+            $table->boolean('isAdmin')->default(0)->after('password');
+        });
     }
 
     /**
@@ -22,6 +24,8 @@ class AddUserIdToUsers extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function($table) {
+            $table->dropColumn('isAdmin');
+        });
     }
 }

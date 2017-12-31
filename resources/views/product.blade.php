@@ -16,7 +16,9 @@
                 </div> <!-- /panel-heading -->
                 <div class="panel-body div-body-modal">
                     <div class="div-add-product-modal pull-right" style="padding-bottom:20px;">
+                        @if(Auth::user()->isAdmin)
                         <button class="btn btn-default" id="add-product-modal-btn"> <i class="glyphicon glyphicon-plus-sign"></i> إضافة منتج </button>
+                        @endif
                     </div> <!-- /div-action -->
                     <div id="switchCategoryDiv">
                         <label for="category_id" class="col-sm-1">الصنف </label>

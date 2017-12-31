@@ -73,7 +73,7 @@
                         <input type="text" name="unit_price[]" id="unit_price<?php echo $x; ?>" disabled="true" onkeyup="this.value = numericInput(this.value);getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" />
                     </td>
                     <td style="padding-left:15px;">
-                        <input type="text" name="discount[]" id="discount<?php echo $x; ?>" onkeyup="this.value = numericInput(this.value);getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" disabled="true" min="0" />
+                        <input type="number" name="discount[]" id="discount<?php echo $x; ?>" onkeyup="this.value = numericInput(this.value);getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" disabled="true" min="0" value="" />
                     </td>
                     <td style="padding-left:20px;">
                         <div class="form-group">
