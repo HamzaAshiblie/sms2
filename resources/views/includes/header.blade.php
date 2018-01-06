@@ -40,6 +40,7 @@
                             <li id="topNavPurchasesReport" class=""><a href="{{ route('reportPurchases') }}"> <i class="glyphicon glyphicon-file"></i> المشتريات</a></li>
                             <li id="topNavVatsReport" class=""><a href="{{ route('reportVats') }}"> <i class="glyphicon glyphicon-file"></i> القيمة المضافة</a></li>
                             <li id="topNavInvoicesReport" class=""><a href="{{ route('reportInvoices') }}"> <i class="glyphicon glyphicon-file"></i> الفواتير</a></li>
+                            <li id="topNavLimitedReport" class=""><a href="{{ route('report.limited') }}"> <i class="glyphicon glyphicon-file"></i> المنتجات المحدودة</a></li>
                         </ul>
                     </li>
                     <li class="dropdown" id="navSetting">
@@ -48,7 +49,7 @@
                             @if(Auth::user()->isAdmin)
                             <li id="topNavSetting"><a href="{{ route('account') }}"> <i class="glyphicon glyphicon-wrench"></i> الإعدادات</a></li>
                             @endif
-                            <li id="topNavLogout"><a href="/logout"> <i class="glyphicon glyphicon-log-out"></i> تسجيل الخروج</a></li>
+                            <li id="topNavLogout"><a href="/sms2/public/logout"> <i class="glyphicon glyphicon-log-out"></i> تسجيل الخروج</a></li>
                         </ul>
                     </li>
 

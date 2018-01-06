@@ -50,6 +50,8 @@
                     <table class="table" id="reportSales-table">
                         <thead>
                         <tr>
+                            <th  style="text-align: right">رقم الفاتورة</th>
+                            <th  style="text-align: right">رقم الفاتورة</th>
                             <th  style="text-align: right">الاجمالي</th>
                             <th  style="text-align: right">التاريخ</th>
                         </tr>
@@ -57,6 +59,12 @@
                         <tbody>
                         @foreach($orders as $order)
                             <tr>
+                                <td>
+                                    <a href="/sms2/public/printOrder/{{$order->id}}">
+                                        {{ $order->id }}
+                                    </a>
+                                </td>
+                                <td>{{ $order->client->client_name }}</td>
                                 <td>{{ $order->vat }}</td>
                                 <td>{{ $order->created_at }}</td>
                             </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Order_item;
 use App\Product;
 use App\Product_update;
@@ -26,6 +27,14 @@ class ReportController extends Controller
         return response()->json($report,200);
     }
 
+    public function printSales()
+    {
+        $betweenOrders =[];
+        $order_item = Order_item::all()->groupBy('order_id');
+
+        $orders = Order::all();
+        return view('includes.printSales',['orders'=>$orders, 'order_items'=>$order_item , 'betweenOrders' => $betweenOrders]);
+    }
     public function getReportPurchases(Request $request)
     {
         $betweenProducts = [];
@@ -62,7 +71,8 @@ class ReportController extends Controller
     {
         $betweenVatOrders =[];
         $orders = Order::all();
-        return view('reportVats',['orders'=> $orders, 'betweenVatOrders' => $betweenVatOrders]);
+        $clients = Client::all();
+        return view('reportVats',['orders'=> $orders, 'betweenVatOrders' => $betweenVatOrders, 'clients' => $clients]);
     }
 
     public function getReportBetweenDate(Request $request)
@@ -92,5 +102,11 @@ class ReportController extends Controller
         $orders = Order::all();
         $betweenVatOrders = Order::whereBetween('created_at', array($start, $end))->get();;
         return view('reportVats',['orders'=>$orders, 'order_items'=>$order_item , 'betweenVatOrders' => $betweenVatOrders]);
+    }
+
+    public function getReportLimited()
+    {
+        $products = Product::where([['product_quantity','<=','limit']])->get();
+        return view('reportLimited',['products'=>$products]);
     }
 }

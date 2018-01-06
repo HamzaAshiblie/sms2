@@ -22,6 +22,7 @@
         <th>السعر</th>
         <th>الخصم</th>
         <th>الكمية</th>
+        <th>القيمة المضافة</th>
         <th>الإجمالي</th>
     </tr>
 
@@ -33,6 +34,7 @@
         <th>{{$order_item->rate}}</th>
         <th>{{$order_item->item_discount}}</th>
         <th>{{$order_item->quantity}}</th>
+        <th>{{$order_item->item_vat}}</th>
         <th>{{$order_item->total}}</th>
     </tr>
     @endforeach
@@ -53,6 +55,11 @@
     <tr>
         <th>الخصم</th>
         <th>{{$order->discount}}</th>
+    </tr>
+
+    <tr>
+        <th>القيمة المضافة</th>
+        <th>{{$order->vat}}</th>
     </tr>
 
     <tr>

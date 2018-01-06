@@ -10,7 +10,7 @@
             <select class="form-control" id="product_update_select" name="product_update_select">
                 <option value="">اختر</option>
                 <option value="all">الكل</option>
-                <option value="توريد">توريد</option>
+                <option value="مشتريات">مشتريات</option>
                 <option value="مبيعات">مبيعات</option>
                 <option value="مرتجع">مرتجع</option>
             </select>
@@ -33,6 +33,7 @@
                             <th  style="text-align: right">العملية</th>
                             <th  style="text-align: right">المورد</th>
                             <th  style="text-align: right">بلد الصنع</th>
+                            <th  style="text-align: right">المبلغ</th>
                             <th  style="text-align: right">التاريخ</th>
                         </tr>
                         </thead>
@@ -45,6 +46,7 @@
                                 <td>{{ $product_update->operation }}</td>
                                 <td>{{ $product_update->supplier }}</td>
                                 <td>{{ $product_update->country }}</td>
+                                <td>{{ $product_update->amount }}</td>
                                 <td>{{ $product_update->created_at->format('Y-m-d') }}</td>
                             </tr>
                         @endforeach

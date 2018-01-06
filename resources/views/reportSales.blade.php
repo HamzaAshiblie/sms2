@@ -66,6 +66,11 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <button type="button" class="btn btn-success" id="printSales" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
+                        <a style="color: white" href="{{ route('print.sales') }}">
+طباعة
+                        </a>
+                    </button>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -73,26 +78,26 @@
                     <div class="page-heading"> <i class="glyphicon glyphicon-edit"></i> المبيعات</div>
                 </div> <!-- /panel-heading -->
                 <div class="panel-body div-body-modal">
-    <div style="height: 50px">
-        المجموع:
-           {{ $orders->sum('total_amount') }}
-        ريال
-    </div>
+                <div style="height: 50px">
+                    المجموع:
+                       {{ $orders->sum('total_amount') }}
+                    ريال
+                </div>
 
     <table class="table" id="reportSales-table">
         <thead>
         <tr>
-            <th  style="text-align: right">رقم المنتج</th>
-            <th  style="text-align: right">العائلة</th>
-            <th  style="text-align: right">المنتج</th>
-            <th  style="text-align: right">الكمية</th>
-            <th  style="text-align: right">سعر البيع</th>
+            <th  style="text-align: right">رقم الطب</th>
+            <th  style="text-align: right">تاريخ الطلب</th>
             <th  style="text-align: right">العميل</th>
-            <th  style="text-align: right">التاريخ</th>
-            <th  style="text-align: right">الكمية</th>
-            <th  style="text-align: right">سعر البيع</th>
-            <th  style="text-align: right">العميل</th>
-            <th  style="text-align: right">التاريخ</th>
+            <th  style="text-align: right">عدد السلع</th>
+            <th  style="text-align: right">السعر الإجمالي</th>
+            <th  style="text-align: right">الخصم</th>
+            <th  style="text-align: right">القيمة المضافة</th>
+            <th  style="text-align: right">السعر النهائي</th>
+            <th  style="text-align: right">المدفوع</th>
+            <th  style="text-align: right">المتبقي</th>
+            <th  style="text-align: right">طريقة الدفع</th>
         </tr>
         </thead>
         <tbody>
@@ -117,6 +122,7 @@
                 </div>
             </div>
         </div>
+    </div>
     <script>
         var token = '{{ Session::token() }}';
         var urlReportSales = '{{ route('postReportSales') }}';

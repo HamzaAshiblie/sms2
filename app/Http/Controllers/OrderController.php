@@ -131,6 +131,7 @@ class OrderController extends Controller
                    $product_update->product_quantity = $new_quantity;
                    $product_update->supplier = '';
                    $product_update->country ='';
+                   $product_update->amount =$request['grand_total'];
                    $product_update->operation = 'مبيعات';
                    $product_update->save();
                }
@@ -167,6 +168,7 @@ class OrderController extends Controller
             $product_update->product_quantity = $removed_quantities[$key];
             $product_update->supplier = '';
             $product_update->country ='';
+            $product_update->amount =$removed_total;
             $product_update->operation = 'مرتجع';
             $product_update->save();
         }
@@ -221,8 +223,8 @@ class OrderController extends Controller
     {
         $order = Order::where('id',$request['id'])->first();
         if($order){
-            $order->paid = $request['paid'];
-            $order->due = $request['due'];
+            $order->paid += $request['paid'];
+            $order->due = $request['due'] - $request['paid'];
             $order->payment_type = $request['payment_type'];
             $order->update();
         }

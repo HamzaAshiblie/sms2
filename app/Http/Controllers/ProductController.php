@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Product_update;
+use App\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -42,27 +43,30 @@ class ProductController extends Controller
     public function productCreateProduct(Request $request)
     {
         $category = 'category_id';
-        if ($request['new_category'] != null){
-            $category = 'new-category';
-        }
+        //if ($request['new_category'] != null){
+        //   $category = 'new-category';
+        //}
         $this->validate($request, [
             'product_name'=> 'required|unique:products',
             $category=>'required',
-            'product_quantity'=>'required',
+            //'product_quantity'=>'required',
             'product_unit'=>'required',
-            'supplier'=>'required',
-            'country'=>'required',
+            //'supplier'=>'required',
+            //'country'=>'required',
             'unit_price'=>'required',
-            'init_price'=>'required'
+            //'init_price'=>'required'
+            'discount'=>'required'
         ]);
         $product = new Product();
         $product->category_id = $request['category_id'];
         $product->product_name = $request['product_name'];
-        $product->product_quantity = $request['product_quantity'];
+        //$product->product_quantity = $request['product_quantity'];
         $product->product_unit = $request['product_unit'];
         $product->unit_price = $request['unit_price'];
-        $product->init_price = $request['init_price'];
+        //$product->init_price = $request['init_price'];
         $product->discount = $request['discount'];
+        $product->limit = $request['limit'];
+        /*
         if ($product->save())
         {
             $product_update = new Product_update();
@@ -70,30 +74,48 @@ class ProductController extends Controller
             $product_update->product_quantity = $product->product_quantity;
             $product_update->supplier = $request['supplier'];
             $product_update->country = $request['country'];
-            $product_update->operation = 'توريد';
+            $product_update->operation = 'تعريف منتج';
             $product_update->save();
             return response()->json($product,200);
         }
+        */
+        $product->save();
         return redirect()->route('product');
     }
 
-    public function importProduct(Request $request)
+    public function purchaseProduct(Request $request)
     {
         $this->validate($request, [
+            'product_id'=>'required',
             'product_quantity'=>'required',
             'supplier'=>'required',
             'country'=>'required',
+            'init_price'=>'required',
+            'vat'=>'required',
         ]);
-        $product_update = new Product_update();
-        $product_update->product_id = $request['product_id'];
-        $product_update->product_quantity = $request['product_quantity'];
-        $product_update->supplier = $request['supplier'];
-        $product_update->country = $request['country'];
-        $product_update->operation = 'توريد';
-        if ($product_update->save()){
-            $old_quantity = Product::where('id',$request['product_id'])->first()->product_quantity;
+        $purchase = new Purchase();
+        $purchase->product_id = $request['product_id'];
+        $purchase->product_quantity = $request['product_quantity'];
+        $last_init = $request['init_price'];
+        $purchase->init_price = $request['init_price'];
+        $purchase->vat = $request['vat'];
+        $purchase->supplier = $request['supplier'];
+        $purchase->country = $request['country'];
+        if ($purchase->save()){
+            $product_update = new Product_update();
+            $product_update->product_id = $request['product_id'];
+            $product_update->product_quantity = $request['product_quantity'];
+            $product_update->supplier = $request['supplier'];
+            $product_update->country = $request['country'];
+            $product_update->amount = $request['init_price'];
+            $product_update->operation = 'مشتريات';
+            $product_update->save();
+            $old_product = Product::where('id',$request['product_id'])->first();
+            $old_quantity = $old_product->product_quantity;
+            $old_init = $old_product->init_price;
+            $max_init = max($last_init, $old_init);
             $updated_quantity = $old_quantity+$request['product_quantity'];
-            Product::where('id',$request['product_id'])->update(['product_quantity'=>$updated_quantity]);
+            Product::where('id',$request['product_id'])->update(['product_quantity'=>$updated_quantity, 'init_price'=>$max_init]);
         }
         return response()->json($product_update,200);
     }
@@ -105,7 +127,7 @@ class ProductController extends Controller
             'product_quantity'=>'required',
             'product_unit'=>'required',
             'unit_price'=>'required',
-            'init_price'=>'required'
+            //'init_price'=>'required'
         ]);
         $product = Product::where('id',$request['id'])->first();
         $product->category_id = $request['category_id'];
@@ -113,8 +135,9 @@ class ProductController extends Controller
         $product->product_quantity = $request['product_quantity'];
         $product->product_unit = $request['product_unit'];
         $product->unit_price = $request['unit_price'];
-        $product->init_price = $request['init_price'];
+        //$product->init_price = $request['init_price'];
         $product->discount = $request['discount'];
+        $product->limit = $request['limit'];
         $message= 'حدث خطأ، لم يتم إضافة المنتج';
         if ($product->update())
         {

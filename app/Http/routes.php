@@ -75,9 +75,9 @@ Route::post('/createproduct',[
     'uses' => 'ProductController@productCreateProduct',
     'as' => 'product.create'
 ]);
-Route::post('/importProduct',[
-    'uses' => 'ProductController@importProduct',
-    'as' => 'importProduct'
+Route::post('/purchaseProduct',[
+    'uses' => 'ProductController@purchaseProduct',
+    'as' => 'purchaseProduct'
 ]);
 Route::get('/producttsingle',[
     'uses' => 'ClientController@getClientSingle',
@@ -92,7 +92,7 @@ Route::post('/productsingle/delete',[
     'as' => 'product.delete',
 ]);
 Route::get('/product/{cat_id}','ProductController@getProductByCat');
-Route::get('/productUpdate/{product_id}/{operation}','ProductController@getProductUpdateByOperation');
+Route::get('/productUpdate/{product_id}/{operation}','ProductController@getProductUpdateByOperation')->name('operation');
 Route::get('/productUpdate/{product_id}','ProductController@getProductUpdate');
 
 ///////////////////////////////////////////ORDERS/////////////////////////////////////////////
@@ -133,6 +133,7 @@ Route::get('/removeOrderItem/{order_id}',[
     'middleware' => 'auth'
 ]);
 Route::get('/printOrder/{order_id}','OrderController@printOrder');
+Route::get('/printSales/','ReportController@printSales')->name('print.sales');
 /////////////////////////////////////////PAYMENTS///////////////////////////////////////////////////
 Route::post('/updatePayment', [
     'uses' => 'OrderController@updateOrderPayment',
@@ -209,6 +210,11 @@ Route::get('/reportProductBetween',[
 Route::get('/reportVatBetween',[
     'uses'=>'ReportController@getReportVatBetweenDate',
     'as' => 'report.betweenVatDate'
+]);
+
+Route::get('/reportLimited',[
+    'uses'=>'ReportController@getReportLimited',
+    'as' => 'report.limited'
 ]);
 
 
