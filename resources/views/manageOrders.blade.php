@@ -61,7 +61,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a type="button" data-toggle="modal" id="edit-payment-modal-btn" data-orderid="{{$order->id}}"> <i class="glyphicon glyphicon-edit"></i> تحديث المدفوعات</a></li>
-                                            <li><a type="button" data-toggle="modal" id="remove-order-items-modal-btn" href="/removeOrderItem/{{$order->id}}"> <i class="glyphicon glyphicon-trash"></i> ترجيع السلع</a></li>
+                                            <li><a type="button" data-toggle="modal" id="remove-order-items-modal-btn" href="/sms2/public/removeOrderItem/{{$order->id}}"> <i class="glyphicon glyphicon-trash"></i> ترجيع السلع</a></li>
                                         </ul>
                                     </div>
                                 </td>

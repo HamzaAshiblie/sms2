@@ -115,6 +115,12 @@ $('.panel').find('.div-body-modal').find('.table').find('.btn-group').find('.dro
 $('#purchase_product_btn').on('click', function () {
     $(".form-group").removeClass('has-error');
     $("h6.editErrorRed").html('');
+    console.log(productUpdateId);
+    console.log($('#purchase-product_quantity').val());
+    console.log($('#purchase-supplier').val());
+    console.log($('#purchase-country').val());
+    console.log($('#purchase-init_price').val());
+    console.log($('#purchase-total_vat').val());
     $.ajax({
         method:'post',
         url:urlPurchaseProduct,

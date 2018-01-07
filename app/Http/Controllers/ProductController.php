@@ -95,8 +95,10 @@ class ProductController extends Controller
         ]);
         $purchase = new Purchase();
         $purchase->product_id = $request['product_id'];
+        $amount_q = $request['product_quantity'];
         $purchase->product_quantity = $request['product_quantity'];
         $last_init = $request['init_price'];
+        $amount = $amount_q*($last_init+$request['vat']);
         $purchase->init_price = $request['init_price'];
         $purchase->vat = $request['vat'];
         $purchase->supplier = $request['supplier'];
@@ -107,14 +109,14 @@ class ProductController extends Controller
             $product_update->product_quantity = $request['product_quantity'];
             $product_update->supplier = $request['supplier'];
             $product_update->country = $request['country'];
-            $product_update->amount = $request['init_price'];
+            $product_update->amount = $amount;
             $product_update->operation = 'مشتريات';
             $product_update->save();
             $old_product = Product::where('id',$request['product_id'])->first();
             $old_quantity = $old_product->product_quantity;
             $old_init = $old_product->init_price;
             $max_init = max($last_init, $old_init);
-            $updated_quantity = $old_quantity+$request['product_quantity'];
+            $updated_quantity = $old_quantity + $request['product_quantity'];
             Product::where('id',$request['product_id'])->update(['product_quantity'=>$updated_quantity, 'init_price'=>$max_init]);
         }
         return response()->json($product_update,200);

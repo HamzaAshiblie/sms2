@@ -18,7 +18,6 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.cTable);
 } );
 $(document).ready(function() {
     window.pTable = $('#products-table').DataTable({
@@ -40,7 +39,6 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.pTable);
 } );
 $(document).ready(function() {
     window.catTable = $('#categories-table').DataTable({
@@ -62,7 +60,6 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
 $(document).ready(function() {
     window.catTable = $('#reportSales-table').DataTable({
@@ -84,9 +81,7 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
-
 $(document).ready(function() {
     window.catTable = $('#reportPurchases-table').DataTable({
         "language": {
@@ -107,7 +102,6 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
 $(document).ready(function() {
     window.catTable = $('#reportSalesBetween-table').DataTable({
@@ -129,9 +123,7 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
-
 $(document).ready(function() {
     window.catTable = $('#reportRemoved-table').DataTable({
         "language": {
@@ -152,9 +144,7 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
-
 $(document).ready(function() {
     window.catTable = $('#reportInvoices-table').DataTable({
         "language": {
@@ -175,9 +165,7 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
-
 $(document).ready(function() {
     window.catTable = $('#reportVats-table').DataTable({
         "language": {
@@ -198,5 +186,4 @@ $(document).ready(function() {
             }
         }
     } );
-    console.log(window.catTable);
 } );
