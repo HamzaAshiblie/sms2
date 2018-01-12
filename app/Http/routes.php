@@ -133,7 +133,12 @@ Route::get('/removeOrderItem/{order_id}',[
     'middleware' => 'auth'
 ]);
 Route::get('/printOrder/{order_id}','OrderController@printOrder');
-Route::get('/printSales/','ReportController@printSales')->name('print.sales');
+Route::get('/printSales/','ReportController@printSales')->name('printSales');
+Route::get('/printDatedSales/','ReportController@printDatedSales')->name('printDatedSales');
+Route::get('/printPurchases/','ReportController@printPurchases')->name('printPurchases');
+Route::get('/printDatedPurchases/','ReportController@printDatedPurchases')->name('printDatedPurchases');
+Route::get('/printVats/','ReportController@printVats')->name('printVats');
+Route::get('/printDatedVats/','ReportController@printDatedVats')->name('printDatedVats');
 /////////////////////////////////////////PAYMENTS///////////////////////////////////////////////////
 Route::post('/updatePayment', [
     'uses' => 'OrderController@updateOrderPayment',

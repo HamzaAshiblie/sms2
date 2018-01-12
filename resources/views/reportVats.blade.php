@@ -23,9 +23,11 @@
                         </div>
                         <button class="btn btn-default" type="submit">إرسال</button>
                     </form>
-                    <table class="table" id="reportSalesBetween-table">
+                    <table class="table" id="reportVatsBetween-table">
                         <thead>
                         <tr>
+                            <th  style="text-align: right">رقم الفاتورة</th>
+                            <th  style="text-align: right">رقم الفاتورة</th>
                             <th  style="text-align: right">الاجمالي</th>
                             <th  style="text-align: right">التاريخ</th>
                         </tr>
@@ -33,12 +35,25 @@
                         <tbody>
                         @foreach($betweenVatOrders as $order)
                             <tr>
+                                <td>
+                                    <a href="/sms2/public/printOrder/{{$order->id}}">
+                                        {{ $order->id }}
+                                    </a>
+                                </td>
+                                <td>{{ $order->client->client_name }}</td>
                                 <td>{{ $order->vat }}</td>
                                 <td>{{ $order->created_at }}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    @if($start)
+                        <button type="button" class="btn btn-success" id="printDatedVats" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
+                            <a style="color: white" href="{{ route('printDatedVats', ['start'=>$start, 'end'=>$end])}}">
+                                طباعة
+                            </a>
+                        </button>
+                    @endif
                 </div>
             </div>
             <div class="panel panel-default">
@@ -47,7 +62,7 @@
                 </div> <!-- /panel-heading -->
                 <div class="panel-body div-body-modal">
 
-                    <table class="table" id="reportSales-table">
+                    <table class="table" id="reportVats-table">
                         <thead>
                         <tr>
                             <th  style="text-align: right">رقم الفاتورة</th>
@@ -77,7 +92,5 @@
         </div>
         <script>
             var token = '{{ Session::token() }}';
-            var urlReportSales = '{{ route('postReportSales') }}';
-
         </script>
 @endsection

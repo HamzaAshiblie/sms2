@@ -66,11 +66,13 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-success" id="printSales" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
-                        <a style="color: white" href="{{ route('print.sales') }}">
-طباعة
-                        </a>
-                    </button>
+                    @if($start)
+                        <button type="button" class="btn btn-success" id="printDatedSales" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
+                            <a style="color: white" href="{{ route('printDatedSales', ['start'=>$start, 'end'=>$end]) }}">
+                                طباعة
+                            </a>
+                        </button>
+                    @endif
                 </div>
             </div>
             <div class="panel panel-default">
@@ -119,6 +121,11 @@
         @endforeach
         </tbody>
     </table>
+                    <button type="button" class="btn btn-success" id="printSales" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
+                        <a style="color: white" href="{{ route('printSales') }}">
+                            طباعة
+                        </a>
+                    </button>
                 </div>
             </div>
         </div>

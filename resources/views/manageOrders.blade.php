@@ -13,10 +13,7 @@
             </ol>
             <div class="panel panel-default">
                 <div class="panel-heading">
-
                     <i class="glyphicon glyphicon-plus-sign"></i>	إضافة طلب
-
-
                 </div> <!--/panel-->
                 <div class="panel-body">
 
@@ -69,7 +66,6 @@
                         @endforeach
                         </tbody>
                     </table>
-
                 </div> <!--/panel-->
             </div> <!--/panel-->
         </div> <!-- /col-md-12 -->

@@ -31,7 +31,7 @@
                         @endif
                     </div>
 
-                    <table class="table" id="reportSalesBetween-table">
+                    <table class="table" id="reportPurchasesBetween-table">
                         <thead>
                         <tr>
                             <th  style="text-align: right">رقم المنتج</th>
@@ -72,6 +72,13 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @if($start)
+                        <button type="button" class="btn btn-success" id="printDatedPurchases" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
+                            <a style="color: white" href="{{ route('printDatedPurchases', ['start'=>$start, 'end'=>$end])}}">
+                                طباعة
+                            </a>
+                        </button>
+                    @endif
                 </div>
             </div>
             <div class="panel panel-default">
@@ -125,12 +132,17 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <button type="button" class="btn btn-success" id="printPurchases" data-loading-text="Loading..." autocomplete="off"><i class="glyphicon glyphicon-ok-sign"></i>
+                        <a style="color: white" href="{{ route('printPurchases') }}">
+طباعة
+                        </a>
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
         <script>
             var token = '{{ Session::token() }}';
-            var urlReportSales = '{{ route('postReportSales') }}';
 
         </script>
 @endsection
