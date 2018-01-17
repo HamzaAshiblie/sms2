@@ -38,7 +38,7 @@
                                 <td>{{ $category->category_name }}</td>
                                 <td>{{ $category->category_description }}</td>
                                 <td>
-                                    <a href="/sms2/public/product/{{$category->id}}">
+                                    <a href="/product/{{$category->id}}">
                                         {{ count($category->products) }}
                                     </a>
                                 </td>

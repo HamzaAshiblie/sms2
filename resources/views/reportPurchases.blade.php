@@ -92,7 +92,7 @@
                         ريال
                     </div>
 
-                    <table class="table" id="reportPurchases-table">
+                    <table class="table" id="reportPurchasesx">
                         <thead>
                         <tr>
                             <th  style="text-align: right">رقم المنتج</th>

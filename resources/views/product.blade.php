@@ -71,7 +71,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a type="button" data-toggle="modal" id="purchase-product-modal-btn" data-productid="{{$product->id}}" > <i class="glyphicon glyphicon-plus-sign"></i> شراء</a></li>
                                             <li><a type="button" data-toggle="modal" id="edit-product-modal-btn" data-productid="{{$product->id}}" data-categoryid="{{$product->category_id}}"> <i class="glyphicon glyphicon-edit"></i> تعديل</a></li>
-                                            <li><a type="button" data-toggle="modal" id="record-product-modal-btn" href="/sms2/public/productUpdate/{{$product->id}}"> <i class="glyphicon glyphicon-edit"></i> السجل</a></li>
+                                            <li><a type="button" data-toggle="modal" id="record-product-modal-btn" href="/productUpdate/{{$product->id}}"> <i class="glyphicon glyphicon-edit"></i> السجل</a></li>
                                             <li><a type="button" data-toggle="modal" data-productid="{{$product->id}}" data-target="#removeCategoriesModal" id="remove-product-modal-btn" onclick=""> <i class="glyphicon glyphicon-trash"></i> حذف</a></li>
                                         </ul>
                                     </div>

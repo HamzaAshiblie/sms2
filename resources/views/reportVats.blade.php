@@ -36,7 +36,7 @@
                         @foreach($betweenVatOrders as $order)
                             <tr>
                                 <td>
-                                    <a href="/sms2/public/printOrder/{{$order->id}}">
+                                    <a href="/printOrder/{{$order->id}}">
                                         {{ $order->id }}
                                     </a>
                                 </td>
@@ -75,7 +75,7 @@
                         @foreach($orders as $order)
                             <tr>
                                 <td>
-                                    <a href="/sms2/public/printOrder/{{$order->id}}">
+                                    <a href="/printOrder/{{$order->id}}">
                                         {{ $order->id }}
                                     </a>
                                 </td>

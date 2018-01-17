@@ -29,7 +29,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-shopping-cart"></i> المبيعات<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li id="topNavAddOrder" class="{{ Request::is('addOrder*') ? 'active' : '' }}"><a href="{{ route('addOrder') }}"> <i class="glyphicon glyphicon-plus"></i> إضافة عملية بيع</a></li>
-                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? '' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة المبيعات</a></li>
+                            <li id="topNavManageOrder" class="{{ Request::is('manageOrder*') ? '' : '' }}"><a href="{{ route('manageOrders') }}"> <i class="glyphicon glyphicon-edit"></i> إدارة المبيعاتf</a></li>
                         </ul>
                     </li>
 
@@ -49,7 +49,7 @@
                             @if(Auth::user()->isAdmin)
                             <li id="topNavSetting"><a href="{{ route('account') }}"> <i class="glyphicon glyphicon-wrench"></i> الإعدادات</a></li>
                             @endif
-                            <li id="topNavLogout"><a href="/sms2/public/logout"> <i class="glyphicon glyphicon-log-out"></i> تسجيل الخروج</a></li>
+                            <li id="topNavLogout"><a href="/logout"> <i class="glyphicon glyphicon-log-out"></i> تسجيل الخروج</a></li>
                         </ul>
                     </li>
 
