@@ -48,7 +48,10 @@ class OrderController extends Controller
     public function getAddOrder()
     {
         $clients = Client::all();
-        $products = Product::where('product_quantity','>',0)->get();
+        //$products = Product::where('product_quantity','>',0)->get();
+        $products = Product::where([
+            ['isActive', '=', 1],
+            ['product_quantity', '>', 0]])->get();
         return view('addOrder',['clients' => $clients, 'products'=>$products]);
 
     }
@@ -184,7 +187,10 @@ class OrderController extends Controller
     }
     public function fetchProductData()
     {
-            $product = Product::where('product_quantity','>',0)->get();
+            //$product = Product::where('product_quantity','>',0)->get();
+            $product = Product::where([
+                ['isActive', '=', 1],
+                ['product_quantity', '>', 0]])->get();
             return $product;
     }
     public function fetchSelectedProduct(Request $request)
@@ -193,6 +199,7 @@ class OrderController extends Controller
         //$product = Product::where([['id',$request['productId']],['product_quantity','>',0]])->get();
         $product = Product::where([
             ['id', '=', $request['productId']],
+            ['isActive', '=', 1],
             ['product_quantity', '>', 0]])->first();
         return $product;
     }

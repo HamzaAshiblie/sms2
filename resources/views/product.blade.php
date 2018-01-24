@@ -70,6 +70,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a type="button" data-toggle="modal" id="purchase-product-modal-btn" data-productid="{{$product->id}}" > <i class="glyphicon glyphicon-plus-sign"></i> شراء</a></li>
+                                            <li><a type="button" data-toggle="modal" id="deactivate-product-modal-btn" data-productid="{{$product->id}}" > <i class="glyphicon glyphicon-plus-sign"></i> تخميل المنتج</a></li>
                                             <li><a type="button" data-toggle="modal" id="edit-product-modal-btn" data-productid="{{$product->id}}" data-categoryid="{{$product->category_id}}"> <i class="glyphicon glyphicon-edit"></i> تعديل</a></li>
                                             <li><a type="button" data-toggle="modal" id="record-product-modal-btn" href="/productUpdate/{{$product->id}}"> <i class="glyphicon glyphicon-edit"></i> السجل</a></li>
                                             <li><a type="button" data-toggle="modal" data-productid="{{$product->id}}" data-target="#removeCategoriesModal" id="remove-product-modal-btn" onclick=""> <i class="glyphicon glyphicon-trash"></i> حذف</a></li>
@@ -330,33 +331,35 @@
     </div>
     <!-- /products -->
 
-    <!-- delete products modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="delete-products-modal">
+    <!-- deactivate products modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deactivate-products-modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> حذف المنتج</h4>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> تخميل المنتج</h4>
                 </div>
                 <div class="modal-body">
-                    <p>هل تريد حذف المنتج بالتأكيد؟</p>
+                    <p>هل تريد تخميل المنتج بالتأكيد؟</p>
                 </div>
                 <div class="modal-footer delete-products-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> إغلاق</button>
-                    <button type="button" class="btn btn-primary" id="delete-products-btn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> حذف</button>
+                    <button type="button" class="btn btn-primary" id="deactivate-products-btn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> حفظ</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <!-- /delete product modal -->
+    <!-- /deactivate product modal -->
     <script>
         var token = '{{ Session::token() }}';
         var urlAddProduct = '{{ route('product.create') }}';
         var urlPurchaseProduct = '{{ route('purchaseProduct') }}';
         var urlGetProduct = '{{ route('product') }}';
+        var urlGetDeactivatedProduct = '{{ route('deactivatedProduct') }}';
         var urlGetCategoryInProduct = '{{ route('fetchCategory') }}';
         var urlEditProduct = '{{ route('product.edit')}}';
-        var urlDeleteProduct = '{{ route('product.delete')}}';
+        //var urlDeleteProduct = '{{ route('product.delete')}}';
+        var urlDeactivateProduct = '{{ route('deactivateProduct')}}';
         var categoryIdSelect = '{{Route::Input('cat_id')}}';
 
         function updateVat() {

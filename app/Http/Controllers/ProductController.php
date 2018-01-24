@@ -11,11 +11,22 @@ class ProductController extends Controller
 {
     public function getProduct(Request $request)
     {
-        $products = Product::all();
+        $products = Product::where([
+            ['isActive', '=', 1]])->get();
         if($request['message']!=null){
             return view('product',['products'=> $products])->with('message');
         }else{
             return view('product',['products'=> $products]);
+        }
+    }
+    public function getDeactivatedProduct(Request $request)
+    {
+        $products = Product::where([
+            ['isActive', '=', 0]])->get();
+        if($request['message']!=null){
+            return view('deactivatedProduct',['products'=> $products])->with('message');
+        }else{
+            return view('deactivatedProduct',['products'=> $products]);
         }
     }
     public function getProductSingle(Request $request)
@@ -81,6 +92,32 @@ class ProductController extends Controller
         */
         $product->save();
         return redirect()->route('product');
+    }
+
+    public function activateProduct(Request $request)
+    {
+        $product = Product::where('id',$request['id'])->first();
+        $product->isActive = 1;
+        if ($product->update())
+        {
+            return response()->json($product,200);
+        }
+
+        return redirect()->route('deactivatedProduct');
+
+    }
+
+    public function deactivateProduct(Request $request)
+    {
+        $product = Product::where('id',$request['id'])->first();
+        $product->isActive = 0;
+        if ($product->update())
+        {
+            return response()->json($product,200);
+        }
+
+        return redirect()->route('deactivatedProduct');
+
     }
 
     public function purchaseProduct(Request $request)

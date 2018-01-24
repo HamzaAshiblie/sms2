@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{URL::to('src/plugins/moment/moment.min.js')}}">
     <link rel="stylesheet" href="{{URL::to('src/plugins/fullcalendar/fullcalendar.min.js')}}">
     <script  src="{{URL::to('src/js/jquery-2.2.4.js')}}"> </script>
+    <script src="{{ URL::to('src/jquery-ui/jquery-ui.min.js')}}"></script>
     <script  src="{{URL::to('src/js/bootstrap.min.js')}}"> </script>
 
     <!-- DataTables -->
@@ -35,7 +36,6 @@
 
 
 <script  src="{{URL::to('src/js/app.js')}}"></script>
-<script src="{{ URL::to('src/jquery-ui/jquery-ui.min.js')}}"></script>
 <script>
     $( function() {
         $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });

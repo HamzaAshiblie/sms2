@@ -34,17 +34,17 @@
                     <table class="table" id="reportSalesBetween-table">
                         <thead>
                         <tr>
-                            <th  style="text-align: right">رقم المنتج</th>
-                            <th  style="text-align: right">العائلة</th>
-                            <th  style="text-align: right">المنتج</th>
-                            <th  style="text-align: right">الكمية</th>
-                            <th  style="text-align: right">سعر البيع</th>
+                            <th  style="text-align: right">رقم الطلب</th>
+                            <th  style="text-align: right">تاريخ الطلب</th>
                             <th  style="text-align: right">العميل</th>
-                            <th  style="text-align: right">التاريخ</th>
-                            <th  style="text-align: right">الكمية</th>
-                            <th  style="text-align: right">سعر البيع</th>
-                            <th  style="text-align: right">العميل</th>
-                            <th  style="text-align: right">التاريخ</th>
+                            <th  style="text-align: right">عدد السلع</th>
+                            <th  style="text-align: right">السعر الإجمالي</th>
+                            <th  style="text-align: right">الخصم</th>
+                            <th  style="text-align: right">القيمة المضافة</th>
+                            <th  style="text-align: right">السعر النهائي</th>
+                            <th  style="text-align: right">المدفوع</th>
+                            <th  style="text-align: right">المتبقي</th>
+                            <th  style="text-align: right">طريقة الدفع</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -89,7 +89,7 @@
     <table class="table" id="reportSales-table">
         <thead>
         <tr>
-            <th  style="text-align: right">رقم الطب</th>
+            <th  style="text-align: right">رقم الطلب</th>
             <th  style="text-align: right">تاريخ الطلب</th>
             <th  style="text-align: right">العميل</th>
             <th  style="text-align: right">عدد السلع</th>

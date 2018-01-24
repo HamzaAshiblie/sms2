@@ -802,25 +802,43 @@ $('#edit-products-btn').on('click', function () {
     });
 });
 
-$('.panel').find('.div-body-modal').find('.table').find('.btn-group').find('.dropdown-menu').find('#remove-product-modal-btn').on('click', function(event){
+$('.panel').find('.div-body-modal').find('.table').find('.btn-group').find('.dropdown-menu').find('#deactivate-product-modal-btn').on('click', function(event){
     event.preventDefault();
     productId = event.target.dataset['productid'];
-    $('#delete-products-modal').modal();
+    $('#deactivate-products-modal').modal();
 });
-$('#delete-products-btn').on('click', function () {
+$('#deactivate-products-btn').on('click', function () {
     $.ajax({
         method:'post',
-        url:urlDeleteProduct,
+        url:urlDeactivateProduct,
         data:{id: productId, _token: token}
     }).fail(function (msg) {
     }).done(function (msg) {
-        $('#delete-product-modal').modal('hide');
-        $(location).attr('href',urlGetProduct);
+        $('#deactivate-product-modal').modal('hide');
+        $(location).attr('href',urlGetDeactivatedProduct);
+    });
+});
+
+$('.panel').find('.div-body-modal').find('.table').find('.btn-group').find('.dropdown-menu').find('#activate-product-modal-btn').on('click', function(event){
+    event.preventDefault();
+    console.log('ddd');
+    productId = event.target.dataset['productid'];
+    $('#activate-products-modal').modal();
+});
+$('#activate-products-btn').on('click', function () {
+    $.ajax({
+        method:'post',
+        url:urlActivateProduct,
+        data:{id: productId, _token: token}
+    }).fail(function (msg) {
+    }).done(function (msg) {
+        $('#activate-product-modal').modal('hide');
+        $(location).attr('href',urlGetDeactivatedProduct);
     });
 });
 
 $('#switchCategory').on('change',function (event) {
-    selectedCatId = event.target.value;
+    var selectedCatId = event.target.value;
     if (selectedCatId){
         $(location).attr('href',"/product/"+selectedCatId);
     }else {
@@ -878,19 +896,22 @@ function addRow() {
             tr += '</select>'+
                 '</div>'+
                 '</td>'+
-                '<td style="padding-left:20px;"">'+
+                '<td style="padding-left:1px;"">'+
                 '<input type="number" name="unit_price[]" id="unit_price'+count+'" disabled="true" onkeyup="getTotal('+count+')" autocomplete="off" class="form-control" />'+
-                '</td style="padding-left:20px;">'+
-                '<td style="padding-left:20px;"">'+
+                '</td>'+
+                '<td style="padding-left:15px;"">'+
                 '<input type="number" name="discount" id="discount'+count+'" disabled="true" onkeyup="getTotal('+count+')" autocomplete="off" class="form-control" />'+
-                '</td style="padding-left:20px;">'+
+                '</td>'+
                 '<td style="padding-left:20px;">'+
                 '<div class="form-group">'+
                 '<input type="number" name="product_quantity[]" id="product_quantity'+count+'" disabled="true" onkeyup="getTotal('+count+')" autocomplete="off" class="form-control" min="1" />'+
                 '</div>'+
                 '</td>'+
-                '<td style="padding-left:20px;">'+
+                '<td style="padding-left:1px;">'+
                 '<input type="text" name="total_quantity" id="total_quantity'+count+'" autocomplete="off" class="form-control" disabled="true" />'+
+                '</td>'+
+                '<td style="padding-left:1px;">'+
+                '<input type="text" name="vat[]" id="vat'+count+'" autocomplete="off" class="form-control" disabled="true" />'+
                 '</td>'+
                 '<td style="padding-left:1px;">'+
                 '<input type="text" name="total[]" id="total'+count+'" autocomplete="off" class="form-control" disabled="true" />'+

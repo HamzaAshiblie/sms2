@@ -71,6 +71,19 @@ Route::get('/product',[
     'as' => 'product',
     'middleware'=> 'auth'
 ]);
+Route::get('/deactivatedProduct',[
+    'uses' => 'ProductController@getDeactivatedProduct',
+    'as' => 'deactivatedProduct',
+    'middleware'=> 'auth'
+]);
+Route::post('/deactivateProduct',[
+    'uses' => 'ProductController@deactivateProduct',
+    'as' => 'deactivateProduct'
+]);
+Route::post('/activateProduct',[
+    'uses' => 'ProductController@activateProduct',
+    'as' => 'activateProduct'
+]);
 Route::post('/createproduct',[
     'uses' => 'ProductController@productCreateProduct',
     'as' => 'product.create'
